@@ -23,7 +23,7 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | [Name]
 
 | Scrum Master
-| [Name]
+| Gabriel Wulkow Moreira da Silva
 
 | Tech Lead footnote:[optionale Rolle, aber empfohlen, um technische Entscheidungen zu koordinieren]
 | [Name]
@@ -42,30 +42,30 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 |===
 | Ereignis | Wann | Dauer | Moderation
 
-| Standup (Daily / Weekly)
-| [z. B. täglich 09:30]
-| [z. B. 15 min]
-| [Rolle / Person]
+| Standup (Weekly)
+| Mittwoch 18 Uhr
+| z. B. 15 min
+| Scrum Master
 
 | Sprint Planning
 | [z. B. montags, Sprintstart]
 | [z. B. 2 h]
-| [Rolle / Person]
+| Scrum Master
 
 | Sprint Review
 | [z. B. freitags, Sprintende]
 | [z. B. 1 h]
-| [Rolle / Person]
+| Scrum Master
 
 | Retrospektive
 | [z. B. freitags, nach Review]
 | [z. B. 1 h]
-| [Rolle / Person]
+| Scrum Master
 
 | Backlog Refinement
 | [z. B. mittwochs, wöchentlich]
 | [z. B. 1 h]
-| [Rolle / Person]
+| Product Owner
 |===
 
 == Kommunikation
