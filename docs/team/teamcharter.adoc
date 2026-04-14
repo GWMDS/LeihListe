@@ -20,7 +20,7 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | Rolle | Person
 
 | Product Owner
-| [Name]
+| Jonas Schletze
 
 | Scrum Master
 | Gabriel Wulkow Moreira da Silva
@@ -29,7 +29,12 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | [Name]
 
 | Entwickler:innen
-| [Namen]
+| Pascal John
+| Eric Hübel
+| Franz Borrmann
+| Kevin Le Nguyen
+| Marius Thomas Hoffmann
+
 
 | Stakeholder (Hauptansprechpartner)
 | [Name]
@@ -43,28 +48,28 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | Ereignis | Wann | Dauer | Moderation
 
 | Standup (Weekly)
-| Mittwoch 18 Uhr
-| z. B. 15 min
+| Mittwoch 18:00 Uhr
+| 15 - 30 min
 | Scrum Master
 
 | Sprint Planning
-| [z. B. montags, Sprintstart]
-| [z. B. 2 h]
-| Scrum Master
+| Mittwoch 18:30 Uhr
+| ca. 2 h
+| Product Owner, Scrum Master
 
 | Sprint Review
-| [z. B. freitags, Sprintende]
-| [z. B. 1 h]
-| Scrum Master
+| Sonntag 18:00 Uhr
+| ca. 0,75 h
+| Product Owner, Scrum Master
 
 | Retrospektive
-| [z. B. freitags, nach Review]
-| [z. B. 1 h]
+| Sonntag 18:45 Uhr
+| ca. 0,75 h
 | Scrum Master
 
 | Backlog Refinement
-| [z. B. mittwochs, wöchentlich]
-| [z. B. 1 h]
+| Mittwochs 18:00 Uhr
+| ca. 1 h
 | Product Owner
 |===
 
@@ -75,22 +80,22 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | Thema | Vereinbarung
 
 | Primärer Kanal
-| [z. B. Discord – #projektname]
+| Discord
 
 | Entscheidungsprotokoll
-| [z. B. Wiki oder per Asciidoc in Ordner <Ordnername>]
+| Asciidoc in Ordner <Ordnername>
 
 | Erwartete Reaktionszeit
-| [z. B. innerhalb von 4 Stunden während Kernzeit]
+| innerhalb von 24 Stunden
 
 | Kernarbeitszeit
-| [z. B. 09:00 – 16:00 Uhr]
+| [???]
 
 | Videokonferenz-Tool
-| [z. B. Teams / Discord / Google Meet]
+| Discord
 
 | Asynchrone Abstimmung
-| [z. B. kurze Statusupdates im Issue-Diskussion]
+| kurze Statusupdates im Discord
 |===
 
 == Arbeitsweise
@@ -103,7 +108,6 @@ _Eine User Story ist bereit für die Entwicklung, wenn:_
 * [ ] Der Aufwand wurde vom Team geschätzt
 * [ ] Abhängigkeiten sind identifiziert und geklärt
 * [ ] Designs / Mockups sind vorhanden (falls relevant)
-* [ ] [Weitere Kriterien ergänzen]
 
 === Definition of Done (DoD)
 _Eine User Story gilt als fertig, wenn:_
@@ -115,7 +119,6 @@ _Eine User Story gilt als fertig, wenn:_
 * [ ] Die Funktionalität wurde im Staging-System getestet
 * [ ] Dokumentation wurde aktualisiert (falls erforderlich)
 * [ ] Der Product Owner hat die Story abgenommen
-* [ ] [Weitere Kriterien ergänzen]
 
 === Code & Versionierung
 
@@ -124,27 +127,27 @@ _Eine User Story gilt als fertig, wenn:_
 | Thema | Vereinbarung
 
 | Branching-Strategie
-| [z. B. Feature Branches, Trunk-Based Development]
+| Feature Branches
 
 | PR-Review-Regeln
-| [z. B. mind. 1 Approval, kein Merge ohne grüne Pipeline]
+| mind. 1 Approval, kein Merge ohne grüne Pipeline
 
 | Merge-Berechtigung
-| [z. B. jedes Teammitglied nach Approval]
+| jedes Teammitglied nach Approval
 
 | Commit-Konventionen
-| [z. B. Conventional Commits]
+| Conventional Commits
 |===
 
 == Teamvereinbarungen
 
 _Diese Vereinbarungen haben wir gemeinsam getroffen:_
 
-. [z. B. Wir gehen respektvoll und offen miteinander um.]
-. [z. B. Wir sprechen Probleme frühzeitig an, anstatt sie zu ignorieren.]
-. [z. B. Fehler sind Lernchancen – wir suchen keine Schuldigen.]
-. [z. B. Meetings beginnen pünktlich; wer verhindert ist, gibt rechtzeitig Bescheid.]
-. [z. B. Entscheidungen werden dort dokumentiert, wo alle sie finden können.]
+. Wir gehen respektvoll und offen miteinander um.
+. Wir sprechen Probleme frühzeitig an, anstatt sie zu ignorieren.
+. Fehler sind Lernchancen – wir suchen keine Schuldigen.
+. Meetings beginnen pünktlich; wer verhindert ist, gibt rechtzeitig Bescheid.
+. Entscheidungen werden dort dokumentiert, wo alle sie finden können.
 
 
-_Nächste Überprüfung: [Datum / Sprint] — Diese Charta wird regelmäßig in der Retrospektive aktualisiert._
+_Nächste Überprüfung: 26.04 / vor 2. Sprint — Diese Charta wird regelmäßig in der Retrospektive aktualisiert._
