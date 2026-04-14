@@ -29,11 +29,7 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | [Name]
 
 | Entwickler:innen
-| Pascal John
-| Eric Hübel
-| Franz Borrmann
-| Kevin Le Nguyen
-| Marius Thomas Hoffmann
+| Pascal John; Eric Hübel; Franz Borrmann; Kevin Le Nguyen; Marius Thomas Hoffmann
 
 
 | Stakeholder (Hauptansprechpartner)
@@ -68,7 +64,7 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | Scrum Master
 
 | Backlog Refinement
-| Mittwochs 18:00 Uhr
+| Mittwoch 18:00 Uhr
 | ca. 1 h
 | Product Owner
 |===
