@@ -1,5 +1,5 @@
 = Produktkonzept: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <email2@domain.org>; Eric Hübel <email3@domain.org>; Franz Borrmann<email4@domain.org>; Kevin Le Nguyen<email5@domain.org>; Jonas Schletze<email6@domain.org>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
