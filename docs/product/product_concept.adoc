@@ -19,10 +19,13 @@ _Warum wird dieses Produkt gebaut? Welches Problem existiert heute, und warum is
 Dieser Abschnitt beschreibt den Ausgangszustand und den Handlungsbedarf — ohne bereits eine
 Lösung zu nennen. 3–5 Sätze genügen._
 
-[Hier die Ausgangssituation und den Handlungsbedarf beschreiben. Beispiel:
-„Studierende an der Hochschule haben heute keinen zentralen Überblick über verfügbare
-Lernräume. Die Suche nach freien Plätzen kostet täglich wertvolle Zeit und führt zu Frust.
-Eine einfache, mobil nutzbare Lösung fehlt bisher."]
+//[Hier die Ausgangssituation und den Handlungsbedarf beschreiben. Beispiel:
+//„Studierende an der Hochschule haben heute keinen zentralen Überblick über verfügbare
+//Lernräume. Die Suche nach freien Plätzen kostet täglich wertvolle Zeit und führt zu Frust.
+//Eine einfache, mobil nutzbare Lösung fehlt bisher."]
+
+Die Inventarverwaltung an Hochschulen ist keine triviale Lösung.
+Gerade bei Ausleihservices ist eine gute Verwaltungssoftware mit einfach benutzbaren Oberfläche unabdingbar. So eine Lösung gibt es akutell nicht.
 
 == Produktvision
 
@@ -33,22 +36,22 @@ nicht wesentlich verändern._
 === Visions-Statement
 
 ____
-Für [Zielgruppe],
-die [Problem oder Bedarf],
-ist [Produktname]
-ein [Produktkategorie],
-das [zentraler Nutzen].
-Im Gegensatz zu [Alternative]
-bietet unser Produkt [entscheidender Unterschied].
+Für Hochschulen,
+die keine Software für Ausleihservices verwenden,
+ist Leihliste
+ein Softwareprodukt,
+das Ausleihe und Inventarverwaltung vereint.
+Im Gegensatz zu SnipesIT
+bietet unser Produkt eine Ausleihfunktionalität.
 ____
 
 //Beispiel: Für Studierende der HTWD, die zu wenig Zeit in der Mittagspause zum Essen haben, ist Flying Burger ein  Lieferdient für Burger, der per Drohne liefert. Anders als landgestützte Lieferdienste kann unser Produkt durchs Fenster direkt in den Hörsaal liefern.
 
 NOTE: Das Visions-Statement kann im Team mit der „Elevator Pitch"-Methode oder dem „Future Press Release"-Format erarbeitet werden.
 
-=== Zielbild
-
-_Optional: Beschreibe in 2–4 Sätzen, wie die Welt mit diesem Produkt aussieht. Was hat sich für die Nutzer:innen verändert?_
+//=== Zielbild
+//
+//_Optional: Beschreibe in 2–4 Sätzen, wie die Welt mit diesem Produkt aussieht. Was hat sich für die Nutzer:innen verändert?_
 //[Hier das Zielbild beschreiben]
 
 
@@ -61,14 +64,14 @@ _Wer sind die Zielgruppen, und wie positioniert sich das Produkt im Vergleich zu
 |===
 | Zielgruppe | Beschreibung
 
-| [z. B. Studierende]
-| [Kurzbeschreibung: Wer sind sie? Was ist ihre Motivation?]
+| Studierende
+| Studierende sind alle Menschen, die an einer Hochschule zum Studium eingeschrieben sind
 
-| [z. B. Lehrende]
-| [Kurzbeschreibung]
+| Hochschulverwaltung
+| Die Hochschulverwaltung meint konkret die Menschen, die das Inventar der Hochschule verwalten und pflegen.
 
-| [Weitere Zielgruppe]
-| [Kurzbeschreibung]
+| Externe Nutzer
+| Externe Nutzer meint alle potentiellen Nutzer des Ausliehservice, die kein Teil der Hochschule sind.Beispiele wären Unternehmen, die für Projekte Laborequipment o.Ä. ausleihen wollen, oder andere Hochschulen.
 |===
 
 NOTE: Ausführliche Beschreibungen der Nutzenden — Personas, Nutzungskontext,
@@ -80,17 +83,17 @@ typische Aufgaben — sind im link:ux_concept.adoc[UX-Konzept] dokumentiert.
 |===
 | Alternative | Beschreibung | Warum unser Produkt besser passt
 
-| [z. B. E-Mail-Anfrage an Sekretariat]
-| [Wie lösen Nutzer:innen das Problem heute?]
-| [Worin liegt unser Vorteil?]
+| E-Mail-Anfragen
+| Nutzer können beim Verleihservice per E-Mail eine Ausleihe Anfragen und absprechen.
+| Unsere Software bietet eine zentrale Möglichkeit an, Ausleihen zu oganisieren und minimiert den Kommunikationsoverhead.
 
-| [z. B. Aushang an schwarzem Brett]
-| [Beschreibung]
-| [Unterschied]
+| Tabellenverwaltung
+| Die Hochschulverwaltung kann Tabellen digital oder analog benutzen, um das Inventar zu verwalten.
+| Tabellen sind ab einer hinreichenden Größe für Menschen unübersichtlich, eine extra Software kann diese hingegen schnell auswerten. Zudem ergibt sich bei Tabellen das Problem der Datensynchronisation.
 
-| [Weitere Alternative]
-| [Beschreibung]
-| [Unterschied]
+| Snipes IT
+| Die Hochschulverwaltung kann das Inventar mit SnipesIT verwalten. Snipes IT ist eine professionelle Open Source Software zur Inventarverwaltung.
+| "Leihliste" bietet im Gegensatz zu Snipes IT eine Ausleihfunktionalität.
 |===
 
 
@@ -103,25 +106,25 @@ erklärt, warum bestimmte Entscheidungen getroffen wurden.
 |===
 | Stakeholder | Rolle / Interesse | Erwartungen an das Produkt | Einfluss
 
-| [z. B. Hochschulverwaltung]
-| [Betreiber der Infrastruktur; will Raumauslastung optimieren]
-| [Auslastungsberichte, DSGVO-Konformität]
+| Studierende
+| potentielle Nutzer der Software, wollen Inventargegenstände ausleihen
+| einfache Benutzeroberfläche, geringe Kommunikationsoverhead
 | Hoch
 
-| [z. B. Studierende]
-| [Hauptnutzer:innen; wollen schnell freie Plätze finden]
-| [Einfache Bedienung, mobiler Zugang]
-| Mittel
+| Firmen
+| potentielle Nutzer der Software, wollen Inventargegenstände ausleihen
+| einfache Bedienung, hoher Informationsgehalt.
+| Hoch
 
-| [z. B. Lehrende]
-| [Nutzen Räume für Lehrveranstaltungen; wollen Konflikte vermeiden]
-| [Sichtbarkeit ihrer Buchungen]
-| Mittel
+| Hochschulverwaltung
+| inventarisiert Gegenstände, pflegt Inventar, Betreiber von Ausleihservice
+| Hoher Informationsgehalt, hohe Verwaltungsfreiheit
+| Hoch
 
-| [Weiterer Stakeholder]
-| [Beschreibung]
-| [Erwartungen]
-| [Hoch / Mittel / Niedrig]
+| Administrator
+| kümmert sich um Bereitstellung und Administration der Software
+| unkomplizierte Bereitstellung, gute Dokumentation, geringe Fehleranfälligkeit
+| Mittel
 |===
 
 == Hauptfunktionen
