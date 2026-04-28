@@ -24,8 +24,8 @@ Lösung zu nennen. 3–5 Sätze genügen._
 //Lernräume. Die Suche nach freien Plätzen kostet täglich wertvolle Zeit und führt zu Frust.
 //Eine einfache, mobil nutzbare Lösung fehlt bisher."]
 
-Die Inventarverwaltung an Hochschulen ist keine triviale Lösung.
-Gerade bei Ausleihservices ist eine gute Verwaltungssoftware mit einfach benutzbaren Oberfläche unabdingbar. So eine Lösung gibt es akutell nicht.
+Hochschulen sind große Organisationen mit vielen Mitgliedern und noch mehr Inventargegenständen. Dieses Inventar zu verwalten ist keine triviale Angelegenheit, insbesondere, wenn dieses Inventar an Hochschulmitglieder und externe Akteure ausleihbar sein soll. Eine einfache, auf Hochschulen zugeschnittene Lösung gibt es noch nicht.
+
 
 == Produktvision
 
@@ -37,12 +37,12 @@ nicht wesentlich verändern._
 
 ____
 Für Hochschulen,
-die keine Software für Ausleihservices verwenden,
+die einen Ausliehservice für ihr Inventar anbieten möchten,
 ist Leihliste
 ein Softwareprodukt,
 das Ausleihe und Inventarverwaltung vereint.
-Im Gegensatz zu SnipesIT
-bietet unser Produkt eine Ausleihfunktionalität.
+Im Gegensatz zu anderen Verwaltungssoftwares
+bietet unser Produkt eine Ausleihfunktionalität, damit die Hochschulgemeinschaft und externe Interessenten vom besser Hochschulinventar profitieren können.
 ____
 
 //Beispiel: Für Studierende der HTWD, die zu wenig Zeit in der Mittagspause zum Essen haben, ist Flying Burger ein  Lieferdient für Burger, der per Drohne liefert. Anders als landgestützte Lieferdienste kann unser Produkt durchs Fenster direkt in den Hörsaal liefern.
@@ -137,25 +137,30 @@ Diese Hauptfunktionen sollten als Epics im Product Backlog für die Gruppierung 
 |===
 | Nutzerbedarf | Hauptfunktion | Priorität
 
-| Studierende wollen schnell sehen, welche Räume gerade frei sind.
-| Echtzeit-Übersicht freier Lernräume
+| Verwaltungsangestellte wollen einen guten, aktuellen Überblick über den Inventarbestand der Software haben
+| Abrufung und Darstellung von gespeicherten Inventargegenständen in Form eines Kataloges
 | Hoch
 
-| Nutzer:innen wollen einen Raum für einen bestimmten Zeitraum reservieren.
-| Raumbuchung mit Zeitfenster
+| Verwaltungsangestellte wollen Änderungen am Inventar in die Software übertragen können
+| Untersützung von CRUD-Operationen an der Inventarliste
 | Hoch
 
-| Nutzer:innen wollen ihre aktiven Buchungen verwalten.
-| Buchungsübersicht & Stornierung
-| Mittel
+| Nutzer wollen Gegenstände ausleihen können
+| Ausleih- und Rückgabefunktionalität.
+| Hoch
 
-| Verwaltung will die Auslastung der Räume analysieren.
-| Auslastungsberichte für Administratoren
+| Nutzer wollen über nahende Rückgabefristen proaktiv informiert werden
+| Push-Benachrichtigungen.
 | Niedrig
 
-| [Nutzerbedarf]
-| [Hauptfunktion]
-| [Hoch / Mittel / Niedrig]
+| Nutzer wollen alleinig auf ihre Daten zugreifen können
+| Benutzertrennung
+| Mittel
+
+| Nutzer wollen nach konkreten Inventargegenständen suchen können
+| Suchfunktion
+| Mittel
+
 |===
 
 NOTE: Die Reihenfolge entspricht einer ersten groben Priorisierung und wird im Rahmen
@@ -192,9 +197,10 @@ technischen Entscheidungen, die sich daraus ergeben — ohne sie hier zu wiederh
 | Das Produkt ist während der Hochschulöffnungszeiten zuverlässig erreichbar.
 | Verfügbarkeit ≥ 99 % während Betriebszeiten.
 
-| [Qualitätsziel]
-| [Beschreibung]
-| [Messkriterium]
+| Synchronisation
+| Der Ausleihstatus eines Gegenstandes muss bei Änderungen bei anderen Nutzern angepasst werden.
+| Nach dem Neuladen der Seite muss der Status sich anpassen
+
 |===
 
 === Einschränkungen
@@ -218,9 +224,17 @@ organisatorische, rechtliche oder zeitliche Vorgaben._
 | Das Produkt muss innerhalb eines Semesters (ca. 4 Monate) lieferbar sein.
 | Zeitlich
 
-| [Einschränkung]
-| [Beschreibung]
-| [Technisch / Rechtlich / Organisatorisch / Zeitlich]
+| Scrum-Nutzung
+| Das Projekt muss mittels Scrum organisiert und durchgeführt werden.
+| Organisatorisch
+
+| Kompatibilität
+| Die Software muss in den gängigsten Browsern funktionieren.
+| Technisch
+
+//| [Einschränkung]
+//| [Beschreibung]
+//| [Technisch / Rechtlich / Organisatorisch / Zeitlich]
 |===
 
 
@@ -231,8 +245,8 @@ organisatorische, rechtliche oder zeitliche Vorgaben._
 | Version | Datum | Änderung
 
 | 1.0
-| [Datum]
-| Initiale Version nach Kick-off-Workshop
+| 28.04.2026
+| Initiale Version, erarbeitet während erstem Sprint
 
 |===
 
