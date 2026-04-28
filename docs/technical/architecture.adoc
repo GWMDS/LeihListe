@@ -1,5 +1,5 @@
 = Architekturdokument: {project-name}
-Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <email2@domain.org>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
+Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <s87929@htw-dresden.de>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
