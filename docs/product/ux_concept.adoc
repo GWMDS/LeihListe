@@ -40,7 +40,7 @@ _Hinweis: Im link:product_concept.adoc[Produktkonzept] werden Zielgruppen nur be
 | vergesslich, musste schon mehrfach Mahngebühr bezahlen
 
 | *Verhalten & Kontext*
-| Nutzt technische Geräte regelmäßig im Alltag, vor allem ihr Smartphone. Die Benutzung von Computern beschränkt größtenteils auf relevante fachliche Software, Onlinebrowsing und gelegentliche Videospiele.
+| Ehrgeizig, kreativ, nutzt technische Geräte regelmäßig im Alltag, vor allem ihr Smartphone. Die Benutzung von Computern beschränkt größtenteils auf relevante fachliche Software, Onlinebrowsing und gelegentliche Videospiele.
 
 | *Bezug zum Produkt*
 | Lena ist eine Primärnutzerin, da sie regelmäßig Bücher von der Hochschule leiht und somit mit der Software interagieren wird. Ihr primärer Nutzen besteht darin, dass sie rechtzeitig an Abgabefristen erinnert wird. Zudem hat sie die Möglichkeit, neben Büchern auch technisches Equipment auszuleihen, welches sie für ihre Projekte braucht.
@@ -66,7 +66,7 @@ _Hinweis: Im link:product_concept.adoc[Produktkonzept] werden Zielgruppen nur be
 | unübersichtliche bisherige Lösungen in Form von Excel Tabellen & unterschiedlichen Kommunikationskanälen, häufige Missverständnisse/Fehler
 
 | *Verhalten & Kontext*
-| Tägliche Benutzung von technischen Geräten (insbesondere Computern) im Arbeitsalltag, sicherer Umgang mit Standardsoftware und Internetanwendungen
+| Introvertiert, risikoscheu, handwerklich begabt, tägliche Benutzung von technischen Geräten (insbesondere Computern) im Arbeitsalltag, sicherer Umgang mit Standardsoftware und Internetanwendungen
 
 | *Bezug zum Produkt*
 | Peter soll als Angestellter der HTW den Ausleihdienst für die Hochschule betreiben und **muss** deshalb mit der Software im Arbeitsalltag interagieren. Sein Nutzen besteht darin, dass Inventarverwaltung und Ausleihservice samt nötiger Kommunikation an einem Ort gebündelt werden, was seine Arbeit erheblich vereinfacht.
