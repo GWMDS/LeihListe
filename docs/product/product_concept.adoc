@@ -38,7 +38,7 @@ nicht wesentlich verändern._
 ____
 Für Hochschulen,
 die einen Ausliehservice für ihr Inventar anbieten möchten,
-ist Leihliste
+ist Lendify
 ein Softwareprodukt,
 das Ausleihe und Inventarverwaltung vereint.
 Im Gegensatz zu anderen Verwaltungssoftwares
