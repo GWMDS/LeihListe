@@ -1,5 +1,5 @@
 // Meta
-:project-name: Projektthema (X0)
+:project-name: Leihliste (B2)
 :project-system-name: Lendify
 // Settings:
 :toc:
