@@ -1,0 +1,124 @@
+= Git-Vereinbarungen: {project-name}
+Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <s87929@htw-dresden.de>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
+{localdatetime}
+include::../_includes/default-attributes.inc.adoc[]
+:version: 1.0
+
+_Dieses Dokument beschreibt die Vereinbarungen des Teams zur Arbeit mit der Versionverwaltung git und GitHub. Sie umfasst Vereinbarungen zu Commits, Branches und Pull Requests_
+
+## Inkrafttreten
+Dieses Dokument wurde während Sprint 2 erarbeitet und tritt ab Sprint 3 der Projektarbeit in Kraft.
+
+## Issues
+* Jede Aufgabe wird als GitHub-Issue angelegt und passend benannt, sowie im GitHub-Project platziert. Die Aufgabenbeschreibung muss konkret sein.
+* Issues sollen die vorhandenen Templates benutzen, sofern eins davon zum Issue passt.
+Wurde die zugehörige Aufgabe im Sprint Planning besprochen, wird das verantwortliche Teammitglied assigned.
+* Issues sind erst dann wirklich abgeschlossen, wenn der Product Owner die Arbeit gesichtigt und für gut befunden hat.
+
+## Branching Strategie
+### Hauptbranches
+Es gibt zwei Hauptbranches:
+
+* dev
+* main
+
+Beide Branches sind **nicht** für direktes Arbeiten auf den Branches gedacht.
+[cols="1,2,3", options="header"]
+|===
+| Branch | Zweck | Umgang
+| dev
+| Entwicklungsbasis mit fertigen Features
+| Änderungen über Pull Requests
+
+| main
+| Letzte stabile Version
+| Merge aus dev **nach** erfolgreichem Review
+
+|===
+
+Beide Branches sollen geschützt werden, um unbefugten Zugriff zu unterbinden.
+
+### Sonstige Branches
+Kein Branch ohne zugehörigen Issue! Jeder Branch muss einem Issue zugeordnet sein!
+
+Alle Branches werden nach einem festen Namensmuster benannt:
+
+|===
+| Typ | Namenskonvention | Beschreibung
+
+| Feature
+| feature/<issue-id>-<description>
+| Neue Funktionalität oder User Story
+
+| Bugfix
+| bugfix/<issue-id>-<description>
+| Korrektur von Fehlern
+
+| Chore
+| chore/<issue-id>-<kurze-beschreibung>
+| Refactoring, Anpassung an Code-Standards, Schreiben von Kommentaren...
+
+| Test
+| test/<issue-id>-<description>
+| Hinzufügen oder Anpassen von Tests
+
+| Docs
+| docs/<issue-id>-<description>
+| Änderungen an Dokumentation
+|===
+
+Beispiele:
+----
+feature/34-login-backend
+test/41-unit-tests-frontend
+docs/22-testing-documentation
+----
+
+Branches sollten erst im Remote Repository auf GitHub gepusht werden, wenn sie fertig sind, bzw. sich kurz vor der Fertigstellung befinden. Wir wollen keine anfänglichen Arbeitsstände im Remote Repo.
+
+Branches bekommen Englische Namen.
+
+## Commits
+Commits sollten inhaltlich sinnvoll sein und eine akzeptable Größe haben.
+
+Commits werden wie Branches auch nach einem festen Schema benannt:
+----
+<commit-type>(file(s)): <description>
+----
+
+|===
+| Commit Typ | Bedeutung 
+
+| feat
+| Funktionalität für ein Feature
+
+| fix
+| Fehlerbehebung
+
+| docs
+| Änderung an Dokumentation
+
+| chore
+| Refactoring, Code Convention
+
+| test
+| Änderungen an Testfunktionalität
+
+|===
+
+Commits werden in Englisch verfasst.
+
+## Pull Requests
+
+Nach Fertigstellung wird für einen Branch immer eine Pull Request erstellt. Dieser wird mindestens ein sinnvoller Reviewer zugewiesen.
+
+### Anforderungen
+
+Eine Pull Request sollte niemals ohne hilfreiche Informationen dastehen. Es muss immer dazugeschrieben werden, welche Änderungen vorgenommen wurden. Außerdem sollte den Reviewern mitgeteilt werden, auf welche Dinge sie besonders achten sollten, sofern sie nur für bestimmte Teile als Reviewer angefragt wurden.
+
+### Mergen
+
+Eine Pull Request wird nur dann gemerged, wenn alle Reviewer zugestimmt haben. Sie darf nur vom Ersteller der Pull Request gemerged werden.
+
+Nach dem Mergen der Pull Request wird der Branch gelöscht, sowohl lokal als auch remote.
+
