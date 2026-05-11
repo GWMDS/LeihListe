@@ -77,7 +77,7 @@ Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 1 be
 | product_concept.adoc
 | Mithilfe der Future Press Release Methode konnten wir eine klare und überzeugende Produktvision entwickeln, die uns geholfen hat, unser Produktkonzept zu fokussieren und zu kommunizieren. Die Produktvision hat uns auch dabei unterstützt, Prioritäten zu setzen und Entscheidungen zu treffen, die im Einklang mit unserem Ziel stehen.
 
-| Personas oder Nutzergruppen beschreiben
+| 
 | 
 | 
 | 
