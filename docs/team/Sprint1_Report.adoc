@@ -155,7 +155,7 @@ Beschreiben Sie kurz, welche nicht-funktionalen Anforderungen, Randbedingungen o
 | Das System muss auf den vorhandenen Servern der Hochschule betrieben werden können; DSGVO-Konformität; Das MVP muss innerhalb eines Semesters (ca. 4 Monate) lieferbar sein
 
 | Ethische Aspekte / Risiken
-| Externe Nutzer könnten Geräte für private Zwecke nutzen und nicht wieder zurückgeben; Wer haftet für Schäden an den Geräten?; Ausschluss von Nutzergruppen, die keinen Zugang zu digitalen Lösungen haben
+| Externe Nutzer könnten Geräte für private Zwecke nutzen und nicht wieder zurückgeben; Wer haftet für Schäden an den Geräten?; Ausschluss von Nutzergruppen, die keinen Zugang zu digitalen Lösungen haben; Ausschluss von Internationals durch sprachliche Barriere
 |===
 
 
