@@ -78,6 +78,8 @@ Branches sollten erst im Remote Repository auf GitHub gepusht werden, wenn sie f
 
 Branches bekommen Englische Namen.
 
+Ein Branch soll dem Issue zugewiesen werden, dessen Arbeitsstand er speichert.
+
 ## Commits
 Commits sollten inhaltlich sinnvoll sein und eine akzeptable Größe haben.
 
