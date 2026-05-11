@@ -108,7 +108,7 @@ Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 1. Leitfragen:
 | Wichtig ist es, auch die Verwaltung der Geräte zu berücksichtigen, damit die Nutzer wissen, wann welche Geräte verfügbar sind und wie sie diese zurückgeben können. Administrative Funktionen sind also auch wichtig, um den Überblick zu behalten und die Nutzerzufriedenheit zu erhöhen.
 
 | Erkenntnis 3
-| Die größte Rückmeldung, haben wir erhalten durch das erstellen der Wireframes, da wir dadurch eine konkrete Vorstellung davon bekommen haben, wie die Benutzeroberfläche aussehen könnte und welche Funktionen für die Nutzer am wichtigsten sind.
+| Für gute Rückmeldungen sind Wireframes essenziell, da Stakeholder durch sie eine konkrete Vorstellung bekommen, wie die Benutzeroberfläche aussehen könnte und die Anwendung bedient wird.
 |===
  
 == 4. Änderungen am Produktkonzept
@@ -121,9 +121,9 @@ Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Ihre Arbeit u
 | Neue Erkenntnis
 | Anpassung am Produktkonzept oder Backlog
 
-| 
-| 
-| 
+| Funktionalität zur Raumbuchung
+| Liegt nicht im Scope
+| Idee wurde verworfen
 
 | 
 | 
@@ -179,5 +179,5 @@ Beschreiben Sie, was Ihr Team im nächsten Sprint beibehalten, ändern oder gezi
 | Sprint Planning umsetzen (Poker Planning?); Bessere Glossary Dokumentation; Weekly Format verbessern
 
 | Offene Frage für Sprint 2
-| Wie kann man das Sprint Planning effektiv umsetzen, um die Arbeit besser zu strukturieren und die Zusammenarbeit zu verbessern?
+| Wie kann man das Sprint Planning effektiv umsetzen, um die Arbeit besser zu strukturieren und die Aufgabenlast besser zu verteilen ?
 |===
