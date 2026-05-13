@@ -19,24 +19,47 @@ Technische Implementierungsdetails gehören nicht hierher!
 |===
 | Begriff / Abkürzung | Definition | Synonyme / Abgrenzungen
 
-| Bestellung
-| Eine vom Nutzer ausgelöste Anforderung, ein oder mehrere Produkte zu erwerben.
-  Eine Bestellung durchläuft verschiedene Status (offen, bezahlt, versendet, abgeschlossen).
-| Auftrag; nicht zu verwechseln mit „Warenkorb" (noch nicht abgeschlossen)
-
 | Nutzer
-| Eine Person, die das System aktiv verwendet. Nutzer müssen registriert und eingeloggt
-  sein, um Bestellungen aufzugeben.
+| Eine Person, die das System aktiv verwendet. Nutzer müssen registriert und eingeloggt sein, um Ausleihen tätigen zu können.
 | Anwender, Benutzer; abzugrenzen von „Administrator"
 
-| Produkt
-| Ein im System angebotener Artikel, der bestellt werden kann. Ein Produkt hat eine
-  Bezeichnung, einen Preis und eine Verfügbarkeit.
-| Artikel, Ware
+| Verleiher
+| Eine Person/Unternehmen, das Gegenstände zur Ausleihe zeitweise an Ausleiher zur Verfügung stellen.
+| Anbieter, Bereitsteller
 
-| [Begriff]
-| [Präzise, fachliche Definition in 1–3 Sätzen]
-| [Synonyme oder Abgrenzungen zu ähnlichen Begriffen]
+| Ausleiher
+| Eine Person, die Gegenstände von einem Verleiher zeitweise ausleiht.
+| Nutzer, Entleiher
+
+| Gegenstand
+| Ein physisches oder digitales Objekt, das ausgeliehen werden kann.
+| Leihobjekt, Leihgegenstand
+
+| Inventar
+| Liste aller Gegenstände eines Verleihers, die von einem Nutzer ausgeliehen werden können.
+| Leihbestand, Sammlung
+
+| Leihfrist
+| Der verbindliche Zeitraum, in dem ein Gegenstand beim Ausleiher verbleiben darf.
+| Rückgabedatum, Abgabefrist, abzugrenzen zu Lebensdauer 
+
+| Status
+| Der aktuelle Zustand eines Gegenstands oder eines Leihvorgangs
+| Zustand 
+
+| Mahnung
+| Eine Benachrichtigung an den Ausleiher, sobald die Leihfrist überschritten wurde.
+| Erinnerung, Verzugsmeldung
+
+| Verlängerung
+| Die nachträgliche Ausweitung der Leihfrist für einen bereits laufenden Leihvorgang.
+| Fristverlängerung
+
+| Kategorie
+| Eine logische Gruppierung von Gegenständen
+| Genre, Fachbereich
+
+
 
 | [Begriff]
 | [Präzise, fachliche Definition in 1–3 Sätzen]
@@ -59,19 +82,27 @@ Es beschreibt die Realität des Problemraums, nicht die Datenbankstruktur._
 ' Beispiel — bitte durch das echte Domänenmodell ersetzen
 
 entity Nutzer {
-  Name
-  E-Mail
+  
 }
 
-entity Bestellung {
-  Bestellnummer
-  Datum
-  Status
+entity Kategorie {
+  
 }
 
-entity Produkt {
-  Bezeichnung
-  Preis
+entity Leihvorgang {
+  
+}
+
+entity Inventarobjekt {
+  
+}
+
+entity Produkttyp {
+  
+}
+
+entity Benachrichtigung {
+  
 }
 
 Nutzer "1" --> "0..*" Bestellung : gibt auf
@@ -92,13 +123,13 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 | Entität | Beschreibung
 
 | Nutzer
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Repräsentiert alle registrierten Personen (Studierende, Externe, Verwaltung). Er ist der Akteur, der Ausleihen initiiert und für die fristgerechte Rückgabe verantwortlich ist
 
-| Bestellung
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Kategorie
+| Dient der hierarchischen Strukturierung des Inventars. Sie ermöglicht Nutzern wie Lena das gezielte Filtern nach Fachbereichen oder Gerätetypen.
 
-| Produkt
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Leihvorgang
+| Dokumentiert die zeitweise Überlassung eines Inventarobjekts an einen Nutzer. Er speichert geschäftsrelevante Daten wie Fristen und den aktuellen Fortschritt
 
 | [Weitere Entität]
 | [Beschreibung]
@@ -113,14 +144,14 @@ Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese b
 | Von | Zu | Kardinalität | Bedeutung
 
 | Nutzer
-| Bestellung
+| Leihvorgang
 | 1 zu 0..*
-| Ein Nutzer kann keine oder mehrere Bestellungen aufgeben.
+| Ein Nutzer kann keine oder beliebig viele Ausleihen tätigen.
 
-| Bestellung
-| Produkt
-| 1 zu 1..*
-| Eine Bestellung enthält mindestens ein Produkt.
+| Inventarobjekt
+| Leihvorgang
+| 1 zu 0..*
+| Ein konkreter Gegenstand kann nur in einem aktiven Vorgang stecken.
 
 | [Entität]
 | [Entität]
