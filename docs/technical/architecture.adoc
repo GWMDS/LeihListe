@@ -177,23 +177,18 @@ diesen Anforderungen ergeben, und verweist auf die zugehörigen Entscheidungen.
 |===
 | Anforderung (aus Produktkonzept) | Technische Konsequenz | Entscheidung
 
-| Performanceziel: Seitenladezeit < 2 s
-| Server-Side Rendering für initiales Laden erforderlich;
-  statische Assets über CDN ausliefern
-| ADR-002
+| Betrieb auf Hochschulinfrastruktur
+| Verwendung von bereits existierenden Diensten der Hochschule wo möglich
+| ADR-001
 
 | DSGVO-Konformität
 | Keine personenbezogenen Daten in Logs; Datensparsamkeit im Datenbankmodell;
   Recht auf Löschung muss implementierbar sein
-| ADR-003, ADR-004
+| ...
 
-| Betrieb auf Hochschulinfrastruktur
-| Keine Cloud-only-Dienste; Containerisierung für Portabilität erforderlich
-| ADR-005
-
-| Verfügbarkeit ≥ 99 % während Betriebszeiten
-| Statusüberwachung und automatischer Neustart über Container-Orchestrierung
-| ADR-005
+| Datensynchronisation
+| Zentralisierte Datenspeicherung
+| ADR-002
 
 | [Anforderung]
 | [Technische Konsequenz]

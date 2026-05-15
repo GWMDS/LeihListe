@@ -42,7 +42,7 @@ ist Lendify
 ein Softwareprodukt,
 das Ausleihe und Inventarverwaltung vereint.
 Im Gegensatz zu anderen Verwaltungssoftwares
-bietet unser Produkt eine Ausleihfunktionalität, damit die Hochschulgemeinschaft und externe Interessenten vom besser Hochschulinventar profitieren können.
+bietet unser Produkt eine Ausleihfunktionalität, damit die Hochschulgemeinschaft und externe Interessenten besser vom Hochschulinventar profitieren können.
 ____
 
 //Beispiel: Für Studierende der HTWD, die zu wenig Zeit in der Mittagspause zum Essen haben, ist Flying Burger ein  Lieferdient für Burger, der per Drohne liefert. Anders als landgestützte Lieferdienste kann unser Produkt durchs Fenster direkt in den Hörsaal liefern.
