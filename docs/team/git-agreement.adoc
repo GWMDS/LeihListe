@@ -85,8 +85,10 @@ Commits sollten inhaltlich sinnvoll sein und eine akzeptable Größe haben.
 
 Commits werden wie Branches auch nach einem festen Schema benannt:
 ----
-<commit-type>(file(s)): <description>
+<commit-type>(scope): <description>
 ----
+
+Als Scope können sowohl die konkreten Dateien angegeben werden, als auch das ungefähre "Thema" des Commits.
 
 |===
 | Commit Typ | Bedeutung 
