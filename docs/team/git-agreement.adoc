@@ -37,6 +37,7 @@ Beide Branches sind **nicht** für direktes Arbeiten auf den Branches gedacht.
 |===
 
 Beide Branches sollen geschützt werden, um unbefugten Zugriff zu unterbinden.
+Nur Architekt und Product Owner dürfen dev in main mergen, die Zuständigkeit liegt hier jedoch beim Architekten.
 
 ### Sonstige Branches
 Kein Branch ohne zugehörigen Issue! Jeder Branch muss einem Issue zugeordnet sein!
@@ -122,7 +123,6 @@ Eine Pull Request sollte niemals ohne hilfreiche Informationen dastehen. Es muss
 
 ### Mergen
 
-Eine Pull Request wird nur dann gemerged, wenn alle Reviewer zugestimmt haben. Sie darf nur vom Ersteller der Pull Request gemerged werden.
+Eine Pull Request wird nur dann gemerged, wenn alle Reviewer zugestimmt haben und der neue Arbeitsstand vom Product Owner abgenickt wurde. Ausgenommen davon sind Fixbranches, hier reicht die Zustimmung der Reviewer. Die Pull Request darf nur vom Ersteller der Pull Request gemerged werden.
 
 Nach dem Mergen der Pull Request wird der Branch gelöscht, sowohl lokal als auch remote.
-
