@@ -142,7 +142,7 @@ Diese Hauptfunktionen sollten als Epics im Product Backlog für die Gruppierung 
 | Hoch
 
 | Verwaltungsangestellte wollen Änderungen am Inventar in die Software übertragen können
-| Untersützung von CRUD-Operationen an der Inventarliste
+| Unterstützung von CRUD-Operationen an der Inventarliste
 | Hoch
 
 | Nutzer wollen Gegenstände ausleihen können
@@ -186,7 +186,7 @@ technischen Entscheidungen, die sich daraus ergeben — ohne sie hier zu wiederh
 | Qualitätsziel | Beschreibung | Messkriterium
 
 | Benutzbarkeit
-| Das Produkt ist ohne Einarbeitung nutzbar.
+| Das Produkt ist ohne Einarbeitung nutzbar. Es gibt eine grafische Benutzeroberfläche.
 | Neue Nutzer:innen finden die Kernfunktion innerhalb von 2 Minuten ohne Hilfe.
 
 | Performance
@@ -200,6 +200,10 @@ technischen Entscheidungen, die sich daraus ergeben — ohne sie hier zu wiederh
 | Synchronisation
 | Der Ausleihstatus eines Gegenstandes muss bei Änderungen bei anderen Nutzern angepasst werden.
 | Nach dem Neuladen der Seite muss der Status sich anpassen
+
+| Aufsetzen
+| Das Produkt soll mit minimalem Installations-/Konfigurationsaufwand nutzbar sein.
+| Ein Nutzer sollte nicht länger als eine Minute brauchen, um das Produkt nutzen zu.
 
 |===
 
@@ -228,6 +232,10 @@ organisatorische, rechtliche oder zeitliche Vorgaben._
 | Das Projekt muss mittels Scrum organisiert und durchgeführt werden.
 | Organisatorisch
 
+| Bedienung
+| Die Software muss Touch als Eingabe unterstützen
+| Technisch
+
 | Kompatibilität
 | Die Software muss in den gängigsten Browsern funktionieren.
 | Technisch
@@ -247,6 +255,10 @@ organisatorische, rechtliche oder zeitliche Vorgaben._
 | 1.0
 | 28.04.2026
 | Initiale Version, erarbeitet während erstem Sprint
+
+| 1.1
+| 19.04.2026
+| Weitere Qualitätsanforderung
 
 |===
 
