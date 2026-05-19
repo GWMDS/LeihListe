@@ -39,23 +39,23 @@ _Der Systemkontext zeigt das System als Ganzes in seiner Umgebung: welche extern
 
 LAYOUT_WITH_LEGEND()
 
-title System Context Diagram – [Systemname]
+title System Context Diagram – LeihListe
 
-Person(user, "Nutzer:in", "Verwendet das System über Web oder Mobile")
-Person(admin, "Administrator:in", "Verwaltet und konfiguriert das System")
+Person(user, "Student:in", "Verwendet das System über Mobile")
+Person(admin, "Hochschulverwalter:in", "Verwaltet und konfiguriert das System")
 
-System(system, "[Systemname]", "Kernfunktionalität des Systems")
+System(system, "LeihListe", "Kernfunktionalität des Systems")
 
 SystemDb(db, "Datenbank", "Persistente Datenhaltung des Systems")
 
-System_Ext(ext1, "Externer Dienst\n[z. B. LDAP / SSO]", "Authentifizierung und Identitätsverwaltung")
-System_Ext(ext2, "Externer Dienst\n[z. B. E-Mail-Server]", "Versand von Benachrichtigungen")
+System_Ext(ext1, "Externer Dienst\n(Technologie offen)", "Authentifizierung und Identitätsverwaltung")
+System_Ext(ext2, "Externer Dienst\n(Technologie offen)", "Versand von Benachrichtigungen")
 
-Rel(user, system, "nutzt", "Web / Mobile")
+Rel(user, system, "nutzt", "Mobile / Web")
 Rel(admin, system, "verwaltet")
-Rel(system, db, "liest / schreibt", "JDBC / SQL")
-Rel(system, ext1, "authentifiziert über", "LDAP / OAuth2")
-Rel(system, ext2, "sendet Benachrichtigungen über", "SMTP")
+Rel(system, db, "liest / schreibt", "Technologie offen")
+Rel(system, ext1, "authentifiziert über", "Technologie offen")
+Rel(system, ext2, "sendet Benachrichtigungen über", "Technologie offen")
 
 @enduml
 ....
