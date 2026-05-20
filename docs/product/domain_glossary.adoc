@@ -81,32 +81,82 @@ Es beschreibt die Realität des Problemraums, nicht die Datenbankstruktur._
 @startuml
 ' Beispiel — bitte durch das echte Domänenmodell ersetzen
 
-entity Nutzer {
+class Nutzer {
+  name: String
+  email: String
+}
+class Ausleiher {
+  kundenNummer: string
+}
+
+class Verleiher {
+  personalNummer: String
+}
+
+class Kategorie {
+  name: String
+  beschreibung: String
   
 }
 
-entity Kategorie {
+class Leihvorgang {
+  startDatum: Date
+  sollRueckgabeDatum: Date
+  istRueckgabeDatum: Date
+  
   
 }
 
-entity Leihvorgang {
+class Gegenstand {
+  inventarNummer: String
+  serienNummer: String
+  anschaffungsDatum: Date
+  aktuellerZustand: ZustandEnum
   
 }
 
-entity Inventarobjekt {
+class Produkttyp {
+  modellName: String
+  hersteller: String
+  beschreibung: String
+  bildUrl: String
   
 }
 
-entity Produkttyp {
+class Reservierung {
+  reserviertAm: Date
+  geplantesStartDatum: Date
+  ablaufDatum: Date
   
 }
 
-entity Benachrichtigung {
-  
+class Mangel {
+  beschreibung: String
+  erfassungsDatum: Date
+  schweregrad: SchweregradEnum
 }
 
-Nutzer "1" --> "0..*" Bestellung : gibt auf
-Bestellung "1" --> "1..*" Produkt : enthält
+class Leihbedingung {
+  maxLeihdauerInTagen: Integer
+  kautionInEuro: Decimal
+}
+
+Nutzer <|-- Ausleiher
+Nutzer <|-- Verleiher
+
+Ausleiher "1" --> "0..*" Leihvorgang : taetigt
+Leihvorgang "*" --> "1" Gegenstand : betrifft
+
+Ausleiher "1" --> "0..*" Reservierung : bucht
+Reservierung "*" --> "1" Produkttyp : blockiert
+
+Gegenstand "*" --> "1" Produkttyp : ist Instanz von
+Produkttyp "*" --> "1..*" Kategorie : gehoert zu
+
+Kategorie "0..1" --> "0..*" Kategorie : ist untergeordnet zu
+
+Gegenstand "1" --> "0..*" Mangel : weist auf
+Leihvorgang "0..1" --> "0..1" Mangel : verursacht
 
 @enduml
 ....
@@ -123,13 +173,34 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 | Entität | Beschreibung
 
 | Nutzer
-| Repräsentiert alle registrierten Personen (Studierende, Externe, Verwaltung). Er ist der Akteur, der Ausleihen initiiert und für die fristgerechte Rückgabe verantwortlich ist
+| Abstrakte Oberklasse für alle im System registrierten Personen. Sie bündelt gemeinsame Stammdaten wie Name und E-Mail-Adresse.
+
+| Ausleiher
+| Spezialisierter Nutzer (z. B. Studierende oder Externe), der aktiv Berechtigungen besitzt, Reservierungen zu tätigen und Gegenstände auszuleihen.
+
+| Verleiher
+| Spezialisierter Nutzer (Verwaltung/Personal), der für die Inventarpflege, Schadenserfassung und die Vergabe von Leihbedingungen zuständig ist.
 
 | Kategorie
-| Dient der hierarchischen Strukturierung des Inventars. Sie ermöglicht Nutzern wie Lena das gezielte Filtern nach Fachbereichen oder Gerätetypen.
+| Dient der hierarchischen Strukturierung des Inventars (z. B. "Medientechnik"). Sie ermöglicht das gezielte Filtern nach Geräteklassen.
 
 | Leihvorgang
-| Dokumentiert die zeitweise Überlassung eines Inventarobjekts an einen Nutzer. Er speichert geschäftsrelevante Daten wie Fristen und den aktuellen Fortschritt
+| Dokumentiert die zeitweise Überlassung eines spezifischen Gegenstands an einen Ausleiher inklusive Fristen und Rückgabedaten.
+
+| Gegenstand
+| Stellt das konkrete, physische Einzelstück im Lager mit eindeutiger Inventarnummer und individuellem Abnutzungszustand dar.
+
+| Produkttyp
+| Bildet den abstrakten Katalogeintrag (das Modell). Er bündelt allgemeine Beschreibungen, Bilder und technische Daten baugleicher Gegenstände.
+
+| Reservierung 
+| Repräsentiert die Absicht eines Ausleihers, einen bestimmten Produkttyp zu einem zukünftigen Zeitpunkt für sich zu blockieren.
+
+| Mangel
+| Dokumentiert Defekte oder Schäden an einem spezifischen Gegenstand. Kann optional mit dem verursachenden Leihvorgang verknüpft werden.
+
+| Leihbedingung
+| Steuernde Assoziationsklasse, welche regelt, welche Ausleiher-Rollen für welche Objekt-Kategorien bestimmte Fristen oder Kautionen besitzen.
 
 | [Weitere Entität]
 | [Beschreibung]
@@ -143,15 +214,61 @@ Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese b
 |===
 | Von | Zu | Kardinalität | Bedeutung
 
-| Nutzer
+| Ausleiher
 | Leihvorgang
 | 1 zu 0..*
-| Ein Nutzer kann keine oder beliebig viele Ausleihen tätigen.
+| Ein Ausleiher kann aktuell oder historisch keine oder beliebig viele Ausleihen im System registriert haben.
 
-| Inventarobjekt
 | Leihvorgang
+| Gegenstand
+| * zu 1
+| Jeder Leihvorgang betrifft exakt einen physischen Gegenstand. Ein Gegenstand kann im Laufe der Zeit jedoch in mehreren (historischen) Leihvorgängen stecken.
+
+| Ausleiher
+| Reservierung
 | 1 zu 0..*
-| Ein konkreter Gegenstand kann nur in einem aktiven Vorgang stecken.
+| Ein Ausleiher kann für zukünftige Zeiträume mehrere Reservierungen parallel oder nacheinander anlegen.
+
+| Reservierung
+| Produkttyp
+| * zu 1
+| Eine Reservierung blockiert zunächst nur einen abstrakten Produkttyp (Modell) für die Zukunft, noch kein spezifisches Einzelstück aus dem Regal.
+
+| Kategorie
+| Kategorie
+| 0..1 zu 0..*
+| Erlaubt eine unbegrenzt tiefe, hierarchische Verschachtelung von Kategorien (z. B. "Hauptkategorie: Medientechnik -> Unterkategorie: Kameras").
+
+| Gegenstand
+| Produkttyp
+| * zu 1
+| Jeder physische Gegenstand im Lager ist die exakte Instanz von genau einem im System hinterlegten Produkttyp (Katalogeintrag).
+
+| Produkttyp
+| Kategorie
+| * zu 1..*
+| Ein Produkttyp muss mindestens einer Hauptkategorie zugeordnet sein, kann aber auch in mehreren Unterkategorien auftauchen.
+
+| Kategorie
+| Kategorie
+| 0..1 zu 0..*
+| Erlaubt eine unbegrenzt tiefe, hierarchische Verschachtelung von Kategorien (z. B. "Hauptkategorie: Medientechnik -> Unterkategorie: Kameras").
+
+| Gegenstand
+| Mangel
+| 1 zu 0..*
+| Ein Gegenstand kann makellos sein (0) oder über seinen Lebenszyklus hinweg eine Historie von mehreren Mängeln ansammeln.
+
+| Leihvorgang
+| Mangel
+| 0..1 zu 0..1
+| Ein Mangel kann optional direkt einem Leihvorgang zugeordnet werden. Dies dient der Nachverfolgbarkeit, bei wem ein Schaden entstanden ist.
+
+| Ausleiher
+| Kategorie
+| * zu *
+| Beschreibt die n:m-Beziehung von Zugriffsregeln, welche vollständig über die Assoziationsklasse *Leihbedingung* (Fristen, Kautionen) aufgelöst wird.
+
 
 | [Entität]
 | [Entität]
