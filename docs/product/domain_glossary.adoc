@@ -44,7 +44,7 @@ Technische Implementierungsdetails gehören nicht hierher!
 | Rückgabedatum, Abgabefrist, abzugrenzen zu Lebensdauer 
 
 | Status
-| Der aktuelle Zustand eines Gegenstands oder eines Leihvorgangs
+| Der aktuelle Zustand eines Gegenstands oder einer Ausleihe
 | Zustand 
 
 | Mahnung
@@ -52,7 +52,7 @@ Technische Implementierungsdetails gehören nicht hierher!
 | Erinnerung, Verzugsmeldung
 
 | Verlängerung
-| Die nachträgliche Ausweitung der Leihfrist für einen bereits laufenden Leihvorgang.
+| Die nachträgliche Ausweitung der Leihfrist für eine bereits laufende Ausleihe. 
 | Fristverlängerung
 
 | Kategorie
@@ -86,7 +86,7 @@ class Nutzer {
   email: String
 }
 class Ausleiher {
-  kundenNummer: string
+  kundenNummer: String
 }
 
 class Verleiher {
@@ -99,7 +99,7 @@ class Kategorie {
   
 }
 
-class Leihvorgang {
+class Ausleihe {
   startDatum: Date
   sollRueckgabeDatum: Date
   istRueckgabeDatum: Date
@@ -144,8 +144,11 @@ class Leihbedingung {
 Nutzer <|-- Ausleiher
 Nutzer <|-- Verleiher
 
-Ausleiher "1" --> "0..*" Leihvorgang : taetigt
-Leihvorgang "*" --> "1" Gegenstand : betrifft
+Verleiher "1" --> "0..*" Mangel : erfasst
+Verleiher "1" --> "0..*" Gegenstand : inventarisiert
+
+Ausleiher "1" --> "0..*" Ausleihe : taetigt
+Ausleihe "*" --> "1" Gegenstand : betrifft
 
 Ausleiher "1" --> "0..*" Reservierung : bucht
 Reservierung "*" --> "1" Produkttyp : blockiert
@@ -156,7 +159,9 @@ Produkttyp "*" --> "1..*" Kategorie : gehoert zu
 Kategorie "0..1" --> "0..*" Kategorie : ist untergeordnet zu
 
 Gegenstand "1" --> "0..*" Mangel : weist auf
-Leihvorgang "0..1" --> "0..1" Mangel : verursacht
+Ausleihe "0..1" --> "0..1" Mangel : verursacht
+
+(Ausleiher, Kategorie) .. Leihbedingung
 
 @enduml
 ....
@@ -184,7 +189,7 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 | Kategorie
 | Dient der hierarchischen Strukturierung des Inventars (z. B. "Medientechnik"). Sie ermöglicht das gezielte Filtern nach Geräteklassen.
 
-| Leihvorgang
+| Ausleihe
 | Dokumentiert die zeitweise Überlassung eines spezifischen Gegenstands an einen Ausleiher inklusive Fristen und Rückgabedaten.
 
 | Gegenstand
@@ -197,7 +202,7 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 | Repräsentiert die Absicht eines Ausleihers, einen bestimmten Produkttyp zu einem zukünftigen Zeitpunkt für sich zu blockieren.
 
 | Mangel
-| Dokumentiert Defekte oder Schäden an einem spezifischen Gegenstand. Kann optional mit dem verursachenden Leihvorgang verknüpft werden.
+| Dokumentiert Defekte oder Schäden an einem spezifischen Gegenstand. Kann optional mit dem verursachenden Ausleihe verknüpft werden.
 
 | Leihbedingung
 | Steuernde Assoziationsklasse, welche regelt, welche Ausleiher-Rollen für welche Objekt-Kategorien bestimmte Fristen oder Kautionen besitzen.
@@ -215,14 +220,14 @@ Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese b
 | Von | Zu | Kardinalität | Bedeutung
 
 | Ausleiher
-| Leihvorgang
+| Ausleihe
 | 1 zu 0..*
 | Ein Ausleiher kann aktuell oder historisch keine oder beliebig viele Ausleihen im System registriert haben.
 
-| Leihvorgang
+| Ausleihe
 | Gegenstand
 | * zu 1
-| Jeder Leihvorgang betrifft exakt einen physischen Gegenstand. Ein Gegenstand kann im Laufe der Zeit jedoch in mehreren (historischen) Leihvorgängen stecken.
+| Jedee Ausleihe betrifft exakt einen physischen Gegenstand. Ein Gegenstand kann im Laufe der Zeit jedoch in mehreren (historischen) Ausleihen stecken.
 
 | Ausleiher
 | Reservierung
@@ -259,16 +264,25 @@ Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese b
 | 1 zu 0..*
 | Ein Gegenstand kann makellos sein (0) oder über seinen Lebenszyklus hinweg eine Historie von mehreren Mängeln ansammeln.
 
-| Leihvorgang
+| Ausleihe
 | Mangel
 | 0..1 zu 0..1
-| Ein Mangel kann optional direkt einem Leihvorgang zugeordnet werden. Dies dient der Nachverfolgbarkeit, bei wem ein Schaden entstanden ist.
+| Ein Mangel kann optional direkt einer Ausleihe zugeordnet werden. Dies dient der Nachverfolgbarkeit, bei wem ein Schaden entstanden ist.
 
 | Ausleiher
 | Kategorie
 | * zu *
 | Beschreibt die n:m-Beziehung von Zugriffsregeln, welche vollständig über die Assoziationsklasse *Leihbedingung* (Fristen, Kautionen) aufgelöst wird.
 
+| Verleiher
+| Gegenstand
+| 1 zu 0..*
+| Der Verleiher pflegt, katalogisiert und erfasst neue physische Gegenstände im System.
+
+| Verleiher
+| Mangel
+| 1 zu 0..*
+| Der Verleiher dokumentiert Schäden und Defekte, die bei Rückgaben oder internen Wartungen auffallen.
 
 | [Entität]
 | [Entität]
