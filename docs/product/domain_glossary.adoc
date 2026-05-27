@@ -151,7 +151,7 @@ Ausleiher "1" --> "0..*" Ausleihe : taetigt
 Ausleihe "*" --> "1" Gegenstand : betrifft
 
 Ausleiher "1" --> "0..*" Reservierung : bucht
-Reservierung "*" --> "1" Produkttyp : blockiert
+Reservierung "*" --> "1" Gegenstand : blockiert
 
 Gegenstand "*" --> "1" Produkttyp : ist Instanz von
 Produkttyp "*" --> "1..*" Kategorie : gehoert zu
@@ -235,9 +235,9 @@ Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese b
 | Ein Ausleiher kann für zukünftige Zeiträume mehrere Reservierungen parallel oder nacheinander anlegen.
 
 | Reservierung
-| Produkttyp
+| Gegenstand
 | * zu 1
-| Eine Reservierung blockiert zunächst nur einen abstrakten Produkttyp (Modell) für die Zukunft, noch kein spezifisches Einzelstück aus dem Regal.
+| Eine Reservierung blockiert ein bestimmten Gegenstand im Inventar. 
 
 | Kategorie
 | Kategorie
