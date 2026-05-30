@@ -1,7 +1,7 @@
 import pyodbc
 
-"""stellt nur Verbindung mit DBS her"""
-"""Database, uid und pwd mit s-nummer ersetzen"""
+# stellt nur Verbindung mit DBS her
+# Database, uid und pwd mit s-nummer ersetzen
 def getConn ():
     cnxn = pyodbc.connect("Driver={sql server};"
                           "Server=141.56.2.46;"
