@@ -411,7 +411,7 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Es bieten sich andere Datenbanksoftwares wie SQLite oder PostgreSQL an. MS-SQL wird jedoch bevorzugt, da der Server bereits auf der technischen Infrastruktur der Hochschule läuft und es somit keinen extra Integrationsaufwand gibt.  
 
 | *Konsequenzen*
-| Bei Verbidnungen von außerhalb des HTW-Netzes, muss die Hochschul-VPN benutzt werden.
+| Bei Verbindungen von außerhalb des HTW-Netzes, muss die Hochschul-VPN benutzt werden.
 
 |===
 
@@ -431,6 +431,11 @@ Punkte in Vergessenheit geraten._
 | Risiko | Auswirkung | Wahrscheinlichkeit | Maßnahme
 
 | Datenbankserver stürzt ab
+| Sehr hoch
+| Niedrig
+| Sofortiger Neustart
+
+| API-Server stürzt ab
 | Sehr hoch
 | Niedrig
 | Sofortiger Neustart
