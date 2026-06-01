@@ -213,11 +213,11 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 
 === Beschreibung der Beziehungen
 
-Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese besondere Kardinalitäten haben oder aus anderen Gründen erklärungsbedürftig sind.
+Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese besondere Multiplizitäten haben oder aus anderen Gründen erklärungsbedürftig sind.
 
 [cols="1,1,1,3", options="header"]
 |===
-| Von | Zu | Kardinalität | Bedeutung
+| Von | Zu | Multiplizität | Bedeutung
 
 | Ausleiher
 | Ausleihe
