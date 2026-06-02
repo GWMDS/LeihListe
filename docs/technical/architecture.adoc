@@ -405,13 +405,13 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Es wird eine zentrale relationale Datenbank verwendet. Die konkrete Technologie wurde noch nicht festgelegt.
 
 | *Entscheidung*
-| Als Datenbanklösung wird der MS-SQL Server der HTW Dresden verwendet.
+| Als Datenbanklösung wird eine PostgreSQL Datenbank in einem Docker Container genutzt.
 
 | *Alternativen*
-| Es bieten sich andere Datenbanksoftwares wie SQLite oder PostgreSQL an. MS-SQL wird jedoch bevorzugt, da der Server bereits auf der technischen Infrastruktur der Hochschule läuft und es somit keinen extra Integrationsaufwand gibt.  
+| MS-SQL-Server der Hochschule: Nicht genutzt, da Zugriffe auf den Server von außerhalb des HTW-Netzes die HTW-eigene VPN benötigen, was für die Entwicklung lästig ist. Außerdem ergibt sich durch die Nutzung des Servers eine Abhängigkeit von den Administratoren des Dienstes. Des Weiteren werden die Datenbanken vergangener Jahrgänge gelöscht.
 
 | *Konsequenzen*
-| Bei Verbindungen von außerhalb des HTW-Netzes, muss die Hochschul-VPN benutzt werden.
+| Während der Entwicklung muss die Datenbank separat gestartet werden, eine Automatisierung die API-Server und Datenbank gekoppelt startet gibt es noch nicht. Alle Teammitglieder müssen Docker installieren, um die Anwednung sinnvoll testen zu können.
 
 |===
 
@@ -440,6 +440,11 @@ Punkte in Vergessenheit geraten._
 | Niedrig
 | Sofortiger Neustart
 
+| VM der Hochschule wird gelöscht
+| Sehr hoch
+| Niedrig (während dem Zeitraum des Projekts)
+| Neue VM anfragen
+
 |===
 
 === Technische Schulden
@@ -448,15 +453,8 @@ Punkte in Vergessenheit geraten._
 |===
 | Beschreibung | Begründung für Kompromiss | Backlog-Eintrag
 
-| [z. B. Keine Datenbankmigrationen mit Flyway — manuelle Skripte]
-| [z. B. Zeitdruck in Sprint 2; wird in Sprint 5 nachgeholt]
-| [z. B. TECH-42]
+| Kein gekoppelter Start von API und Datenbank
+| für initiale Architektur unnötiger Aufwand
+| Issue #71
 
-| [z. B. Fehlerbehandlung in API-Endpunkten unvollständig]
-| [z. B. MVP-Fokus; nur Hauptpfade abgedeckt]
-| [z. B. TECH-51]
-
-| [Weitere technische Schuld]
-| [Begründung]
-| [Ticket-Referenz oder "-"]
 |===
