@@ -152,7 +152,7 @@ sind in <<Architekturentscheidungen>> dokumentiert._
 | BISHER KEINE ANWENDUNG
 
 | Containerisierung
-| vorraussichtlich Docker
+| Docker
 | bewährte Technologie, Vorkenntnisse im Team
 | BISHER KEINE ANWENDUNG
 
@@ -411,7 +411,31 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | MS-SQL-Server der Hochschule: Nicht genutzt, da Zugriffe auf den Server von außerhalb des HTW-Netzes die HTW-eigene VPN benötigen, was für die Entwicklung lästig ist. Außerdem ergibt sich durch die Nutzung des Servers eine Abhängigkeit von den Administratoren des Dienstes. Des Weiteren werden die Datenbanken vergangener Jahrgänge gelöscht.
 
 | *Konsequenzen*
-| Während der Entwicklung muss die Datenbank separat gestartet werden, eine Automatisierung die API-Server und Datenbank gekoppelt startet gibt es noch nicht. Alle Teammitglieder müssen Docker installieren, um die Anwednung sinnvoll testen zu können.
+| Während der Entwicklung muss die Datenbank separat gestartet werden, eine Automatisierung die API-Server und Datenbank gekoppelt startet gibt es noch nicht. Alle Teammitglieder müssen Docker installieren, um die Anwendung sinnvoll testen zu können.
+
+|===
+
+=== ADR-009: Nutzung von Docker
+
+[cols="1,3"]
+|===
+| *Status*
+| Angenommen
+
+| *Datum*
+| 02.062026
+
+| *Kontext*
+| Das aktuelle Softwareprodukt besteht aus mehreren separat ausführbaren Teilen, die separat voneinander gestartet werden müssen
+
+| *Entscheidung*
+| Es wird Docker zur Containerisierung der einzelnen Softwarestücke verwendet.
+
+| *Alternativen*
+| Man könnte die einzelnen Architekturkomponenten einzeln starten, das ist jedoch für das explorative Testen während der Entwicklung sehr lästig.
+
+| *Konsequenzen*
+| Die Teammitglieder müssen Docker installieren und sich minimal mit der Benutzung vertraut machen.
 
 |===
 
