@@ -38,7 +38,8 @@ Hat das alles funktioniert, sollte man sich jetzt in der aktivierten virtuellen 
 
 ### Run and Hot-Reload for Development
 
-Bevor der API-Server gestartet werden kann, sollte die Datenbank laufen! Siehe README.md im `database` Verzeichnis
+Bevor der API-Server gestartet werden kann, sollte die Datenbank laufen! Siehe README.md im `database` Verzeichnis.
+Der Server liefert **keinen** Fehler, wenn die Datenbank noch nicht läuft, da SQLModel mit einer lazy Connection arbeitet, die Verbindung zur Datenbank also nur herstellt, wenn sie wirklich gebraucht wird.
 
 Danach
 

@@ -2,13 +2,15 @@
 
 Docker ([Download-Link](https://www.docker.com/)) installieren, unter Linux idealerweise mit dem Package Manager.
 Danach in diesem Verzeichnis mittels
+Auf Windows muss Docker Desktop laufen, damit ihr die Befehle ausführen könnt.
+Unter Linux müssen die Docker-Befehle typischerweise als root ausgeführt werden. Das ist lästig. Um dem zu entgehen, könnt ihr euch selbst der Docker Gruppe hinzufügen. Das ist allerdings nicht zwingend notwendig und wird deshalb hier nicht beschrieben.
 
 ```sh
 touch .env
 ```
 
 eine .env erstellen und nach Vorbild der example.env befüllen. Die .env ist in der .gitignore enthalten, wird also nicht getracked und sollte deshalb **nicht** im repo erscheinen.
-Die genauen Zugangsdaten sind relativ irrelevant, sollten aber mit der .env im /api Verzeichnis übereinstimmen.
+Die genauen Zugangsdaten sind relativ irrelevant, sollten aber mit der .env im `api` Verzeichnis übereinstimmen.
 Danach folgenden Befel ausführen:
 
 ```sh
