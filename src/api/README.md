@@ -4,7 +4,7 @@ In dieser README wird beschrieben, wie man den FastAPI-Server zum laufen bekommt
 ## Projekt Einrichtung
 
 Python ([Download-Link](https://www.python.org/downloads/)) installieren, unter Linux idealerweise mit dem Package Manager.
-Dann im Verzeichnis `backend` den folgenden Befehl ausführen
+Dann im Verzeichnis `api` den folgenden Befehl ausführen
 
 ```sh
 python -m venv .venv
@@ -38,7 +38,7 @@ Hat das alles funktioniert, sollte man sich jetzt in der aktivierten virtuellen 
 
 ### Run and Hot-Reload for Development
 
-Die Details der Datenbankanbindung steht noch nicht fest. Wenn Pascal mir sein Script geschickt hat, kann ich den Teil hier noch ausfüllen.
+Bevor der API-Server gestartet werden kann, sollte die Datenbank laufen! Siehe README.md im `database` Verzeichnis
 
 Danach
 
