@@ -258,7 +258,7 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Das Produkt könnte als Anwendung entwickelt werden, die bspw. über den App-Store installiert werden muss, damit würde sich die Zeit bis zur Nutzbarkeit jedoch verlängern.
 
 | *Konsequenzen*
-| Die Tools für die Produktentwicklung müssen zu, gewählten Ansatz passen.
+| Die Tools für die Produktentwicklung müssen zum gewählten Ansatz passen.
 |===
 
 === ADR-002: Datenpersistenz
@@ -321,13 +321,13 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Die Software braucht ein grobes Architekturmuster, das gut zum Nutzungskontext passt. Relevant für diese Entscheidung ist zudem ADR-003.
 
 | *Entscheidung*
-| Es wird ein Client-Server Schema mit einer klassischen 3-Schicht-Answendung verwendet.
+| Es wird ein Client-Server Schema mit einer klassischen 3-Schicht-Anwendung verwendet.
 
 | *Alternativen*
 | Andere Möglichkeiten wäre z.B. eine Schichtenarchitektur, die jedoch nicht zu unserer Anwendung passt.
 
 | *Konsequenzen*
-| Effektiv werden zwei Stücke Software entwickelt, die auf unterschiedlichen Geräten laufen können. Das erlaubt eine einfache Trennung der Zuständigkeiten innerhalb des Teams. Zudem werden die Schnittstellen zwischen diesen Elementen werden besonders wichtig. Außerdem fangen wir uns die klassischen Nachteile des Client-Server-Schemas ein.
+| Effektiv werden zwei Stücke Software entwickelt, die auf unterschiedlichen Geräten laufen können. Das erlaubt eine einfache Trennung der Zuständigkeiten innerhalb des Teams. Zudem werden die Schnittstellen zwischen diesen Elementen besonders wichtig. Außerdem fangen wir uns die klassischen Nachteile des Client-Server-Schemas ein.
 
 |===
 
