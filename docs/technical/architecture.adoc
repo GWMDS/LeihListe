@@ -369,13 +369,13 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Das Architekturmuster sieht eine Aufteilung in Front- und Backend vor. Es ist sinnvoll, hier spezialisierte Frameworks zu verwenden.
 
 | *Entscheidung*
-| Für die Entwicklung der Benutzeroberfläche wird das VueJS-Framework verwendet.
+| Für die Entwicklung der Benutzeroberfläche wird das VueJS-Framework verwendet, als Sprache verwenden wir TypeScript.
 
 | *Alternativen*
 | Alternative Frameworks wären Angular oder auf React basierende UI-Frameworks. Zu VueJS gibt es im Team jedoch Kenntnisse, außerdem ist der Einstieg in Vue verhältnismäßig leicht.
 
 | *Konsequenzen*
-| Die für das Frontend verantwortlichen Teammitglieder müssen sich mit dem VueJS Framework beschäftigen. Es wird NodeJS als Laufzeitumgebung benötigt und die Oberflächenfunktionalität wird in JavaScript geschrieben.
+| Die für das Frontend verantwortlichen Teammitglieder müssen sich mit dem VueJS Framework beschäftigen. Für das Benutzen der Benutzerobefläche wird ein Browser benötigt, die Oberflächenfunktionalität wird mit TypeScript geschrieben.
 
 |===
 
