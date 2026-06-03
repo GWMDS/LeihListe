@@ -42,20 +42,20 @@ LAYOUT_WITH_LEGEND()
 title System Context Diagram – LeihListe
 
 Person(user, "Student:in", "Verwendet das System über Mobile")
-Person(admin, "Hochschulverwalter:in", "Verwaltet und konfiguriert das System")
+Person(admin, "Hochschulverwalter:in", "Verwaltet und pflegt das System")
 
 System(system, "LeihListe", "Kernfunktionalität des Systems")
 
 SystemDb(db, "Datenbank", "Persistente Datenhaltung des Systems")
 
-System_Ext(ext1, "Externer Dienst\n(Technologie offen)", "Authentifizierung und Identitätsverwaltung")
-System_Ext(ext2, "Externer Dienst\n(Technologie offen)", "Versand von Benachrichtigungen")
+' System_Ext(ext1, "Externer Dienst\n(Technologie offen)", "Authentifizierung und Identitätsverwaltung")
+' System_Ext(ext2, "Externer Dienst\n(Technologie offen)", "Versand von Benachrichtigungen")
 
 Rel(user, system, "nutzt", "Mobile / Web")
 Rel(admin, system, "verwaltet")
-Rel(system, db, "liest / schreibt", "Technologie offen")
-Rel(system, ext1, "authentifiziert über", "Technologie offen")
-Rel(system, ext2, "sendet Benachrichtigungen über", "Technologie offen")
+Rel(system, db, "liest / schreibt", "PostgreSQL-Datenbank")
+' Rel(system, ext1, "authentifiziert über", "Technologie offen")
+' Rel(system, ext2, "sendet Benachrichtigungen über", "Technologie offen")
 
 @enduml
 ....
@@ -69,44 +69,56 @@ Die interne Struktur des Systems ist im Designdokument beschrieben.
 |===
 | Schnittstelle | Typ | Beschreibung | Protokoll / Format
 
-| [z. B. Hochschul-LDAP]
-| Externes System
-| Authentifizierung und Nutzerverwaltung über bestehende Hochschulinfrastruktur
-| LDAP / TLS
+// | [z. B. Hochschul-LDAP]
+// | Externes System
+// | Authentifizierung und Nutzerverwaltung über bestehende Hochschulinfrastruktur
+// | LDAP / TLS
 
-| [z. B. SMTP-Server]
-| Externes System
-| Versand von Benachrichtigungs-E-Mails an Nutzende
-| SMTP / TLS
+// | [z. B. SMTP-Server]
+// | Externes System
+// | Versand von Benachrichtigungs-E-Mails an Nutzende
+// | SMTP / TLS
 
-| [z. B. Nutzer:in via Browser]
+| Nutzer:in via Browser
 | Menschlicher Akteur
 | Zugriff über Web-Oberfläche
-| HTTPS / REST
+| HTTP
 
-| [Weitere Schnittstelle]
-| [Typ]
-| [Beschreibung]
-| [Protokoll]
+| Datenbank
+| Externes System
+| Liefert nötige Funktionalität für Datenpersistenz
+| ODBC
 |===
 
 === Laufzeitumgebungen (Container Diagramm)
 //Level 2 im C4-Modell
 Diese Sicht gibt an, welche Umgebungen für den Code vorgesehen sind, z.B. JVM, Node.js, DBMS, Browser, Android Runtime.
 
-[plantuml, "{diagramsdir}/system-context", svg]
+[plantuml, "{diagramsdir}/system-contextk", svg]
 ....
 @startuml
 ' source: https://github.com/plantuml-stdlib/C4-PlantUML
 ' C4 Model
 !include <c4/C4_Container.puml>
 
-Person(personAlias, "Label", "Optional Description")
+Person(user, "Nutzeri:in", "Hochschulmitarbeiter:in oder Ausleiher")
 
-System_Boundary(c1, "Sample System") {
-    Container(containerAlias, "Container Name", "Technology", "Optional Description")
+System_Boundary(c1, "Frontend") {
+    Container(UI, "Browser", "Firefox, Chrome...", "Benutzeroberfläche, über die Nutzer:innen mit dem restlichen System interagieren")
 }
-Rel(personAlias, containerAlias, "Label", "Optional Technology")
+
+System_Boundary(c2, "Backend - VM") {
+    Container(db, "Datenbank", "PostgreSQL", "sorgt für Datenpersistenz")
+
+    System_Boundary(c3, "Docker Container") {
+    Container(api, "API-Server", "FastAPI", "REST-API für Datenbankinteraktion")
+  }
+}
+
+Rel(user, UI, "bedient", "")
+Rel(UI,api, "kommuniziert mit","HTTP")
+Rel(api,db,"liest","ODBC")
+Rel(api,db,"schreibt","ODBC")
 
 @enduml
 ....
@@ -154,7 +166,7 @@ sind in <<Architekturentscheidungen>> dokumentiert._
 | Containerisierung
 | Docker
 | bewährte Technologie, Vorkenntnisse im Team
-| BISHER KEINE ANWENDUNG
+| ADR-009
 
 | CI/CD
 | vorraussichtlich GitHub Actions
@@ -423,7 +435,7 @@ NOTE: ADRs werden nicht gelöscht oder überschrieben — sie werden als
 | Angenommen
 
 | *Datum*
-| 02.062026
+| 02.06.2026
 
 | *Kontext*
 | Das aktuelle Softwareprodukt besteht aus mehreren separat ausführbaren Teilen, die separat voneinander gestartet werden müssen
