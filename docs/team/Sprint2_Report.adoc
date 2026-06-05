@@ -28,7 +28,7 @@ Formulieren Sie Ihr Sprintziel in 1–2 Sätzen. Leitfragen:
 | Kriterium | Ihre Antwort
 
 | Sprintziel
-| Erstellung eines initialen Architektur Dokuments
+| Das Hauptziel war die Erstellung einer initialen Architektur. Es sollte ein grobes Architekturschema festgelegt, sich auf konkrete Werkzeuge und eine Rollenverteilung im Developer-Team geeinigt werden. 
 
 | Zentrale technische Unsicherheit / Annahme
 | Aus welchen technischen Anforderungen ergeben sich unsere Architekturentscheidungen
@@ -63,29 +63,25 @@ Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 2 be
 | Nutzen, Erkenntnis oder Anpassung
 
 | ADRs für wichtige technische Entscheidungen schreiben
-| 
+| Die Entscheidungen für die initiale Architektur (Technologien, Architekturmuster o.Ä.) wurden mittels ADRs dokumentiert.
 | architecture.adoc
-| 
-
-| Walking Skeleton als lauffähigen Nachweis des technischen Konzepts aufbauen
-| 
-| 
-| 
-
-| Domänenmodell erstellen oder überarbeiten
-| 
-| architecture.adoc
-| 
-
-| Systemgrenzen und externe Systeme identifizieren sowie C4-Kontextdiagramm erstellen
-| 
-| architecture.adoc
-| 
+| Die ADRs liefern eine nachvollziehbare Dokumentation, warum die Architektur so aufgebaut wurde, wie sie zum aktuellen Stand aussieht.
 
 | technische Spikes oder Experimente durchführen
+| Durchführung eines Spike zur informierteren Auswahl der Datenbanktechnologie
 | 
-| 
-| 
+| Der MS-SQL Server der Hochschule sollte aus technischen und praktikablen Gründen lieber nicht verwendet werden. Wir nutzen daher eine PostgreSQL Datenbank.
+
+| Technologieoptionen recherchieren, vergleichen und auswählen
+| Technologieoptionen (for allem Frameworks) wurden in einem separaten Technikmeeting verglichen und besprochen.
+| https://github.com/GWMDS/LeihListe/blob/docs/team/docs/team/meeting_log/260522_Devmeeting%201.md[Dev-Meeting]
+| Der Nutzen ist offensichtlich, das Dev-Team muss die Tools benutzen, also sollte das Dev-Team auch darüber entscheiden können. Es gab zudem die Erkenntnis, dass viele Technologien nich aufgrund ihrer Fähigkeiten bzw. dem Passen zur Aufgabe gewählt wurden, sondern vor allem aufgrund von vorhandener Kenntnisse oder dem leichten Aneignen dieser.
+
+| Gemeinsame Regeln zur Git Nutzung diskutieren und vereinbaren
+| Wir haben ein Dokument verfasst, in dem wir uns auf feste Regeln zur Nutzung von Git und einigen Funktionen von GitHub geeinigt haben. Diese Vereinbarungen werden teilweise schon angewandt, sind allerdings erst ab Sprint 3 verbindlich.
+| https://github.com/GWMDS/LeihListe/blob/dev/docs/team/git-agreement.adoc[Git-Agreement]
+| Die Vereinbarungen sollen für mehr Sicherheit (in Form von Reviews) und Übersichtlichkeit (Branching, Commit-Messages...) sorgen.
+
 |===
 
 
