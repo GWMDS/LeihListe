@@ -35,6 +35,8 @@ npm install
 npm run dev
 ```
 
+Wenn Änderungen am Quellcode vorgenommen werden, wird der Server automatisch neu gestartet und die Änderungen werden sichtbar ("Hot-Reload").
+
 ### Type-Check, Compile and Minify for Production
 
 ```sh
