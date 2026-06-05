@@ -108,17 +108,17 @@ System_Boundary(c1, "Frontend") {
 }
 
 System_Boundary(c2, "Backend - VM") {
-    Container(db, "Datenbank", "PostgreSQL", "sorgt für Datenpersistenz")
+    Container(api, "API-Server", "FastAPI", "REST-API für Datenbankinteraktion")
 
     System_Boundary(c3, "Docker Container") {
-    Container(api, "API-Server", "FastAPI", "REST-API für Datenbankinteraktion")
+        Container(db, "Datenbank", "PostgreSQL", "sorgt für Datenpersistenz")
+
   }
 }
 
 Rel(user, UI, "bedient", "")
 Rel(UI,api, "kommuniziert mit","HTTP")
-Rel(api,db,"liest","ODBC")
-Rel(api,db,"schreibt","ODBC")
+Rel(api,db,"liest/schreibt","ODBC")
 
 @enduml
 ....
@@ -150,9 +150,9 @@ sind in <<Architekturentscheidungen>> dokumentiert._
 | ADR-007
 
 | Datenbank
-| MS-SQL-Server der HTW
-| Bereits von Hochschule betrieben, kein extra Integrationsaufwand
-| TODO
+| PostgreSQL-Datenbank
+| bewährte Technologie, gute Skalierung
+| ADR-008
 
 | Authentifizierung
 //| [z. B. OAuth2 / Hochschul-SSO]
