@@ -147,7 +147,7 @@ Beschreiben Sie kurz, welche Treiber, Entscheidungen und Nachweise für Ihren te
 | Kriterium | Ihre Antwort
 
 | Wichtigste Architekturtreiber
-| 
+| Datenspeicherung und -synchronisation; geringer Aufwand zum Aufsetzen und Benutzen; Betrieb auf Hochschulinfrastruktur
 
 | Wichtigste Entscheidungen / ADRs
 | Framework-Auswahl, sowie grundlegendes Architekturmuster.
