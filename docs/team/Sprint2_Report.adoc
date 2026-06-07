@@ -64,13 +64,15 @@ Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 2 be
 
 | ADRs für wichtige technische Entscheidungen schreiben
 | Die Entscheidungen für die initiale Architektur (Technologien, Architekturmuster o.Ä.) wurden mittels ADRs dokumentiert.
-| architecture.adoc
+| https://github.com/GWMDS/LeihListe/blob/dev/docs/technical/architecture.adoc[architecture.adoc]
 | Die ADRs liefern eine nachvollziehbare Dokumentation, warum die Architektur so aufgebaut wurde, wie sie zum aktuellen Stand aussieht.
 
 | technische Spikes oder Experimente durchführen
 | Durchführung eines Spike zur informierteren Auswahl der Datenbanktechnologie
-| 
+| https://github.com/GWMDS/LeihListe/blob/docs/technical/spike/SE_Issue49.md[Spike Dokumentation]
 | Der MS-SQL Server der Hochschule sollte aus technischen und praktikablen Gründen lieber nicht verwendet werden. Wir nutzen daher eine PostgreSQL Datenbank.
+
+//Zwischenkommentar: Die Dokumentation dieses ganzen Spikes lässt zu wünschen übrig, z.B. steht sie an der völlig falschen Stelle. Ich habe sie trotzdem verlinkt, weil wir sonst keine haben.
 
 | Technologieoptionen recherchieren, vergleichen und auswählen
 | Technologieoptionen (for allem Frameworks) wurden in einem separaten Technikmeeting verglichen und besprochen.
@@ -98,13 +100,13 @@ Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 2. Leitfragen:
 | Kriterium | Ihre Antwort
 
 | Erkenntnis 1
-| 
+| Die Annahme, dass die Benutzung des MS-SQL-Servers der HTW am bequemsten als Persistenzlösung ist, wurde wirderlegt. Nähere Details siehe verlinkte Spike Dokumentation oben.
 
 | Erkenntnis 2
-| 
+| Das Team hat gelernt, wie mehrere Framworks benutzt werden, um unterschiedliche Teile des Systems technisch umzusetzen, sowie wie diese Teile miteinander kommunizieren.
 
 | Erkenntnis 3
-| 
+| Am relevantesten für die Technologieauswahlentscheidungen waren weniger technische Details, sondern vor allem die Bewährtheit der konkret ausgewählten Technologien, sowie Vorkenntnisse im Team.
 |===
  
 == 4. Änderungen am technischen Ansatz
@@ -117,17 +119,17 @@ Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Ihre Modellie
 | Neue Erkenntnis oder Evidenz
 | Anpassung am technischen Ansatz, an der Architektur oder am Backlog
 
-| 
-| 
-| 
+| Annahme: Nutzung des HTW-MS-SQL-Servers ist bequemer als das Nutzen einer separaten Datenbank.
+| Die Datenbanken, die Studis zugewiesen sind, werden irgendwann gelöscht -> Architekturrisiko! Zur Nutzung muss die Hochschul-VPN aktiv sein. Erkenntnis kam aus Spike.
+| Es wird eine PostgreSQL-Datenbank als Persistenzlösung genutzt.
 
-| 
-| 
-| 
+| Option: Django als Backend-Framework.
+| Django benutzt Python, das können wir! Das Framework ist aber nicht nur auf APIs ausgelegt, also etwas überdimensioniert. Zudem gibt es keine Vorkenntnisse im Team.
+| Wir benutzen FastAPI.
 
-| 
-| 
-| 
+| React-based Framework ist eine sinnvolle Option für die Benutzeroberfläche.
+| Wir haben keine Kenntnis im Team, zudem ist die Lernkurve recht steil.
+| Wir nutzen lieber das VueJS-Framework. 
 |===
 
 
@@ -148,13 +150,13 @@ Beschreiben Sie kurz, welche Treiber, Entscheidungen und Nachweise für Ihren te
 | 
 
 | Wichtigste Entscheidungen / ADRs
-| 
+| Framework-Auswahl, sowie grundlegendes Architekturmuster.
 
 | Technische Evidenz
-| 
+| Basiert vor allem auf Vorerfahrungen. Eine echte Interaktion existiert im Walking Skeleton aber noch nicht, das haben wir zeitlich nicht geschafft.
 
 | Verbleibende Risiken / offene Fragen
-| 
+| Offene Fragen beziehen sich vor allem auf Design- sowie Deploymentfragen. Ein Risiko wäre schlechte Performance bei hoher Nutzlast, allerdings bewegt sich das Projekt aktuell nicht in solch einem Rahmen. Offene Fragen wären die Verteilung bisheriger technischer Kenntnisse im Team. Allerdings sind das keine architekturbezogenen Themen, sie resultieren jedoch aus dem gewählten Architekturansatz.
 |===
 
 
