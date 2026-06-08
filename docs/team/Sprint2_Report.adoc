@@ -174,11 +174,11 @@ Beschreiben Sie, was Ihr Team im nächsten Sprint beibehalten, ändern oder gezi
 | Kriterium | Ihre Antwort
 
 | Beibehalten
-| 
+| Meeting Strukturen (Weekly, Dev, Review, Coach); Dokumentation für Richtlinien, Miro Strukturierung zu Ideensammlung
 
 | Ändern / verbessern
-| 
+| asynchrone Kommunikation mehr nutzen; Arbeitsverteilung; Terminvorbereitung/durchführung, teils fristgerechte Aufgabenerledigung, Rollenaufgaben besser verstehen
 
 | Kandidat für Sprint 3
-| 
+| rudimentärer Ausleihworkflow und Verleihworkflow
 |===
