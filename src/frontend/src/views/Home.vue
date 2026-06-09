@@ -1,10 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <h1>Test</h1>
+      <h1>Home</h1>
       <v-btn color="primary">
-        Hallo Vuetify
+        Hello
       </v-btn>
     </v-main>
   </v-app>
 </template>
+
+<script></script>
