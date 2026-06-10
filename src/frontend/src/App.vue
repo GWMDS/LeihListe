@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <v-app-bar title="LeihListe" />
-    <v-main class="app-main">
+    <v-main>
       <v-container>
         <router-view />
       </v-container>
