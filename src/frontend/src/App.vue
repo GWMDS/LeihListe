@@ -7,7 +7,7 @@
       </v-container>
     </v-main>
 
-    <v-bottom-navigation app>
+    <v-bottom-navigation>
       <v-btn to="/">Home</v-btn>
       <v-btn to="/test">Test</v-btn>
     </v-bottom-navigation>

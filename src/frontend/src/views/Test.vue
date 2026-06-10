@@ -27,8 +27,12 @@
   <h3>Liste</h3>
 
   <v-row>
-    <v-col cols="11"><v-text-field v-model="newItemText" label="Neues Item"></v-text-field></v-col>
-    <v-col cols="1"><v-btn block @click="addItem()">+</v-btn></v-col>
+    <v-col>
+      <v-text-field v-model="newItemText" label="Neues Item"></v-text-field>
+    </v-col>
+    <v-col cols="auto">
+      <v-btn icon="mdi-plus" size="large" @click="addItem()"></v-btn>
+    </v-col>
   </v-row>
   <div>Eingegeben: {{ newItemText }}</div>
 
