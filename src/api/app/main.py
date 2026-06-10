@@ -7,7 +7,7 @@ from database import engine
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     """Lifespan function, used to do stuff before or after server is online"""
-
+    SQLModel.metadata.create_all(engine)
     yield
 
 app = FastAPI(lifespan=lifespan)
