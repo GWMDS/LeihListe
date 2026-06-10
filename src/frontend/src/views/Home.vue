@@ -1,12 +1,8 @@
 <template>
-  <v-app>
-    <v-main>
-      <h1>Home</h1>
-      <v-btn color="primary" @click="Test">
-        API GET Test
-      </v-btn>
-    </v-main>
-  </v-app>
+  <h1>Home</h1>
+  <v-btn color="primary" @click="Test">
+    API GET Test
+  </v-btn>
 </template>
 
 <script setup lang="ts">

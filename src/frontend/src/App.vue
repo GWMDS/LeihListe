@@ -1,20 +1,21 @@
 <template>
   <v-app>
-    <v-main>
-      <v-bottom-navigation>
-        <router-link to="/">Home</router-link>
-        <router-link to="/test">Test</router-link>
-      </v-bottom-navigation>
-      <router-view />
+    <v-app-bar title="LeihListe" />
+    <v-main class="app-main">
+      <v-container>
+        <router-view />
+      </v-container>
     </v-main>
+
+    <v-bottom-navigation app>
+      <v-btn to="/">Home</v-btn>
+      <v-btn to="/test">Test</v-btn>
+    </v-bottom-navigation>
   </v-app>
-  
 </template>
 
 <script setup lang="ts">
 
 </script>
 
-<style scoped>
-
-</style>
+<style></style>
