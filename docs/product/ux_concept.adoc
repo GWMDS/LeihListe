@@ -1,5 +1,5 @@
 = UX-Konzept: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <s87929@htw-dresden.de>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -20,56 +20,56 @@ auf Annahmen allein._
 
 _Hinweis: Im link:product_concept.adoc[Produktkonzept] werden Zielgruppen nur benannt. Hier werden sie als Personas ausgearbeitet._
 
-=== Persona 1: [Name]
+=== Persona 1: Lena Müller
 
 [cols="1,3"]
 |===
 | *Rolle*
-| [z. B. Studierende im 3. Semester, Informatik]
+| Studentin im 4. Semester Design
 
 | *Alter*
-| [z. B. 22 Jahre]
+| 22
 
 | *Zitat*
 | _„[Ein prägnanter Satz, der ihre Haltung oder ihr Problem auf den Punkt bringt.]"_
 
 | *Ziele*
-| [Was will diese Person erreichen? Was motiviert sie?]
+| Fachbücker ausliehen, ohne die Abgabefrist zu verpassen
 
 | *Frustrationen*
-| [Was hindert sie heute daran, ihre Ziele zu erreichen?]
+| vergesslich, musste schon mehrfach Mahngebühr bezahlen
 
 | *Verhalten & Kontext*
-| [Wie und wann nutzt sie digitale Produkte? Welche Geräte? Welche Erfahrung?]
+| Ehrgeizig, kreativ, nutzt technische Geräte regelmäßig im Alltag, vor allem ihr Smartphone. Die Benutzung von Computern beschränkt größtenteils auf relevante fachliche Software, Onlinebrowsing und gelegentliche Videospiele.
 
 | *Bezug zum Produkt*
-| [Warum ist dieses Produkt für sie relevant? Was ist ihr primärer Nutzen?]
+| Lena ist eine Primärnutzerin, da sie regelmäßig Bücher von der Hochschule leiht und somit mit der Software interagieren wird. Ihr primärer Nutzen besteht darin, dass sie rechtzeitig an Abgabefristen erinnert wird. Zudem hat sie die Möglichkeit, neben Büchern auch technisches Equipment auszuleihen, welches sie für ihre Projekte braucht.
 |===
 
-=== Persona 2: [Name]
+=== Persona 2: Peter Müller
 
 [cols="1,3"]
 |===
 | *Rolle*
-| [z. B. Verwaltungsangestellte, zuständig für Raumvergabe]
+| Mitarbeiter der HTW im Dezernat Technik
 
 | *Alter*
-| [z. B. 45 Jahre]
+| 42
 
 | *Zitat*
 | _„[Prägnantes Zitat]"_
 
 | *Ziele*
-| [Ziele]
+| Überblick über Inventar behalten, Verwaltung des Inventars einfach und unkompliziert betreiben, Ausleihservice reibungslos betreiben
 
 | *Frustrationen*
-| [Frustrationen]
+| unübersichtliche bisherige Lösungen in Form von Excel Tabellen & unterschiedlichen Kommunikationskanälen, häufige Missverständnisse/Fehler
 
 | *Verhalten & Kontext*
-| [Verhalten & Kontext]
+| Introvertiert, risikoscheu, handwerklich begabt, tägliche Benutzung von technischen Geräten (insbesondere Computern) im Arbeitsalltag, sicherer Umgang mit Standardsoftware und Internetanwendungen
 
 | *Bezug zum Produkt*
-| [Bezug zum Produkt]
+| Peter soll als Angestellter der HTW den Ausleihdienst für die Hochschule betreiben und **muss** deshalb mit der Software im Arbeitsalltag interagieren. Sein Nutzen besteht darin, dass Inventarverwaltung und Ausleihservice samt nötiger Kommunikation an einem Ort gebündelt werden, was seine Arbeit erheblich vereinfacht.
 |===
 
 NOTE: Für jedes Projekt sind 2–4 Personas ausreichend. Mehr Personas verwässern
@@ -108,8 +108,9 @@ Soziale & organisatorische Umgebung: Organisationsstruktur, Zusammenarbeit, Unte
 _Wie lösen die Nutzenden ihr Problem heute? Diese Beschreibung zeigt, was das Produkt
 verbessern soll — und macht den Mehrwert explizit._
 
-[Beschreibe den heutigen Ablauf in 3–5 Sätzen oder als kurze Schrittfolge. Beispiel: „Heute fragt Maria an der Infotheke nach freien Räumen, erhält eine Liste per E-Mail, und stellt beim Ankommen fest, dass der Raum bereits belegt ist.
-Der Prozess kostet sie im Schnitt 20 Minuten pro Tag."]
+Lena möchte sich ein Buch über Farbsymbolik ausleihen. Vor Ort wird sie darüber informiert, dass ein bereits ausgeliehenes Buch gestern fällig war und sie bei der Rückgabe eine Gebühr zahlen muss. Diese Gebühr tut nicht übermaßig weh, ist aber lästig.
+
+Peter möchte sich mit einer Angestellten aus der Öffentlichkeitsarbeit treffen, die für eine Messe Tische, Aufsteller und Ähnliches ausleihen möchte. Er muss prüfen, ob die Gegenstände alle verfügbar und in gutem Zustand sind. Parallel wird er öfter wegen Nachfragen zur Ausleihe und der Verfügbarkeit anderer Gegenstände angerufen. Dieses hin und her verlangsamt seine Arbeit erheblich.
 
 === Nutzungshürden & Risiken
 
@@ -119,14 +120,21 @@ _Was könnte die Akzeptanz oder Nutzung des Produkts beeinträchtigen?_
 |===
 | Hürde / Risiko | Mögliche Reaktion im Design
 
-| [z. B. Datenschutzbedenken bei Registrierungspflicht]
-| [z. B. Gastzugang für erste Nutzung anbieten]
+| Mehrbenutzerbetrieb
+| interne Trennung von Benutzern (z.B. durch Nutzeraccounts)
 
-| [z. B. Schlechte WLAN-Verfügbarkeit in Gebäudeteilen]
-| [z. B. Offline-Ansicht für zuletzt geladene Daten]
+| langwieriger Installationsprozess auf Clientgeräten
+| Konzipierung als Webanwendung => link:../technical/architecture_notebook.adoc[architekturrelevant]
 
-| [Weitere Hürde]
-| [Reaktion]
+| langsame Ausführung CRUD-Operationen
+| Verwendung einer effizienten Datenbankandwendung
+
+| unansprechendes / inkonsistentes Oberflächendesign
+| verbindliches, systemweite Designvorgaben für die Benutzeroberfläche
+
+| Geringe Nutzung durch Internationals
+| mehrere Sprachmodi
+
 |===
 
 == Systemweite Interaktionsflüsse

@@ -1,5 +1,5 @@
 = Domänenmodell und Glossar: {project-name}
-Vorname Nachname <email@domain.org>; Vorname2 Nachname2 <email2@domain.org>; Vorname3 Nachname3 <email3@domain.org>
+Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <s87929@htw-dresden.de>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de> 
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 // Platzhalter für weitere Dokumenten-Attribute
@@ -14,18 +14,6 @@ Alle Begriffe in User Stories, Personas und Gesprächen mit Stakeholdern sollten
 Alle *fachlichen* Begriffe und Abkürzungen werden hier alphabetisch definiert.
 Ziel ist eine einheitliche Sprache im gesamten Team.
 Technische Implementierungsdetails gehören nicht hierher!
-
-////
-| Bestellung
-| Eine vom Nutzer ausgelöste Anforderung, ein oder mehrere Produkte zu erwerben.
-  Eine Bestellung durchläuft verschiedene Status (offen, bezahlt, versendet, abgeschlossen).
-| Auftrag; nicht zu verwechseln mit „Warenkorb" (noch nicht abgeschlossen)
-
-| Produkt
-| Ein im System angebotener Artikel, der bestellt werden kann. Ein Produkt hat eine
-  Bezeichnung, einen Preis und eine Verfügbarkeit.
-| Artikel, Ware
-////
 
 [cols="1,3,2", options="header"]
 |===
@@ -50,6 +38,26 @@ Technische Implementierungsdetails gehören nicht hierher!
 | Inventar
 | Liste aller Gegenstände eines Verleihers, die von einem Nutzer ausgeliehen werden können.
 | Leihbestand, Sammlung
+
+| Leihfrist
+| Der verbindliche Zeitraum, in dem ein Gegenstand beim Ausleiher verbleiben darf.
+| Rückgabedatum, Abgabefrist, abzugrenzen zu Lebensdauer 
+
+| Status
+| Der aktuelle Zustand eines Gegenstands oder einer Ausleihe
+| Zustand 
+
+| Mahnung
+| Eine Benachrichtigung an den Ausleiher, sobald die Leihfrist überschritten wurde.
+| Erinnerung, Verzugsmeldung
+
+| Verlängerung
+| Die nachträgliche Ausweitung der Leihfrist für eine bereits laufende Ausleihe. 
+| Fristverlängerung
+
+| Kategorie
+| Eine logische Gruppierung von Gegenständen
+| Genre, Fachbereich
 
 | Standort
 | Ein Ort an dem Gegenstände gelagert bzw. vom Ausleiher abgeholt werden.
@@ -79,24 +87,87 @@ Es beschreibt die Realität des Problemraums, nicht die Datenbankstruktur._
 @startuml
 ' Beispiel — bitte durch das echte Domänenmodell ersetzen
 
-entity Nutzer {
-  Name
-  E-Mail
+class Nutzer {
+  name: String
+  email: String
+}
+class Ausleiher {
+  kundenNummer: String
 }
 
-entity Bestellung {
-  Bestellnummer
-  Datum
-  Status
+class Verleiher {
+  personalNummer: String
 }
 
-entity Produkt {
-  Bezeichnung
-  Preis
+class Kategorie {
+  name: String
+  beschreibung: String
+  
 }
 
-Nutzer "1" --> "0..*" Bestellung : gibt auf
-Bestellung "1" --> "1..*" Produkt : enthält
+class Ausleihe {
+  startDatum: Date
+  sollRueckgabeDatum: Date
+  istRueckgabeDatum: Date
+  
+  
+}
+
+class Gegenstand {
+  inventarNummer: String
+  serienNummer: String
+  anschaffungsDatum: Date
+  aktuellerZustand: ZustandEnum
+  
+}
+
+class Produkttyp {
+  modellName: String
+  hersteller: String
+  beschreibung: String
+  bildUrl: String
+  
+}
+
+class Reservierung {
+  reserviertAm: Date
+  geplantesStartDatum: Date
+  ablaufDatum: Date
+  
+}
+
+class Mangel {
+  beschreibung: String
+  erfassungsDatum: Date
+  schweregrad: SchweregradEnum
+}
+
+class Leihbedingung {
+  maxLeihdauerInTagen: Integer
+  kautionInEuro: Decimal
+}
+
+Nutzer <|-- Ausleiher
+Nutzer <|-- Verleiher
+
+Verleiher "1" --> "0..*" Mangel : erfasst
+Verleiher "1" --> "0..*" Gegenstand : inventarisiert
+
+Ausleiher "1" --> "0..*" Ausleihe : taetigt
+Ausleihe "*" --> "1" Gegenstand : betrifft
+
+Ausleiher "1" --> "0..*" Reservierung : bucht
+Reservierung "*" --> "1" Gegenstand : blockiert
+
+Gegenstand "*" --> "1" Produkttyp : ist Instanz von
+Produkttyp "*" --> "1..*" Kategorie : gehoert zu
+
+Kategorie "0..1" --> "0..*" Kategorie : ist untergeordnet zu
+
+Gegenstand "1" --> "0..*" Mangel : weist auf
+Ausleihe "0..1" --> "0..1" Mangel : verursacht
+
+(Ausleiher, Kategorie) .. Leihbedingung
 
 @enduml
 ....
@@ -113,13 +184,34 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 | Entität | Beschreibung
 
 | Nutzer
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Abstrakte Oberklasse für alle im System registrierten Personen. Sie bündelt gemeinsame Stammdaten wie Name und E-Mail-Adresse.
 
-| Bestellung
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Ausleiher
+| Spezialisierter Nutzer (z. B. Studierende oder Externe), der aktiv Berechtigungen besitzt, Reservierungen zu tätigen und Gegenstände auszuleihen.
 
-| Produkt
-| [Beschreibung der Entität und ihrer Rolle im System]
+| Verleiher
+| Spezialisierter Nutzer (Verwaltung/Personal), der für die Inventarpflege, Schadenserfassung und die Vergabe von Leihbedingungen zuständig ist.
+
+| Kategorie
+| Dient der hierarchischen Strukturierung des Inventars (z. B. "Medientechnik"). Sie ermöglicht das gezielte Filtern nach Geräteklassen.
+
+| Ausleihe
+| Dokumentiert die zeitweise Überlassung eines spezifischen Gegenstands an einen Ausleiher inklusive Fristen und Rückgabedaten.
+
+| Gegenstand
+| Stellt das konkrete, physische Einzelstück im Lager mit eindeutiger Inventarnummer und individuellem Abnutzungszustand dar.
+
+| Produkttyp
+| Bildet den abstrakten Katalogeintrag (das Modell). Er bündelt allgemeine Beschreibungen, Bilder und technische Daten baugleicher Gegenstände.
+
+| Reservierung 
+| Repräsentiert die Absicht eines Ausleihers, einen bestimmten Produkttyp zu einem zukünftigen Zeitpunkt für sich zu blockieren.
+
+| Mangel
+| Dokumentiert Defekte oder Schäden an einem spezifischen Gegenstand. Kann optional mit dem verursachenden Ausleihe verknüpft werden.
+
+| Leihbedingung
+| Steuernde Assoziationsklasse, welche regelt, welche Ausleiher-Rollen für welche Objekt-Kategorien bestimmte Fristen oder Kautionen besitzen.
 
 | [Weitere Entität]
 | [Beschreibung]
@@ -127,21 +219,76 @@ Kurze Erläuterung zu den im Modell enthaltenen Entitäten.
 
 === Beschreibung der Beziehungen
 
-Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese besondere Kardinalitäten haben oder aus anderen Gründen erklärungsbedürftig sind.
+Beschreibung der wichtigsten Beziehungen zwischen den Entitäten, sofern diese besondere Multiplizitäten haben oder aus anderen Gründen erklärungsbedürftig sind.
 
 [cols="1,1,1,3", options="header"]
 |===
-| Von | Zu | Kardinalität | Bedeutung
+| Von | Zu | Multiplizität | Bedeutung
 
-| Nutzer
-| Bestellung
+| Ausleiher
+| Ausleihe
 | 1 zu 0..*
-| Ein Nutzer kann keine oder mehrere Bestellungen aufgeben.
+| Ein Ausleiher kann aktuell oder historisch keine oder beliebig viele Ausleihen im System registriert haben.
 
-| Bestellung
-| Produkt
-| 1 zu 1..*
-| Eine Bestellung enthält mindestens ein Produkt.
+| Ausleihe
+| Gegenstand
+| * zu 1
+| Jedee Ausleihe betrifft exakt einen physischen Gegenstand. Ein Gegenstand kann im Laufe der Zeit jedoch in mehreren (historischen) Ausleihen stecken.
+
+| Ausleiher
+| Reservierung
+| 1 zu 0..*
+| Ein Ausleiher kann für zukünftige Zeiträume mehrere Reservierungen parallel oder nacheinander anlegen.
+
+| Reservierung
+| Gegenstand
+| * zu 1
+| Eine Reservierung blockiert ein bestimmten Gegenstand im Inventar. 
+
+| Kategorie
+| Kategorie
+| 0..1 zu 0..*
+| Erlaubt eine unbegrenzt tiefe, hierarchische Verschachtelung von Kategorien (z. B. "Hauptkategorie: Medientechnik -> Unterkategorie: Kameras").
+
+| Gegenstand
+| Produkttyp
+| * zu 1
+| Jeder physische Gegenstand im Lager ist die exakte Instanz von genau einem im System hinterlegten Produkttyp (Katalogeintrag).
+
+| Produkttyp
+| Kategorie
+| * zu 1..*
+| Ein Produkttyp muss mindestens einer Hauptkategorie zugeordnet sein, kann aber auch in mehreren Unterkategorien auftauchen.
+
+| Kategorie
+| Kategorie
+| 0..1 zu 0..*
+| Erlaubt eine unbegrenzt tiefe, hierarchische Verschachtelung von Kategorien (z. B. "Hauptkategorie: Medientechnik -> Unterkategorie: Kameras").
+
+| Gegenstand
+| Mangel
+| 1 zu 0..*
+| Ein Gegenstand kann makellos sein (0) oder über seinen Lebenszyklus hinweg eine Historie von mehreren Mängeln ansammeln.
+
+| Ausleihe
+| Mangel
+| 0..1 zu 0..1
+| Ein Mangel kann optional direkt einer Ausleihe zugeordnet werden. Dies dient der Nachverfolgbarkeit, bei wem ein Schaden entstanden ist.
+
+| Ausleiher
+| Kategorie
+| * zu *
+| Beschreibt die n:m-Beziehung von Zugriffsregeln, welche vollständig über die Assoziationsklasse *Leihbedingung* (Fristen, Kautionen) aufgelöst wird.
+
+| Verleiher
+| Gegenstand
+| 1 zu 0..*
+| Der Verleiher pflegt, katalogisiert und erfasst neue physische Gegenstände im System.
+
+| Verleiher
+| Mangel
+| 1 zu 0..*
+| Der Verleiher dokumentiert Schäden und Defekte, die bei Rückgaben oder internen Wartungen auffallen.
 
 | [Entität]
 | [Entität]

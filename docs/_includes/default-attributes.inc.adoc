@@ -1,6 +1,6 @@
 // Meta
-:project-name: Projektthema (X0)
-:project-system-name: Software-Name
+:project-name: Leihliste (B2)
+:project-system-name: Lendify
 // Settings:
 :toc:
 :toc-title: Inhaltsverzeichnis
