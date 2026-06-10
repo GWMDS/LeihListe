@@ -1,0 +1,184 @@
+= Sprint-2-Report: Technischer Ansatz und agile Arbeitsweise
+
+// Bitte fügen Sie hier die Informationen zu Ihrem Team, Projekt, Datum und Repository ein.
+Team:: 2B
+Projektname:: Lendify
+Datum:: 05.06.2026
+Repository-Link:: https://github.com/GWMDS/LeihListe/
+
+
+====
+Dieser Report soll auf maximal einer Seite zeigen, wie Ihr Team in Sprint 2 gearbeitet hat,
+welche Praktiken Sie angewendet haben, welche technischen Artefakte entstanden sind und was Sie daraus gelernt haben.
+
+Der Report ist kein Tätigkeitsprotokoll und kein vollständiges Architekturdokument. Beschreiben Sie nicht nur, _was_ Sie gemacht haben,
+sondern vor allem, _warum_ Sie es gemacht haben, welche Evidenz dadurch entstanden ist und wie diese Evidenz Ihren technischen Ansatz begründet oder verändert hat.
+====
+
+== 1. Sprintziel und zentrale Fragestellung
+
+Formulieren Sie Ihr Sprintziel in 1–2 Sätzen. Leitfragen:
+
+* Welche technische Fragestellung oder Unsicherheit wollte Ihr Team in diesem Sprint klären?
+* Welche Annahme zum technischen Ansatz sollte Sprint 2 überprüfen?
+* Warum ist Ihr technischer Ansatz nach diesem Sprint besser begründet als vorher?
+
+[cols="1,3", options="header"]
+|===
+| Kriterium | Ihre Antwort
+
+| Sprintziel
+| Das Hauptziel war die Erstellung einer initialen Architektur. Es sollte ein grobes Architekturschema festgelegt, sich auf konkrete Werkzeuge und eine Rollenverteilung im Developer-Team geeinigt werden. 
+
+| Zentrale technische Unsicherheit / Annahme
+| Aus welchen technischen Anforderungen ergeben sich unsere Architekturentscheidungen
+|===
+
+
+== 2. Erwartete Praktiken in Sprint 2
+
+Wählen Sie 3–5 Praktiken aus, die für Ihren Sprint besonders relevant waren.
+Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 2 beschrieben werden. Mögliche Praktiken:
+
+* Domänenmodell erstellen oder überarbeiten
+* Partielles logisches Datenmodell erarbeiten
+* Architekturtreiber aus Domäne, Qualitätsanforderungen, Randbedingungen, Nutzerflüssen und Teamfähigkeiten ableiten
+* Systemgrenzen und externe Systeme identifizieren sowie C4-Kontextdiagramm erstellen
+* Wesentliche Subsysteme identifizieren sowie C4-Containerdiagramm erstellen
+* technische Services identifizieren und mittels Attributen beschreiben
+* einfache Komponentensicht oder Projektstruktur skizzieren
+* minimale Architekturleitplanken für die Codebasis festlegen
+* Technologieoptionen vergleichen und auswählen
+* ADRs für wichtige technische Entscheidungen schreiben
+* technische Spikes oder Experimente durchführen
+* Walking Skeleton als lauffähigen Nachweis des technischen Konzepts aufbauen
+* technische Risiken identifizieren und dokumentieren
+* Kandidaten für einen ersten nützlichen MVP-Ausschnitt in Sprint 3 identifizieren
+
+[cols="1,2,2,2", options="header"]
+|===
+| Praktik
+| Konkrete Anwendung in unserem Sprint
+| Nachweis / Artefakt (Link einfügen)
+| Nutzen, Erkenntnis oder Anpassung
+
+| ADRs für wichtige technische Entscheidungen schreiben
+| Die Entscheidungen für die initiale Architektur (Technologien, Architekturmuster o.Ä.) wurden mittels ADRs dokumentiert.
+| https://github.com/GWMDS/LeihListe/blob/dev/docs/technical/architecture.adoc[architecture.adoc]
+| Die ADRs liefern eine nachvollziehbare Dokumentation, warum die Architektur so aufgebaut wurde, wie sie zum aktuellen Stand aussieht.
+
+| technische Spikes oder Experimente durchführen
+| Durchführung eines Spike zur informierteren Auswahl der Datenbanktechnologie
+| https://github.com/GWMDS/LeihListe/blob/docs/technical/spike/SE_Issue49.md[Spike Dokumentation]
+| Der MS-SQL Server der Hochschule sollte aus technischen und praktikablen Gründen lieber nicht verwendet werden. Wir nutzen daher eine PostgreSQL Datenbank.
+
+//Zwischenkommentar: Die Dokumentation dieses ganzen Spikes lässt zu wünschen übrig, z.B. steht sie an der völlig falschen Stelle. Ich habe sie trotzdem verlinkt, weil wir sonst keine haben.
+
+| Technologieoptionen recherchieren, vergleichen und auswählen
+| Technologieoptionen (for allem Frameworks) wurden in einem separaten Technikmeeting verglichen und besprochen.
+| https://github.com/GWMDS/LeihListe/blob/docs/team/docs/team/meeting_log/260522_Devmeeting%201.md[Dev-Meeting]
+| Der Nutzen ist offensichtlich, das Dev-Team muss die Tools benutzen, also sollte das Dev-Team auch darüber entscheiden können. Es gab zudem die Erkenntnis, dass viele Technologien nich aufgrund ihrer Fähigkeiten bzw. dem Passen zur Aufgabe gewählt wurden, sondern vor allem aufgrund von vorhandener Kenntnisse oder dem leichten Aneignen dieser.
+
+| Gemeinsame Regeln zur Git Nutzung diskutieren und vereinbaren
+| Wir haben ein Dokument verfasst, in dem wir uns auf feste Regeln zur Nutzung von Git und einigen Funktionen von GitHub geeinigt haben. Diese Vereinbarungen werden teilweise schon angewandt, sind allerdings erst ab Sprint 3 verbindlich.
+| https://github.com/GWMDS/LeihListe/blob/dev/docs/team/git-agreement.adoc[Git-Agreement]
+| Die Vereinbarungen sollen für mehr Sicherheit (in Form von Reviews) und Übersichtlichkeit (Branching, Commit-Messages...) sorgen.
+
+|===
+
+
+== 3. Wichtigste technische Lernergebnisse aus Sprint 2
+
+Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 2. Leitfragen:
+
+* Was hat Ihr Team über die technische Machbarkeit des Produkts gelernt?
+* Welche Annahme zum Architekturansatz, Technologie-Stack oder Projektaufbau wurde bestätigt, widerlegt oder präzisiert?
+* Welche technische Evidenz hatte den größten Einfluss auf Ihre Entscheidungen?
+
+[cols="1,3", options="header"]
+|===
+| Kriterium | Ihre Antwort
+
+| Erkenntnis 1
+| Die Annahme, dass die Benutzung des MS-SQL-Servers der HTW am bequemsten als Persistenzlösung ist, wurde wirderlegt. Nähere Details siehe verlinkte Spike Dokumentation oben.
+
+| Erkenntnis 2
+| Das Team hat gelernt, wie mehrere Framworks benutzt werden, um unterschiedliche Teile des Systems technisch umzusetzen, sowie wie diese Teile miteinander kommunizieren.
+
+| Erkenntnis 3
+| Am relevantesten für die Technologieauswahlentscheidungen waren weniger technische Details, sondern vor allem die Bewährtheit der konkret ausgewählten Technologien, sowie Vorkenntnisse im Team.
+|===
+ 
+== 4. Änderungen am technischen Ansatz
+
+Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Ihre Modellierung, Entscheidungen, Spikes oder den Walking Skeleton verändert hat.
+
+[cols="2,2,2", options="header"]
+|===
+| Ursprüngliche Annahme / Option
+| Neue Erkenntnis oder Evidenz
+| Anpassung am technischen Ansatz, an der Architektur oder am Backlog
+
+| Annahme: Nutzung des HTW-MS-SQL-Servers ist bequemer als das Nutzen einer separaten Datenbank.
+| Die Datenbanken, die Studis zugewiesen sind, werden irgendwann gelöscht -> Architekturrisiko! Zur Nutzung muss die Hochschul-VPN aktiv sein. Erkenntnis kam aus Spike.
+| Es wird eine PostgreSQL-Datenbank als Persistenzlösung genutzt.
+
+| Option: Django als Backend-Framework.
+| Django benutzt Python, das können wir! Das Framework ist aber nicht nur auf APIs ausgelegt, also etwas überdimensioniert. Zudem gibt es keine Vorkenntnisse im Team.
+| Wir benutzen FastAPI.
+
+| React-based Framework ist eine sinnvolle Option für die Benutzeroberfläche.
+| Wir haben keine Kenntnis im Team, zudem ist die Lernkurve recht steil.
+| Wir nutzen lieber das VueJS-Framework. 
+|===
+
+
+== 5. Architekturtreiber, Entscheidungen und technische Evidenz
+
+Beschreiben Sie kurz, welche Treiber, Entscheidungen und Nachweise für Ihren technischen Ansatz besonders wichtig sind. Leitfragen:
+
+* Welche Qualitätsanforderungen, Randbedingungen oder Nutzerflüsse haben Ihre technischen Entscheidungen besonders geprägt?
+* Welche Architektur- oder Technologieentscheidungen sind für das weitere Projekt besonders wichtig?
+* Welche Evidenz zeigt, dass der gewählte technische Ansatz grundsätzlich tragfähig ist?
+* Welche technischen Risiken oder offenen Fragen bleiben bestehen?
+
+[cols="1,3", options="header"]
+|===
+| Kriterium | Ihre Antwort
+
+| Wichtigste Architekturtreiber
+| Datenspeicherung und -synchronisation; geringer Aufwand zum Aufsetzen und Benutzen; Betrieb auf Hochschulinfrastruktur
+
+| Wichtigste Entscheidungen / ADRs
+| Framework-Auswahl, sowie grundlegendes Architekturmuster.
+
+| Technische Evidenz
+| Basiert vor allem auf Vorerfahrungen. Eine echte Interaktion existiert im Walking Skeleton aber noch nicht, das haben wir zeitlich nicht geschafft.
+
+| Verbleibende Risiken / offene Fragen
+| Offene Fragen beziehen sich vor allem auf Design- sowie Deploymentfragen. Ein Risiko wäre schlechte Performance bei hoher Nutzlast, allerdings bewegt sich das Projekt aktuell nicht in solch einem Rahmen. Offene Fragen wären die Verteilung bisheriger technischer Kenntnisse im Team. Allerdings sind das keine architekturbezogenen Themen, sie resultieren jedoch aus dem gewählten Architekturansatz.
+|===
+
+
+== 6. Anpassung der Arbeitsweise für Sprint 3
+
+Beschreiben Sie, was Ihr Team im nächsten Sprint beibehalten, ändern oder gezielt verbessern will. Leitfragen:
+
+* Welche technische oder organisatorische Arbeitsweise hat gut funktioniert?
+* Was hat Ihre technische Zusammenarbeit, Entscheidungsfindung oder Umsetzung behindert?
+* Was wollen Sie in Sprint 3 konkret anders machen?
+* Welcher erste nützliche MVP-Ausschnitt soll in Sprint 3 umgesetzt oder weiter validiert werden?
+
+[cols="1,3", options="header"]
+|===
+| Kriterium | Ihre Antwort
+
+| Beibehalten
+| Meeting Strukturen (Weekly, Dev, Review, Coach); Dokumentation für Richtlinien, Miro Strukturierung zu Ideensammlung, Discord für schnelle asynchrone Kommunikation
+
+| Ändern / verbessern
+| asynchrone Kommunikation mehr nutzen; Arbeitsverteilung; Terminvorbereitung/durchführung, fristgerechte Aufgabenerledigung, Rollenaufgaben besser verstehen, fachspezifische Kenntnisse stärker im Team verteilen
+
+| Kandidat für Sprint 3
+| Inventarliste, rudimentärer Ausleihworkflow und Verleihworkflow
+|===
