@@ -6,4 +6,4 @@ wt -w 0 nt -d . cmd /k "docker compose -f database/docker-compose.yml up"
 
 wt -w 0 nt -d . cmd /k "api\.venv\Scripts\python -m fastapi dev api/app/main.py"
 
-wt -w 0 nt -d . cmd /k "npm --prefix frontend run dev"
+wt -w 0 nt -d . cmd /k "npm --prefix frontend run dev -- --host"
