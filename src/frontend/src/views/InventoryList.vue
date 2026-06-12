@@ -11,7 +11,7 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card v-if="item.status === false" disabled variant="flat" class="bg-grey-lighten-3">
+      <v-card v-if="item.status === true" disabled variant="flat" class="bg-grey-lighten-3">
         <v-card-title class="text-grey">{{ item.name }}</v-card-title>
         <v-card-text class="text-grey">
           ID: {{ item.id }}<br>
