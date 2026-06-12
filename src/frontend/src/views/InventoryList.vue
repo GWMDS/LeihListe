@@ -11,7 +11,22 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card>
+      <v-card v-if="item.status === false" disabled variant="flat" class="bg-grey-lighten-3">
+        <v-card-title class="text-grey">{{ item.name }}</v-card-title>
+        <v-card-text class="text-grey">
+          ID: {{ item.id }}<br>
+          Kategorie: {{ item.category }}<br>
+          State: {{ item.state }}<br>
+          Status: {{ item.status }}<br>
+          Beschreibung: {{ item.description }}
+        </v-card-text>
+
+        <v-card-actions>
+          <v-btn>Details</v-btn>
+        </v-card-actions>
+      </v-card>
+
+      <v-card v-else>
         <v-card-title>{{ item.name }}</v-card-title>
         <v-card-text>
           ID: {{ item.id }}<br>
@@ -25,24 +40,19 @@
           <v-btn>Details</v-btn>
         </v-card-actions>
       </v-card>
+
     </v-col>
   </v-row>
 
-  <v-snackbar
-    v-model="showError"
-    color="error"
-    timeout="5000"
-    location="bottom"
-    variant="elevated"
-  >
+  <v-snackbar v-model="showError" color="error" timeout="5000" location="bottom" variant="elevated">
     {{ errorMessage }}
 
-  <template v-slot:actions>
-    <v-btn variant="text" @click="showError = false">
-      Schließen 
-    </v-btn>
-  </template> 
-   </v-snackbar> 
+    <template v-slot:actions>
+      <v-btn variant="text" @click="showError = false">
+        Schließen
+      </v-btn>
+    </template>
+  </v-snackbar>
 </template>
 
 <script setup lang="ts">
@@ -69,9 +79,9 @@ async function getInventoryList() {
     console.log(response.data)
   } catch (error: any) {
     if (error.response) {
-      errorMessage.value="Fehler: " + error.response.status + " - " + error.response.data?.detail
+      errorMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value="Fehler: " + error.message
+      errorMessage.value = "Fehler: " + error.message
     }
     console.error(errorMessage.value)
     showError.value = true
