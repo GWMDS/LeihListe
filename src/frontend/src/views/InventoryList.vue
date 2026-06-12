@@ -11,36 +11,19 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card v-if="item.status === true" disabled variant="flat" class="bg-grey-lighten-3">
-        <v-card-title class="text-grey">{{ item.name }}</v-card-title>
-        <v-card-text class="text-grey">
-          ID: {{ item.id }}<br>
-          Kategorie: {{ item.category }}<br>
-          State: {{ item.state }}<br>
-          Status: {{ item.status }}<br>
-          Beschreibung: {{ item.description }}
-        </v-card-text>
-
-        <v-card-actions>
-          <v-btn>Details</v-btn>
-        </v-card-actions>
-      </v-card>
-
-      <v-card v-else>
+      <v-card :disabled="item.status">
         <v-card-title>{{ item.name }}</v-card-title>
         <v-card-text>
           ID: {{ item.id }}<br>
           Kategorie: {{ item.category }}<br>
-          State: {{ item.state }}<br>
+          Zustand: {{ item.state }}<br>
           Status: {{ item.status }}<br>
           Beschreibung: {{ item.description }}
         </v-card-text>
-
         <v-card-actions>
           <v-btn>Details</v-btn>
         </v-card-actions>
       </v-card>
-
     </v-col>
   </v-row>
 
@@ -68,7 +51,88 @@ interface Item {
   id: number
 }
 
-const items = ref(<Item[]>[])
+const items = [
+  {
+    id: 0,
+    name: "Laptop",
+    category: "electronics",
+    description: "Dell Latitude 5420",
+    state: "new",
+    status: false
+  },
+  {
+    id: 1,
+    name: "Java Buch",
+    category: "books",
+    description: "Einführung in Java",
+    state: "used",
+    status: false
+  },
+  {
+    id: 2,
+    name: "Beamer",
+    category: "electronics",
+    description: "HD-Projektor für Präsentationen",
+    state: "borrowed",
+    status: true
+  },
+  {
+    id: 3,
+    name: "Tastatur",
+    category: "electronics",
+    description: "Mechanische Tastatur",
+    state: "used",
+    status: false
+  },
+  {
+    id: 4,
+    name: "Maus",
+    category: "electronics",
+    description: "Kabellose Maus",
+    state: "new",
+    status: false
+  },
+  {
+    id: 5,
+    name: "Monitor",
+    category: "electronics",
+    description: "24 Zoll Full-HD Monitor",
+    state: "used",
+    status: false
+  },
+  {
+    id: 6,
+    name: "Netzteil",
+    category: "electronics",
+    description: "65W USB-C Netzteil",
+    state: "new",
+    status: false
+  },
+  {
+    id: 7,
+    name: "Whiteboard Marker",
+    category: "office",
+    description: "Set aus vier Farben",
+    state: "new",
+    status: false
+  },
+  {
+    id: 8,
+    name: "HDMI Kabel",
+    category: "electronics",
+    description: "2 Meter HDMI 2.1",
+    state: "used",
+    status: false
+  },
+  {
+    id: 9,
+    name: "Rucksack",
+    category: "general",
+    description: "Schwarzer Laptop-Rucksack",
+    state: "used",
+    status: false
+  }
+]
 const showError = ref(false)
 const errorMessage = ref('')
 
