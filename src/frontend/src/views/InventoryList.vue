@@ -27,6 +27,22 @@
       </v-card>
     </v-col>
   </v-row>
+
+  <v-snackbar
+    v-model="showError"
+    color="error"
+    timeout="5000"
+    location="bottom"
+    variant="elevated"
+  >
+    {{ errorMessage }}
+
+  <template v-slot:actions>
+    <v-btn variant="text" @click="showError = false">
+      Schließen 
+    </v-btn>
+  </template> 
+   </v-snackbar> 
 </template>
 
 <script setup lang="ts">
@@ -43,6 +59,9 @@ interface Item {
 }
 
 const items = ref(<Item[]>[])
+const showError = ref(false)
+const errorMessage = ref('')
+
 async function getInventoryList() {
   try {
     const response = await api.get('/api/items')
@@ -50,10 +69,12 @@ async function getInventoryList() {
     console.log(response.data)
   } catch (error: any) {
     if (error.response) {
-      console.error("Fehler: " + error.response.status + " - " + error.response.data?.detail)
+      errorMessage.value="Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      console.error("Fehler: " + error)
+      errorMessage.value="Fehler: " + error.message
     }
+    console.error(errorMessage.value)
+    showError.value = true
   }
 }
 
