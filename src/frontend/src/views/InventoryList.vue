@@ -1,6 +1,6 @@
 <template>
   <h1>Inventarliste</h1>
-  <v-btn color="primary" @click="Test" class="mt-4">
+  <v-btn color="primary" @click="getInventoryList()" class="mt-4">
     Liste holen
   </v-btn>
   <v-row class="mt-4">
@@ -10,7 +10,7 @@
     md="4"   : 4/12 (3 Spalten)
     lg="3"   : 3/12 (4 Spalten)
     -->
-    <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3"> 
+    <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
       <v-card>
         <v-card-title>{{ item.name }}</v-card-title>
         <v-card-text>
@@ -42,21 +42,17 @@ interface Item {
   id: number
 }
 
-const itemsText = ref('')
 const items = ref(<Item[]>[])
-async function Test() {
+async function getInventoryList() {
   try {
     const response = await api.get('/api/items')
-    itemsText.value = JSON.stringify(response.data, null, 2)
     items.value = response.data
     console.log(response.data)
   } catch (error: any) {
     if (error.response) {
       console.error("Fehler: " + error.response.status + " - " + error.response.data?.detail)
-      itemsText.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
       console.error("Fehler: " + error)
-      itemsText.value = "Fehler: " + error
     }
   }
 }
