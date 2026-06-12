@@ -8,7 +8,7 @@
     </v-main>
 
     <v-bottom-navigation>
-      <v-btn to="/">Home</v-btn>
+      <v-btn to="/">Inv. Liste</v-btn>
       <v-btn to="/test">Test</v-btn>
     </v-bottom-navigation>
   </v-app>
