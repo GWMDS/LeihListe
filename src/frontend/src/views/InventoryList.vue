@@ -11,13 +11,13 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card :disabled="item.status">
+      <v-card :disabled="item.isBorrowed">
         <v-card-title>{{ item.name }}</v-card-title>
         <v-card-text>
           ID: {{ item.id }}<br>
           Kategorie: {{ item.category }}<br>
           Zustand: {{ item.state }}<br>
-          Status: {{ item.status }}<br>
+          Ausgeliehen: {{ item.isBorrowed }}<br>
           Beschreibung: {{ item.description }}
         </v-card-text>
         <v-card-actions>
@@ -46,7 +46,7 @@ interface Item {
   state: string
   name: string
   category: string
-  status: boolean
+  isBorrowed: boolean
   description: string
   id: number
 }
