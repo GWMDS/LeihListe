@@ -39,6 +39,20 @@ Beide Branches sind **nicht** für direktes Arbeiten auf den Branches gedacht.
 Beide Branches sollen geschützt werden, um unbefugten Zugriff zu unterbinden.
 Nur Architekt und Product Owner dürfen dev in main mergen, die Zuständigkeit liegt hier jedoch beim Architekten.
 
+
+Für die übergeordneten Issues, die user-stories repräsentieren, sollen Task-Branches erstellt werden, auf denen
+dann Front- und Backend-Team für die konkreten Issues (die Implementierungsaufgaben enthalten) Sub-Branches
+erstellen können, in denen dann Code implementiert werden kann. 
+Der Owner der Task-Branches ist das Frontend-Team.
+Die Sub-Branches werden auf den Task-Branch gemerged, wenn das Frontend-Team dies erlaubt (assigned).
+Der Sinn dahinter ist, dass das Frontend-Team prüfen kann, ob die Umsetzung des Backend-Teams zu dem passt,
+was das Frontend-Team implementiert hat bzw. implementieren wird oder ob Änderungen vom Backend-Team
+vorgenommen werden müssen.
+Zusätzlich können damit Frontend- und Backend-Team ihre Schnittstellen im Task-Branch besser austauschen bzw. festlegen.
+Außerdem wird die Person die für das Mergen der Branches in den dev Branch zuständig ist entlastet und Front- und Backend-Team
+können unabhängig von ihr arbeiten.
+
+
 ### Sonstige Branches
 Kein Branch ohne zugehörigen Issue! Jeder Branch muss einem Issue zugeordnet sein!
 
