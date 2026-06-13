@@ -41,19 +41,19 @@ def create_item(item: Item, session: Session = Depends(get_session)) -> Item:
     return item
 
 # issue 93 (story 66) - modify details (not id) of a single item
-@router.put("/{item_id}")#, response_model=Item)
-def update_item(item_id: int, item: Item, session: Session = Depends(get_session)) -> Item:
+@router.put("/{item_id}/{item_name}/{item_description}/{item_state}/{item_isborrowed}/{item_category}")#, response_model=Item)
+def update_item(item_id: int, item_name: str, item_description: str, item_state: str, item_isborrowed: bool, item_category: str, session: Session = Depends(get_session)) -> Item:
     """Updates an item in the database."""
     db_item = session.get(Item, item_id)
 
     if not db_item:
         raise HTTPException(status_code=404, detail="Item not found")
 
-    db_item.name = item.name
-    db_item.description = item.description
-    db_item.state = item.state
-    db_item.isBorrowed = item.isBorrowed
-    db_item.category = item.category
+    db_item.name = item_name
+    db_item.description = item_description
+    db_item.state = item_state
+    db_item.isBorrowed = item_isborrowed
+    db_item.category = item_category
     session.commit()
     session.refresh(db_item)
     return db_item
