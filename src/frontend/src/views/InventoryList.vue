@@ -14,10 +14,10 @@
       <v-card :class="{ 'opacity-50': item.isBorrowed }">
         <v-card-title>
           {{ item.name }}
-          <span v-if="item.isBorrowed" class="text-caption text-error d-block">
-            (Ausgeliehen)
-          </span>
         </v-card-title>
+        <v-card-subtitle v-if="item.isBorrowed" class="text-caption text-error">
+          (Ausgeliehen)
+        </v-card-subtitle>
         <v-card-text>
           ID: {{ item.id }}<br>
           Kategorie: {{ item.category }}<br>
@@ -35,11 +35,7 @@
   </v-row>
 
   <v-dialog v-model="dialogOpen" max-width="500px">
-    <v-card v-if="selectedItem">
-      <v-card-title class="text-h5 mt-2">
-        {{ selectedItem.name }}
-      </v-card-title>
-
+    <v-card v-if="selectedItem" :title="selectedItem.name">
       <v-card-text>
         ID: {{ selectedItem.id }}<br>
         Kategorie: {{ selectedItem.category }}<br>
@@ -52,7 +48,6 @@
           Schließen
         </v-btn>
       </v-card-actions>
-
     </v-card>
   </v-dialog>
 
