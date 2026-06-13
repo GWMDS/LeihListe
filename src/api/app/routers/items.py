@@ -15,6 +15,14 @@ def get_items(session: Session = Depends(get_session))-> list[Item]:
     items = session.exec(select(Item)).all()
     return items
 
+# issue 109 (story 63) - get all borrowed items with details
+@router.get("/borrowed")#, response_model=Item)
+def get_items_borrowed(session: Session = Depends(get_session))-> list[Item]:
+    """Returns borrowed items from database for all users"""
+    items = session.exec(select(Item).where(Item.isBorrowed)).all()
+    return items
+
+
 # issue 102 (story 101) - get single item with details
 # issue 93 (story 66) - get single item with details
 @router.get("/{item_id}")#, response_model=Item)
@@ -106,3 +114,4 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     session.commit()
     session.refresh(item)
     return item
+
