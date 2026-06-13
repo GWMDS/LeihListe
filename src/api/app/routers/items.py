@@ -58,6 +58,25 @@ def update_item(item_id: int, item_name: str, item_description: str, item_state:
     session.refresh(db_item)
     return db_item
 
+# issue 93 (story 66) - modify details (not id) of a single item using POST request
+@router.post("/update")#, response_model=Item)
+def update_item_with_post(item: Item, session: Session = Depends(get_session)) -> Item:
+    """Updates an item in the database."""
+    db_item = session.get(Item, item.id)
+
+    if not db_item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    db_item.name = item.name
+    if (item.description is not None):
+        db_item.description = item.description
+    db_item.state = item.state
+    db_item.isBorrowed = item.isBorrowed
+    db_item.category = item.category
+    session.commit()
+    session.refresh(db_item)
+    return db_item
+
 # issue 93 (story 66) - delete single item
 @router.delete("/{item_id}")#, response_model=Item)
 def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
