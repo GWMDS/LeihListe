@@ -8,8 +8,8 @@ router = APIRouter(
     tags=["items"]
 )
 
-@router.get("/")#, response_model=Item)
-def get_items(session: Session = Depends(get_session))-> list[Item]:
-    """Returns all items in the database."""
-    items = session.exec(select(Item)).all()
+@router.get("/borrowed")#, response_model=Item)
+def get_items_borrowed(session: Session = Depends(get_session))-> list[Item]:
+    """Returns borrowed items from database."""
+    items = session.exec(select(Item).where(Item.status == False)).all()
     return items

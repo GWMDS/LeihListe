@@ -16,7 +16,7 @@ def write_starting_data(session: Session):
                             name=f"Item {i}",
                             description=f"Description for item {i}",
                             state="new",
-                            status=True,
+                            status= (i%2==0),
                             category="general")
                 session.add(db_item)
         session.commit()
