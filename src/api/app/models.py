@@ -9,5 +9,5 @@ class Item(SQLModel, table=True):
     name: str = Field()
     description: str = Field()
     state: str = Field()    #zu enum aendern
-    status: bool = Field()  
+    isBorrowed: bool = Field(default=False) #True if item is borrowed, False otherwise
     category: str = Field() #zu enum aendern
