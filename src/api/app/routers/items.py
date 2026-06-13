@@ -68,3 +68,20 @@ def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
     session.delete(item)
     session.commit()
     return {"message": "Item deleted successfully"}
+
+
+@router.put("/{item_id}/borrow")#, response_model=Item)
+def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
+    """Marks an item as borrowed."""
+    item = session.get(Item, item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    if item.isBorrowed:
+        raise HTTPException(status_code=400, detail="Item is already borrowed")
+
+    item.isBorrowed = True
+    session.commit()
+    session.refresh(item)
+    return item
