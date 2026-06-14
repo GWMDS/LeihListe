@@ -43,16 +43,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: preparing API
+      working-directory:
+        ./src/api
       run: |
-        cd ./src/api
         touch .env
         echo "DB_USER=\"user\"" >> .env && echo "DB_PASS=\"passwd\"" >> .env && echo "DB_ADDR=\"localhost\"" >> .env
         python -m venv .venv
         source .venv/bin/activate
         ls -a
     - name: launching API
+      working-directory: 
+        ./src/api
       run: |
-        cd ./src/api
         fastapi dev app/main.py &
 
 #Starting the frontend          
@@ -67,8 +69,7 @@ jobs:
         npm install vue@latest
 
     - name: executing frontend
+      working-directory: ./src/frontend
       run: |
-        cd ./src/frontend
-        npm run dev
-
-
+        npm ci
+        npm run build
