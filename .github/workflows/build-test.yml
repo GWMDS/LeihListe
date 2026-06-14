@@ -67,10 +67,6 @@ jobs:
         node -v
         npm -v
 
-    - name: installing vue
-      run: |
-        npm install vue@latest
-
     - name: executing frontend
       working-directory: ./src/frontend
       run: |
