@@ -11,7 +11,7 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card :class="{ 'opacity-50': item.isBorrowed }">
+      <v-card :class="{ 'opacity-50': item.isBorrowed }" class="d-flex flex-column fill-height">
         <v-card-title>
           {{ item.name }}
         </v-card-title>
