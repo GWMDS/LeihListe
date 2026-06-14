@@ -17,7 +17,7 @@ on:
     - 'src/**.html'
 
 jobs:
-  test:
+  BUILD-ACTION:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code to the runner
