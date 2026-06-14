@@ -61,3 +61,14 @@ jobs:
         sudo apt install nodejs
         node -v
         npm -v
+
+    - name: installing vue
+      run: |
+        npm install vue@next
+
+    - name: executing frontend
+      run: |
+        cd ./src/frontend
+        npm run dev
+
+
