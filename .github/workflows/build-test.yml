@@ -52,5 +52,12 @@ jobs:
         ls -a
     - name: launching API
       run: |
-          cd ./src/api
-          fastapi dev app/main.py &
+        cd ./src/api
+        fastapi dev app/main.py &
+
+#Starting the frontend          
+    - name: setting up Node.js
+      run: |
+        sudo apt install nodejs
+        node -v
+        npm -v
