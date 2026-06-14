@@ -64,7 +64,7 @@ jobs:
 
     - name: installing vue
       run: |
-        npm install vue@next
+        npm install vue@latest
 
     - name: executing frontend
       run: |
