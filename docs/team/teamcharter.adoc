@@ -5,13 +5,13 @@ include::../_includes/default-attributes.inc.adoc[]
 :version: 1.0
 
 == Über uns
-_Hier können Sie einen Teamnamen und ggf. ein Motto oder eine kurze Beschreibung hinzufügen, um die Identität Ihres Teams zu stärken._
+Wir sind ein motiviertes Team, was das best mögliche aus dieser Projektarbeit herausholen will.
 
 == Zweck
 
 *Was bauen wir, und warum?*
 
-_Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
+Für Hochschulen, die einen Ausliehservice für ihr Inventar anbieten möchten, ist Lendify ein Softwareprodukt, das Ausleihe und Inventarverwaltung vereint. Im Gegensatz zu anderen Verwaltungssoftwares bietet unser Produkt eine Ausleihfunktionalität, damit die Hochschulgemeinschaft und externe Interessenten besser vom Hochschulinventar profitieren können.
 
 == Rollen
 
@@ -33,7 +33,7 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 
 
 | Stakeholder (Hauptansprechpartner)
-| [Name]
+| Rico Knorr, Elias Lange
 |===
 
 
@@ -79,13 +79,13 @@ _Hier die Produktvision und den Projektzweck in 2–3 Sätzen beschreiben._
 | Discord
 
 | Entscheidungsprotokoll
-| Asciidoc in Ordner <Ordnername>
+| Asciidoc in Ordner docs/team/meeting_log
 
 | Erwartete Reaktionszeit
 | innerhalb von 24 Stunden
 
 | Kernarbeitszeit
-| [???]
+| Montag - Freitag
 
 | Videokonferenz-Tool
 | Discord
@@ -146,4 +146,5 @@ _Diese Vereinbarungen haben wir gemeinsam getroffen:_
 . Entscheidungen werden dort dokumentiert, wo alle sie finden können.
 
 
-_Nächste Überprüfung: 26.04 / vor 2. Sprint — Diese Charta wird regelmäßig in der Retrospektive aktualisiert._
+_Nächste Überprüfung: ?.? / vor 4. Sprint — Diese Charta wird regelmäßig in der Retrospektive aktualisiert._
+_Letzte Überpfrüfung: 15.06.2026
