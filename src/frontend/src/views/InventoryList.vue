@@ -12,18 +12,16 @@
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
       <v-card :class="{ 'opacity-50': item.isBorrowed }" class="d-flex flex-column fill-height">
-        <v-card-title>
+        <v-card-title class="d-flex align-center">
           {{ item.name }}
+          <v-spacer />
+          <v-chip :color="item.isBorrowed ? 'error' : 'success'" size="small">
+            {{ item.isBorrowed ? 'Ausgeliehen' : 'Verfügbar' }}
+          </v-chip>
         </v-card-title>
-        <v-card-subtitle v-if="item.isBorrowed" class="text-caption text-error">
-          (Ausgeliehen)
-        </v-card-subtitle>
         <v-card-text>
-          ID: {{ item.id }}<br>
-          Kategorie: {{ item.category }}<br>
-          Zustand: {{ item.state }}<br>
-          Ausgeliehen: {{ item.isBorrowed ? 'Ja' : 'Nein' }}<br>
-          Beschreibung: {{ item.description }}
+          <div>Kategorie: {{ item.category }}</div>
+          <div class="line-clamp"> Beschreibung: {{ item.description }}</div>
         </v-card-text>
         <v-card-actions>
           <v-btn variant="text" @click="showDetails(item.id)">
