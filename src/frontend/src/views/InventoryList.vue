@@ -42,6 +42,14 @@
         Beschreibung: {{ selectedItem.description }}
       </v-card-text>
       <v-card-actions>
+        <v-btn 
+          color="primary" 
+          variant="elevated" 
+          :disabled="selectedItem.isBorrowed"
+          @click="borrowItem(selectedItem.id)"
+        >
+          {{ selectedItem.isBorrowed ? 'Bereits verliehen' : 'Ausleihen' }}
+        </v-btn>
         <v-btn variant="text" @click="dialogOpen = false">
           Schließen
         </v-btn>
@@ -109,7 +117,32 @@ async function showDetails(id: number) {
     console.error(errorMessage.value)
     showError.value = true
   }
-
 }
+
+async function borrowItem(id: number) {
+  try{
+  await api.post(`/api/items/${id}/borrow`)
+
+  if(selectedItem.value){
+    selectedItem.value.isBorrowed = true
+  }
+  const listItem = items.value.find(item => item.id == id)
+    if(listItem){
+      listItem.isBorrowed =true
+    }
+  dialogOpen.value=false
+  }
+  catch (error:any){
+    if(error.response){
+      errorMessage.value = "Fehler beim Ausleihen: " + error.response.status + " - " + error.response.data?.detail
+    } else {
+      errorMessage.value = "Fehler beim Ausleihen: " + error.message
+    }
+    console.error(errorMessage.value)
+    showError.value = true
+    }
+  }
+
+
 
 </script>
