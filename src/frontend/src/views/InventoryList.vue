@@ -1,8 +1,5 @@
 <template>
   <h1>Inventarliste</h1>
-  <v-btn color="primary" @click="getInventoryList()" class="mt-4">
-    Liste holen
-  </v-btn>
   <v-row class="mt-4">
     <!--
     cols="12": 12/12 (volle Breite)
@@ -65,7 +62,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import api from '../api.ts'
 
 interface Item {
@@ -82,6 +79,10 @@ const showError = ref(false)
 const errorMessage = ref('')
 const dialogOpen = ref(false)
 const selectedItem = ref<Item | null>(null)
+
+onMounted(async () => {
+  getInventoryList();
+})
 
 async function getInventoryList() {
   try {
@@ -131,7 +132,6 @@ async function borrowItem(id: number) {
     showError.value = true
   }
 }
-
 
 
 </script>
