@@ -8,15 +8,14 @@ router = APIRouter(
     tags=["items"]
 )
 
-# issue 99 (story 67) - get all items with details
+
 @router.get("/")#, response_model=Item)
 def get_items(session: Session = Depends(get_session))-> list[Item]:
     """Returns all items in the database."""
     items = session.exec(select(Item)).all()
     return items
 
-# issue 102 (story 101) - get single item with details
-# issue 93 (story 66) - get single item with details
+
 @router.get("/{item_id}")#, response_model=Item)
 def get_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     """Returns one item by id."""
@@ -26,7 +25,7 @@ def get_item(item_id: int, session: Session = Depends(get_session)) -> Item:
         raise HTTPException(status_code=404, detail="Item not found")
     return item
 
-# issue 93 (story 66) - add single item without any details
+
 @router.post("/")#, response_model=Item)
 def create_item(item: Item, session: Session = Depends(get_session)) -> Item:
     """Creates a new item in the database."""
@@ -40,7 +39,7 @@ def create_item(item: Item, session: Session = Depends(get_session)) -> Item:
     session.refresh(item)
     return item
 
-# issue 93 (story 66) - modify details (not id) of a single item
+
 @router.put("/{item_id}/{item_name}/{item_description}/{item_state}/{item_isborrowed}/{item_category}")#, response_model=Item)
 def update_item(item_id: int, item_name: str, item_description: str, item_state: str, item_isborrowed: bool, item_category: str, session: Session = Depends(get_session)) -> Item:
     """Updates an item in the database."""
@@ -58,7 +57,7 @@ def update_item(item_id: int, item_name: str, item_description: str, item_state:
     session.refresh(db_item)
     return db_item
 
-# issue 93 (story 66) - modify details (not id) of a single item using POST request
+
 @router.post("/update")#, response_model=Item)
 def update_item_with_post(item: Item, session: Session = Depends(get_session)) -> Item:
     """Updates an item in the database."""
@@ -77,7 +76,7 @@ def update_item_with_post(item: Item, session: Session = Depends(get_session)) -
     session.refresh(db_item)
     return db_item
 
-# issue 93 (story 66) - delete single item
+
 @router.delete("/{item_id}")#, response_model=Item)
 def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
     """Deletes an item from the database."""
@@ -90,7 +89,7 @@ def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
     session.commit()
     return {"message": "Item deleted successfully"}
 
-# issue 105 (story 104) - borrows single item
+
 @router.put("/{item_id}/borrow")#, response_model=Item)
 def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     """Marks an item as borrowed."""
