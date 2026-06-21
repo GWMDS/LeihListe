@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from models import Item
+from models import Item, ItemBase
 from dependencies import get_session
 
 router = APIRouter(
@@ -27,17 +27,13 @@ def get_item(item_id: int, session: Session = Depends(get_session)) -> Item:
 
 
 @router.post("/")#, response_model=Item)
-def create_item(item: Item, session: Session = Depends(get_session)) -> Item:
+def create_item(item: ItemBase, session: Session = Depends(get_session)) -> Item:
     """Creates a new item in the database."""
-    db_item = session.get(Item, item.id)
-
-    if db_item:
-        raise HTTPException(status_code=400, detail="Item with this ID already exists")
-
-    session.add(item)
+    db_item = Item.model_validate(item)
+    session.add(db_item)
     session.commit()
-    session.refresh(item)
-    return item
+    session.refresh(db_item)
+    return db_item
 
 
 @router.put("/{item_id}/{item_name}/{item_description}/{item_state}/{item_isborrowed}/{item_category}")#, response_model=Item)
