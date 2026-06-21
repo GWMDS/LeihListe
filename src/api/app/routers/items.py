@@ -11,14 +11,30 @@ router = APIRouter(
 
 @router.get("/")#, response_model=Item)
 def get_items(session: Session = Depends(get_session))-> list[Item]:
-    """Returns all items in the database."""
+    """
+    Returns all items in the database.
+    
+    Args: session (Session): Database session, provided as a dependency.
+
+    Returns: items (list[Item]): A list of all items in the database.
+    """
     items = session.exec(select(Item)).all()
     return items
 
 
 @router.get("/{item_id}")#, response_model=Item)
 def get_item(item_id: int, session: Session = Depends(get_session)) -> Item:
-    """Returns one item by id."""
+    """
+    Returns one item by id.
+    
+    Args: item_id (int): The id of the item to retrieve, as a path parameter.
+        session (Session): Database session, provided as a dependency.
+
+
+    Returns: item (Item): The item with the specified id.
+
+    Raises: HTTPException (404): If the item with the specified id is not found in the database.
+    """
     item = session.get(Item, item_id)
 
     if not item:
@@ -28,7 +44,14 @@ def get_item(item_id: int, session: Session = Depends(get_session)) -> Item:
 
 @router.post("/")#, response_model=Item)
 def create_item(item: ItemBase, session: Session = Depends(get_session)) -> Item:
-    """Creates a new item in the database."""
+    """
+    Creates a new item in the database.
+    
+    Args: item (ItemBase): The item to create.
+        session (Session): Database session, provided as a dependency.
+
+    Returns: db_item (Item): The created item.
+    """
     db_item = Item.model_validate(item)
     session.add(db_item)
     session.commit()
@@ -38,7 +61,17 @@ def create_item(item: ItemBase, session: Session = Depends(get_session)) -> Item
 
 @router.put("/{item_id}")#, response_model=Item)
 def update_item(item_id: int, item: ItemBase, session: Session = Depends(get_session)) -> Item:
-    """Updates an item in the database."""
+    """
+    Updates an item in the database.
+    
+    Args: item_id (int): The id of the item to update, as a path parameter.
+        item (ItemBase): The updated item data.
+        session (Session): Database session, provided as a dependency.
+
+    Returns: db_item (Item): The updated item.
+
+    Raises: HTTPException (404): If the item with the specified id is not found in the database.
+    """
     db_item = session.get(Item, item_id)
 
     if not db_item:
@@ -53,7 +86,16 @@ def update_item(item_id: int, item: ItemBase, session: Session = Depends(get_ses
 
 @router.delete("/{item_id}")#, response_model=Item)
 def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
-    """Deletes an item from the database."""
+    """
+    Deletes an item from the database.
+    
+    Args: item_id (int): The id of the item to delete, as a path parameter.
+        session (Session): Database session, provided as a dependency.
+    
+    Returns: message (dict): A message indicating that the item was deleted successfully.
+
+    Raises: HTTPException (404): If the item with the specified id is not found in the database.
+    """
     item = session.get(Item, item_id)
 
     if not item:
@@ -66,7 +108,17 @@ def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
 
 @router.put("/borrow/{item_id}")#, response_model=Item)
 def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
-    """Marks an item as borrowed."""
+    """
+    Marks an item as borrowed.
+    
+    Args: item_id (int): The id of the item to borrow, as a path parameter.
+        session (Session): Database session, provided as a dependency.
+
+    Returns: item (Item): The borrowed item.
+
+    Raises: HTTPException (404): If the item with the specified id is not found in the database.
+        HTTPException (400): If the item is already borrowed.
+    """
     item = session.get(Item, item_id)
 
     if not item:
