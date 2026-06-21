@@ -1,5 +1,5 @@
 <template>
-  <h1>Inventarliste</h1>
+  <h1>Inventar</h1>
   <v-row class="mt-4">
     <!--
     cols="12": 12/12 (volle Breite)
