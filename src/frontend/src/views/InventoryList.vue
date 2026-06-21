@@ -86,7 +86,7 @@ onMounted(async () => {
 
 async function getInventoryList() {
   try {
-    const response = await api.get('/api/items')
+    const response = await api.get('/api/items/')
     items.value = response.data
     console.log(response.data)
   } catch (error: any) {
