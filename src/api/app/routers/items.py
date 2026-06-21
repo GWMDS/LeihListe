@@ -64,7 +64,7 @@ def delete_item(item_id: int, session: Session = Depends(get_session)) -> dict:
     return {"message": "Item deleted successfully"}
 
 
-@router.put("/{item_id}/borrow")#, response_model=Item)
+@router.put("/borrow/{item_id}")#, response_model=Item)
 def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     """Marks an item as borrowed."""
     item = session.get(Item, item_id)
