@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar title="LeihListe">
+    <v-app-bar title="Lendify">
       <v-btn @click="theme.toggle()"><v-icon size="x-large">mdi-theme-light-dark</v-icon></v-btn>
     </v-app-bar>
     <v-main>
