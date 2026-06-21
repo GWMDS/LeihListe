@@ -9,9 +9,13 @@ import '@mdi/font/css/materialdesignicons.css'
 
 import { createVuetify } from 'vuetify'
 
-const vuetify = createVuetify()
+const vuetify = createVuetify({
+  theme: {
+    defaultTheme: 'system', // 'system' | 'light' | 'dark'
+  },
+})
 
 createApp(App)
-.use(router)
-.use(vuetify)
-.mount('#app')
+  .use(router)
+  .use(vuetify)
+  .mount('#app')

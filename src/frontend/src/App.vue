@@ -1,6 +1,8 @@
 <template>
   <v-app>
-    <v-app-bar title="LeihListe" />
+    <v-app-bar title="LeihListe">
+      <v-btn @click="theme.toggle()"><v-icon size="x-large">mdi-theme-light-dark</v-icon></v-btn>
+    </v-app-bar>
     <v-main>
       <v-container min-width="100%">
         <router-view />
@@ -18,7 +20,10 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+import { useTheme } from 'vuetify'
+
 const activeTab = ref('home')
+const theme = useTheme()
 
 </script>
 
