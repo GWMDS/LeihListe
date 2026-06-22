@@ -91,6 +91,7 @@ async function getInventoryList() {
     items.value = response.data
     console.log(response.data)
   } catch (error: any) {
+    snackbarColor.value = 'error'
     if (error.response) {
       snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
@@ -107,6 +108,7 @@ async function showDetails(id: number) {
     selectedItem.value = response.data
     dialogOpen.value = true
   } catch (error: any) {
+    snackbarColor.value = 'error'
     if (error.response) {
       snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
@@ -128,6 +130,7 @@ async function borrowItem(id: number) {
 
   }
   catch (error: any) {
+    snackbarColor.value = 'error'
     if (error.response) {
       snackbarMessage.value = "Fehler beim Ausleihen: " + error.response.status + " - " + error.response.data?.detail
     } else {
