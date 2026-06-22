@@ -50,11 +50,11 @@
     </v-card>
   </v-dialog>
 
-  <v-snackbar v-model="showError" color="error" timeout="5000" location="bottom" variant="elevated">
-    {{ errorMessage }}
+  <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="5000" location="bottom" variant="elevated">
+    {{ snackbarMessage }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="showError = false">
+      <v-btn variant="text" @click="showSnackbar = false">
         Schließen
       </v-btn>
     </template>
@@ -75,8 +75,9 @@ interface Item {
 }
 
 const items = ref(<Item[]>[])
-const showError = ref(false)
-const errorMessage = ref('')
+const showSnackbar = ref(false)
+const snackbarMessage = ref('')
+const snackbarColor = ref('success')
 const dialogOpen = ref(false)
 const selectedItem = ref<Item | null>(null)
 
@@ -91,12 +92,12 @@ async function getInventoryList() {
     console.log(response.data)
   } catch (error: any) {
     if (error.response) {
-      errorMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value = "Fehler: " + error.message
+      snackbarMessage.value = "Fehler: " + error.message
     }
-    console.error(errorMessage.value)
-    showError.value = true
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
   }
 }
 
@@ -107,12 +108,12 @@ async function showDetails(id: number) {
     dialogOpen.value = true
   } catch (error: any) {
     if (error.response) {
-      errorMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value = "Fehler beim Laden der Details: " + error.message
+      snackbarMessage.value = "Fehler beim Laden der Details: " + error.message
     }
-    console.error(errorMessage.value)
-    showError.value = true
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
   }
 }
 
@@ -121,15 +122,19 @@ async function borrowItem(id: number) {
     await api.put(`/api/items/${id}/borrow`)
     dialogOpen.value = false
     await getInventoryList()
+    snackbarColor.value = 'success'
+    snackbarMessage.value = 'Gegenstand wurde erfolgreich ausgeliehen!'
+    showSnackbar.value = true
+
   }
   catch (error: any) {
     if (error.response) {
-      errorMessage.value = "Fehler beim Ausleihen: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = "Fehler beim Ausleihen: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value = "Fehler beim Ausleihen: " + error.message
+      snackbarMessage.value = "Fehler beim Ausleihen: " + error.message
     }
-    console.error(errorMessage.value)
-    showError.value = true
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
   }
 }
 
