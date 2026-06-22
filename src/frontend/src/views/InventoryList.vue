@@ -8,7 +8,8 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card :class="{ 'opacity-50': item.isBorrowed }" class="d-flex flex-column fill-height">
+      <v-card :class="{ 'opacity-50': item.isBorrowed }" class="d-flex flex-column fill-height"
+        @click="openCrudMenu(item)">
         <v-card-title class="d-flex align-center">
           {{ item.name }}
           <v-spacer />
@@ -21,13 +22,51 @@
           <div class="line-clamp"> Beschreibung: {{ item.description }}</div>
         </v-card-text>
         <v-card-actions>
-          <v-btn variant="text" @click="showDetails(item.id)">
+          <v-btn variant="text" @click.stop="showDetails(item.id)">
             Details
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-col>
   </v-row>
+
+  <v-dialog v-model="crudDialogOpen" max-width="350">
+    <v-card>
+      <v-card-title class="text-subtitle-1 font-weight-bold pa-4 pb-2">
+        Optionen für: {{ selectedCrudItem?.name }}
+      </v-card-title>
+      <v-card-text>
+        <v-list nav>
+          <v-list-item prepend-icon="mdi-delete" title="Gegenstand löschen" color="error" class="text-error"
+            @click="triggerDelete">
+          </v-list-item>
+        </v-list>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn variant="text" @click="crudDialogOpen = false">Abbrechen</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
+  <v-dialog v-model="deleteDialogOpen" max-width="400">
+    <v-card>
+      <v-card-title class="text-h6 text-error d-flex align-center">
+        <v-icon start>mdi-alert-circle</v-icon>
+        Gegenstand löschen?
+      </v-card-title>
+
+      <v-card-text>
+        Sind Sie sicher, dass Sie den Artikel <strong>{{ itemToDelete?.name }}</strong> löschen möchten?
+      </v-card-text>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn variant="text" @click="deleteDialogOpen = false">Abbrechen</v-btn>
+        <v-btn color="error" variant="elevated" @click="confirmDelete">Löschen</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
 
   <v-dialog v-model="dialogOpen" max-width="500px">
     <v-card v-if="selectedItem" :title="selectedItem.name">
@@ -64,6 +103,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import api from '../api.ts'
+import { er } from 'vue-router/dist/index-BQLwgiyK.js'
 
 interface Item {
   state: string
@@ -139,6 +179,47 @@ async function borrowItem(id: number) {
     console.error(snackbarMessage.value)
     showSnackbar.value = true
   }
+}
+async function confirmDelete() {
+  if (!itemToDelete.value) return
+
+  try {
+    const id = itemToDelete.value.id
+    await api.delete(`/api/items/${id}`)
+    deleteDialogOpen.value = false
+    await getInventoryList()
+    snackbarColor.value = 'success'
+    snackbarMessage.value = `Gegenstand "${itemToDelete.value.name}" wurde erfolgreich gelöscht.`
+    showSnackbar.value = true
+  } catch (error: any) {
+    snackbarColor.value = 'error'
+    if (error.response) {
+      snackbarMessage.value = "Fehler beim Löschen " + error.response.status + " - " + error.response.data?.detail
+    }
+    else {
+      snackbarMessage.value = "Fehler beim Löschen: " + error.message
+    }
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
+  }
+  finally {
+    itemToDelete.value = null
+  }
+}
+
+const crudDialogOpen = ref(false)
+const deleteDialogOpen = ref(false)
+const selectedCrudItem = ref<any>(null)
+const itemToDelete = ref<any>(null)
+
+function openCrudMenu(item: any) {
+  selectedCrudItem.value = item
+  crudDialogOpen.value = true
+}
+function triggerDelete() {
+  itemToDelete.value = selectedCrudItem.value
+  crudDialogOpen.value = false
+  deleteDialogOpen.value = true
 }
 
 
