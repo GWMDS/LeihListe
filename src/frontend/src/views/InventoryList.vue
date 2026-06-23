@@ -14,7 +14,6 @@
       <v-card :disabled="item.isBorrowed">
         <v-card-title>{{ item.name }}</v-card-title>
         <v-card-text>
-          ID: {{ item.id }}<br>
           Kategorie: {{ item.category }}<br>
           Zustand: {{ item.state }}<br>
           Ausgeliehen: {{ item.isBorrowed }}<br>
