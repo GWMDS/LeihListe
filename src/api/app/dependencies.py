@@ -12,7 +12,7 @@ def write_starting_data(session: Session):
     with session:
         for i in range(10):
             if session.get(Item, i) is None:
-                db_item = Item(id=i,
+                db_item = Item(
                             name=f"Item {i}",
                             description=f"Description for item {i}",
                             state="new",
