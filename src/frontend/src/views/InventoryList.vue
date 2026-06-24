@@ -150,7 +150,7 @@ async function showDetails(id: number) {
 
 async function borrowItem(id: number) {
   try {
-    await api.put(`/api/items/${id}/borrow`)
+    await api.put(`/api/items/borrow/${id}`)
     dialogOpen.value = false
     await getInventoryList()
     snackbarColor.value = 'success'
