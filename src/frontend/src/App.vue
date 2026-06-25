@@ -2,7 +2,7 @@
   <v-app>
     <v-app-bar title="LeihListe" />
     <v-main>
-      <v-container>
+      <v-container min-width="100%">
         <router-view />
       </v-container>
     </v-main>
