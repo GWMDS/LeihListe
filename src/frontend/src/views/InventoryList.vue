@@ -212,9 +212,9 @@ async function borrowItem(id: number) {
 }
 
 // Bearbeiten
-function openEditDialog(Item: Item) {
-  itemToEditId.value = Item.id
-  editForm.value = { ...Item }; // Kopie
+function openEditDialog(item: Item) {
+  itemToEditId.value = item.id
+  editForm.value = { ...item }; // Kopie
 
   editDialogOpen.value = true
 }
