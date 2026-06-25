@@ -1,5 +1,7 @@
 <template>
   <h1>Inventar</h1>
+  <v-btn color="green" prepend-icon="mdi-plus" variant="elevated" @click="openCreateDialog">
+  </v-btn>
   <v-row class="mt-4">
     <!--
     cols="12": 12/12 (volle Breite)
@@ -60,7 +62,7 @@
   <v-dialog v-model="editDialogOpen" max-width="500px">
     <v-card>
       <v-card-title>
-        Gegenstand bearbeiten
+        {{ itemToEditId ? 'Gegenstand bearbeiten' : 'Neuen Gegenstand hinzufügen' }}
       </v-card-title>
       <v-card-text>
         <v-text-field v-model="editForm.name" label="Name" required></v-text-field>
@@ -70,7 +72,8 @@
       </v-card-text>
       <v-card-actions>
         <v-btn variant="text" @click="editDialogOpen = false"> Abbrechen</v-btn>
-        <v-btn color="primary" variant="elevated" @click="saveEdit">Speichern</v-btn>
+        <v-btn color="primary" variant="elevated" @click="saveItem(itemToEditId !== null)">{{ itemToEditId ? 'Speichern'
+          : 'Anlegen' }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -86,8 +89,7 @@
         Beschreibung: {{ detailItem.description }}
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" variant="elevated" :disabled="detailItem.isBorrowed"
-          @click="borrowItem(detailItem.id)">
+        <v-btn color="primary" variant="elevated" :disabled="detailItem.isBorrowed" @click="borrowItem(detailItem.id)">
           {{ detailItem.isBorrowed ? 'Bereits verliehen' : 'Ausleihen' }}
         </v-btn>
         <v-btn variant="text" @click="detailDialogOpen = false">
@@ -128,7 +130,7 @@ const snackbarColor = ref('success')
 
 const detailDialogOpen = ref(false)
 const detailItem = ref<Item | null>(null)
-  
+
 const editDialogOpen = ref(false)
 const itemToEditId = ref<number | null>(null)
 const editForm = ref({
@@ -212,23 +214,28 @@ function openEditDialog(Item: Item) {
 
   editDialogOpen.value = true
 }
-
-async function saveEdit() {
-  if (itemToEditId.value == null) return
+//Fusionierte Funktion zum speichern 
+async function saveItem(isUpdating: boolean) {
+  const actionText = isUpdating ? 'Editieren' : 'Erstellen'
   try {
-    await api.put(`/api/items/${itemToEditId.value}`, editForm.value)
+    if (isUpdating) {
+      await api.put(`/api/items/${itemToEditId.value}`, editForm.value)
+      snackbarMessage.value = `Gegenstand "${editForm.value.name}" wurde aktualisiert.`
+    } else {
+      await api.post('/api/items/', editForm.value)
+      snackbarMessage.value = `Gegenstand "${editForm.value.name}" wurde erfolgreich angelegt.`
+    }
     editDialogOpen.value = false
     await getInventoryList()
     snackbarColor.value = 'success'
-    snackbarMessage.value = `Gegenstand "${editForm.value.name}" wurde erfolgreich aktualisiert.`
     showSnackbar.value = true
   } catch (error: any) {
     snackbarColor.value = 'error'
     if (error.response) {
-      snackbarMessage.value = "Fehler beim Editieren: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = `Fehler beim ${actionText}: ` + error.response.status + " - " + error.response.data?.detail
     }
     else {
-      snackbarMessage.value = "Fehler beim Editieren: " + error.message
+      snackbarMessage.value = `Fehler beim ${actionText}: ` + error.message
     }
     console.error(snackbarMessage.value)
     showSnackbar.value = true
@@ -271,6 +278,18 @@ async function confirmDelete() {
   finally {
     itemToDelete.value = null
   }
+  //Erstellen 
+}
+function openCreateDialog() {
+  itemToEditId.value = null
+  editForm.value = {
+    name: '',
+    description: '',
+    state: '',
+    isBorrowed: false,
+    category: ''
+  }
+  editDialogOpen.value = true
 }
 
 </script>
