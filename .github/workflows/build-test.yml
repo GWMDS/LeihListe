@@ -1,0 +1,74 @@
+name: Build Test
+ 
+on:
+
+  pull_request:
+    branches:
+      #all!
+    - '**'
+
+    paths:
+      #only if workflows or code are changed
+    - '.github/**.yml'
+    - 'src/**.py'
+    - 'src/**.js'
+    - 'src/**.css'
+    - 'src/**.vue'
+    - 'src/**.html'
+
+jobs:
+  BUILD-ACTION:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code to the runner
+      uses: actions/checkout@v4
+
+# Preparing database
+
+    - name: Creating and filling .env
+      run: |
+          cd ./src/database
+          touch .env
+          echo "DB_USER=\"user\"" >> .env && echo "DB_PASS=\"passwd\"" >> .env && echo "DB_ADDR=\"host\"" >> .env
+          docker compose up -d
+
+# Starting the API
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        cd ${{ github.workspace }}/src/api
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: preparing API
+      working-directory:
+        ./src/api
+      run: |
+        touch .env
+        echo "DB_USER=\"user\"" >> .env && echo "DB_PASS=\"passwd\"" >> .env && echo "DB_ADDR=\"localhost\"" >> .env
+        python -m venv .venv
+        source .venv/bin/activate
+        ls -a
+
+    - name: launching API
+      working-directory: 
+        ./src/api
+      run: |
+        fastapi dev app/main.py &
+
+#Starting the frontend          
+    - name: setting up Node.js
+      run: |
+        sudo apt install nodejs
+        node -v
+        npm -v
+
+    - name: executing frontend
+      working-directory: ./src/frontend
+      run: |
+        npm ci
+        npm run build

@@ -32,7 +32,6 @@
   <v-dialog v-model="dialogOpen" max-width="500px">
     <v-card v-if="selectedItem" :title="selectedItem.name">
       <v-card-text>
-        ID: {{ selectedItem.id }}<br>
         Kategorie: {{ selectedItem.category }}<br>
         Zustand: {{ selectedItem.state }}<br>
         Ausgeliehen: {{ selectedItem.isBorrowed ? 'Ja' : 'Nein' }}<br>
