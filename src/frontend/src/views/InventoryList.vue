@@ -28,7 +28,7 @@
               </v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn title="Bearbeiten">
+              <v-btn title="Bearbeiten" @click.stop="openEditDialog(item)">
                 <v-icon size="large">mdi-pencil</v-icon>
               </v-btn>
               <v-btn title="Löschen" color="error" @click="triggerDelete(item)">
@@ -57,6 +57,34 @@
     </v-card>
   </v-dialog>
 
+  <v-dialog v-model="editDialogOpen" max-width="500px">
+    <v-card>
+      <v-card-title>
+        Gegenstand bearbeiten
+      </v-card-title>
+      <v-card-text>
+        <v-row>
+          <v-col cols="12">
+            <v-text-field v-model="editForm.name" label="Name" required></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field v-model="editForm.category" label="Kategorie" required></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-text-field v-model="editForm.state" label="Zustand" required></v-text-field>
+          </v-col>
+          <v-col cols="12">
+            <v-textarea v-model="editForm.description" label="Beschreibung"></v-textarea>
+          </v-col>
+        </v-row>
+      </v-card-text>
+      <v-card-actions>
+        <v-btn variant="text" @click="editDialogOpen = false"> Abbrechen</v-btn>
+        <v-btn color="primary" variant="elevated" @click="saveEdit">Speichern</v-btn>
+      </v-card-actions>
+    </v-card>
+  </v-dialog>
+
   <v-dialog v-model="dialogOpen" max-width="500px">
     <v-card v-if="selectedItem">
       <v-card-title>{{ selectedItem.name }}</v-card-title>
@@ -78,6 +106,7 @@
       </v-card-actions>
     </v-card>
   </v-dialog>
+
 
   <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="5000" location="bottom" variant="elevated">
     {{ snackbarMessage }}
@@ -109,6 +138,16 @@ const snackbarMessage = ref('')
 const snackbarColor = ref('success')
 const dialogOpen = ref(false)
 const selectedItem = ref<Item | null>(null)
+const editDialogOpen = ref(false)
+const itemToEditId = ref<number | null>(null)
+
+const editForm = ref({
+  name: '',
+  description: '',
+  state: '',
+  isBorrowed: false,
+  category: ''
+})
 
 onMounted(async () => {
   getInventoryList();
@@ -177,6 +216,42 @@ function triggerDelete(item: Item) {
   console.log(item)
   itemToDelete.value = item
   deleteDialogOpen.value = true
+}
+function openEditDialog(Item: Item) {
+  itemToEditId.value = Item.id
+
+  editForm.value = {
+    name: Item.name,
+    description: Item.description,
+    state: Item.state,
+    isBorrowed: Item.isBorrowed,
+    category: Item.category
+  }
+  editDialogOpen.value = true
+}
+async function saveEdit() {
+  if (itemToEditId.value == null) return
+  try {
+    await api.put(`/api/items/${itemToEditId.value}`, editForm.value)
+    editDialogOpen.value = false
+    await getInventoryList()
+    snackbarColor.value = 'success'
+    snackbarMessage.value = `Gegenstand "${editForm.value.name}" wurde erfolgreich aktualisiert.`
+    showSnackbar.value = true
+  } catch (error: any) {
+    snackbarColor.value = 'error'
+    if (error.response) {
+      snackbarMessage.value = "Fehler beim Editieren: " + error.response.status + " - " + error.response.data?.detail
+    }
+    else {
+      snackbarMessage.value = "Fehler beim Editieren " + error.message
+    }
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
+  }
+  finally {
+    itemToEditId.value = null
+  }
 }
 
 async function confirmDelete() {
