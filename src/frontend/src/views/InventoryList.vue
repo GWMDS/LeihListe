@@ -63,20 +63,10 @@
         Gegenstand bearbeiten
       </v-card-title>
       <v-card-text>
-        <v-row>
-          <v-col cols="12">
-            <v-text-field v-model="editForm.name" label="Name" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field v-model="editForm.category" label="Kategorie" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-text-field v-model="editForm.state" label="Zustand" required></v-text-field>
-          </v-col>
-          <v-col cols="12">
-            <v-textarea v-model="editForm.description" label="Beschreibung"></v-textarea>
-          </v-col>
-        </v-row>
+        <v-text-field v-model="editForm.name" label="Name" required></v-text-field>
+        <v-text-field v-model="editForm.category" label="Kategorie" required></v-text-field>
+        <v-text-field v-model="editForm.state" label="Zustand" required></v-text-field>
+        <v-textarea v-model="editForm.description" label="Beschreibung"></v-textarea>
       </v-card-text>
       <v-card-actions>
         <v-btn variant="text" @click="editDialogOpen = false"> Abbrechen</v-btn>
@@ -85,28 +75,27 @@
     </v-card>
   </v-dialog>
 
-  <v-dialog v-model="dialogOpen" max-width="500px">
-    <v-card v-if="selectedItem">
-      <v-card-title>{{ selectedItem.name }}</v-card-title>
+  <v-dialog v-model="detailDialogOpen" max-width="500px">
+    <v-card v-if="detailItem">
+      <v-card-title>{{ detailItem.name }}</v-card-title>
       <v-card-text>
-        ID: {{ selectedItem.id }}<br>
-        Kategorie: {{ selectedItem.category }}<br>
-        Zustand: {{ selectedItem.state }}<br>
-        Ausgeliehen: {{ selectedItem.isBorrowed ? 'Ja' : 'Nein' }}<br>
-        Beschreibung: {{ selectedItem.description }}
+        ID: {{ detailItem.id }}<br>
+        Kategorie: {{ detailItem.category }}<br>
+        Zustand: {{ detailItem.state }}<br>
+        Ausgeliehen: {{ detailItem.isBorrowed ? 'Ja' : 'Nein' }}<br>
+        Beschreibung: {{ detailItem.description }}
       </v-card-text>
       <v-card-actions>
-        <v-btn color="primary" variant="elevated" :disabled="selectedItem.isBorrowed"
-          @click="borrowItem(selectedItem.id)">
-          {{ selectedItem.isBorrowed ? 'Bereits verliehen' : 'Ausleihen' }}
+        <v-btn color="primary" variant="elevated" :disabled="detailItem.isBorrowed"
+          @click="borrowItem(detailItem.id)">
+          {{ detailItem.isBorrowed ? 'Bereits verliehen' : 'Ausleihen' }}
         </v-btn>
-        <v-btn variant="text" @click="dialogOpen = false">
+        <v-btn variant="text" @click="detailDialogOpen = false">
           Schließen
         </v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
-
 
   <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="5000" location="bottom" variant="elevated">
     {{ snackbarMessage }}
@@ -131,16 +120,17 @@ interface Item {
   description: string
   id: number
 }
-
 const items = ref(<Item[]>[])
+
 const showSnackbar = ref(false)
 const snackbarMessage = ref('')
 const snackbarColor = ref('success')
-const dialogOpen = ref(false)
-const selectedItem = ref<Item | null>(null)
+
+const detailDialogOpen = ref(false)
+const detailItem = ref<Item | null>(null)
+  
 const editDialogOpen = ref(false)
 const itemToEditId = ref<number | null>(null)
-
 const editForm = ref({
   name: '',
   description: '',
@@ -149,6 +139,10 @@ const editForm = ref({
   category: ''
 })
 
+const deleteDialogOpen = ref(false)
+const itemToDelete = ref<any>(null)
+
+// Liste holen
 onMounted(async () => {
   getInventoryList();
 })
@@ -170,11 +164,12 @@ async function getInventoryList() {
   }
 }
 
+// Details
 async function showDetails(id: number) {
   try {
     const response = await api.get(`/api/items/${id}`)
-    selectedItem.value = response.data
-    dialogOpen.value = true
+    detailItem.value = response.data
+    detailDialogOpen.value = true
   } catch (error: any) {
     snackbarColor.value = 'error'
     if (error.response) {
@@ -187,10 +182,11 @@ async function showDetails(id: number) {
   }
 }
 
+// Ausleihen
 async function borrowItem(id: number) {
   try {
     await api.put(`/api/items/borrow/${id}`)
-    dialogOpen.value = false
+    detailDialogOpen.value = false
     await getInventoryList()
     snackbarColor.value = 'success'
     snackbarMessage.value = 'Gegenstand wurde erfolgreich ausgeliehen!'
@@ -209,26 +205,14 @@ async function borrowItem(id: number) {
   }
 }
 
-const deleteDialogOpen = ref(false)
-const itemToDelete = ref<any>(null)
-
-function triggerDelete(item: Item) {
-  console.log(item)
-  itemToDelete.value = item
-  deleteDialogOpen.value = true
-}
+// Bearbeiten
 function openEditDialog(Item: Item) {
   itemToEditId.value = Item.id
+  editForm.value = { ...Item }; // Kopie
 
-  editForm.value = {
-    name: Item.name,
-    description: Item.description,
-    state: Item.state,
-    isBorrowed: Item.isBorrowed,
-    category: Item.category
-  }
   editDialogOpen.value = true
 }
+
 async function saveEdit() {
   if (itemToEditId.value == null) return
   try {
@@ -244,7 +228,7 @@ async function saveEdit() {
       snackbarMessage.value = "Fehler beim Editieren: " + error.response.status + " - " + error.response.data?.detail
     }
     else {
-      snackbarMessage.value = "Fehler beim Editieren " + error.message
+      snackbarMessage.value = "Fehler beim Editieren: " + error.message
     }
     console.error(snackbarMessage.value)
     showSnackbar.value = true
@@ -252,6 +236,13 @@ async function saveEdit() {
   finally {
     itemToEditId.value = null
   }
+}
+
+// Löschen
+function triggerDelete(item: Item) {
+  console.log(item)
+  itemToDelete.value = item
+  deleteDialogOpen.value = true
 }
 
 async function confirmDelete() {
