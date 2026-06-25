@@ -1,6 +1,7 @@
 <template>
   <h1>Inventar</h1>
-  <v-btn color="green" prepend-icon="mdi-plus" variant="elevated" @click="openCreateDialog">
+  <v-btn color="green" variant="elevated" class="mt-4" @click="openCreateDialog">
+    <v-icon>mdi-plus</v-icon>
   </v-btn>
   <v-row class="mt-4">
     <!--
@@ -189,11 +190,11 @@ async function borrowItem(id: number) {
   try {
     await api.put(`/api/items/borrow/${id}`)
     detailDialogOpen.value = false
+
     await getInventoryList()
     snackbarColor.value = 'success'
     snackbarMessage.value = 'Gegenstand wurde erfolgreich ausgeliehen!'
     showSnackbar.value = true
-
   }
   catch (error: any) {
     snackbarColor.value = 'error'
@@ -214,7 +215,8 @@ function openEditDialog(Item: Item) {
 
   editDialogOpen.value = true
 }
-//Fusionierte Funktion zum speichern 
+
+// Fusionierte Funktion zum speichern 
 async function saveItem(isUpdating: boolean) {
   const actionText = isUpdating ? 'Editieren' : 'Erstellen'
   try {
@@ -226,6 +228,7 @@ async function saveItem(isUpdating: boolean) {
       snackbarMessage.value = `Gegenstand "${editForm.value.name}" wurde erfolgreich angelegt.`
     }
     editDialogOpen.value = false
+
     await getInventoryList()
     snackbarColor.value = 'success'
     showSnackbar.value = true
@@ -278,8 +281,9 @@ async function confirmDelete() {
   finally {
     itemToDelete.value = null
   }
-  //Erstellen 
 }
+
+// Erstellen 
 function openCreateDialog() {
   itemToEditId.value = null
   editForm.value = {
