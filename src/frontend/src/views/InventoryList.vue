@@ -63,18 +63,20 @@
   <v-dialog v-model="editDialogOpen" max-width="500px">
     <v-card>
       <v-card-title>
-        {{ itemToEditId ? 'Gegenstand bearbeiten' : 'Neuen Gegenstand hinzufügen' }}
+        {{ itemToEditId ? 'Gegenstand bearbeiten' : 'Gegenstand hinzufügen' }}
       </v-card-title>
       <v-card-text>
-        <v-text-field v-model="editForm.name" label="Name" required></v-text-field>
-        <v-text-field v-model="editForm.category" label="Kategorie" required></v-text-field>
-        <v-text-field v-model="editForm.state" label="Zustand" required></v-text-field>
-        <v-textarea v-model="editForm.description" label="Beschreibung"></v-textarea>
+        <v-form id="editForm" v-model="editFormValid" @submit.prevent="saveItem(itemToEditId !== null)">
+          <v-text-field v-model="editForm.name" :rules="nameRules" label="Name" required></v-text-field>
+          <v-text-field v-model="editForm.category" :rules="categoryRules" label="Kategorie" required></v-text-field>
+          <v-text-field v-model="editForm.state" :rules="stateRules" label="Zustand" required></v-text-field>
+          <v-textarea v-model="editForm.description" label="Beschreibung"></v-textarea>
+        </v-form>
       </v-card-text>
       <v-card-actions>
         <v-btn variant="text" @click="editDialogOpen = false"> Abbrechen</v-btn>
-        <v-btn color="primary" variant="elevated" @click="saveItem(itemToEditId !== null)">{{ itemToEditId ? 'Speichern'
-          : 'Anlegen' }}</v-btn>
+        <v-btn color="primary" form="editForm" type="submit" variant="elevated">{{
+          itemToEditId ? 'Speichern' : 'Anlegen' }}</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -134,6 +136,7 @@ const detailItem = ref<Item | null>(null)
 
 const editDialogOpen = ref(false)
 const itemToEditId = ref<number | null>(null)
+const editFormValid = ref(false)
 const editForm = ref({
   name: '',
   description: '',
@@ -216,8 +219,31 @@ function openEditDialog(Item: Item) {
   editDialogOpen.value = true
 }
 
+const nameRules = [
+  (value: any) => {
+    if (value) return true
+    return 'Name erforderlich.'
+  },
+]
+
+const categoryRules = [
+  (value: any) => {
+    if (value) return true
+    return 'Kategorie erforderlich.'
+  },
+]
+
+const stateRules = [
+  (value: any) => {
+    if (value) return true
+    return 'Zustand erforderlich.'
+  },
+]
+
 // Fusionierte Funktion zum speichern 
 async function saveItem(isUpdating: boolean) {
+  if (!editFormValid.value) return;
+
   const actionText = isUpdating ? 'Editieren' : 'Erstellen'
   try {
     if (isUpdating) {
