@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar title="Lendify">
+    <v-app-bar :title=APP_TITLE>
       <v-btn @click="theme.toggle()"><v-icon size="x-large">mdi-theme-light-dark</v-icon></v-btn>
     </v-app-bar>
     <v-main>
@@ -18,6 +18,7 @@
 </template>
 
 <script setup lang="ts">
+import { APP_TITLE } from "./config.ts";
 import { ref } from 'vue'
 import { useTheme } from 'vuetify'
 
