@@ -13,7 +13,7 @@ def write_starting_data(session: Session):
     with session:
         for i in range(10):
             if session.get(Item, i) is None:
-                db_item = Item(
+                db_item = Item(id=i,
                             name=f"Item {i}",
                             description=f"Description for item {i}",
                             state="new",
@@ -32,7 +32,7 @@ def write_starting_data(session: Session):
             if session.get(Borrowing, j) is None:
                 db_borrowing = Borrowing(borrowing_id=j,
                             item_id=((j+1)%2),
-                            customer_id=((j+5)%2),
+                            customer_id=((j)%2),
                             borrowing_date=date.today(),
                             return_date=date.today())
                 session.add(db_borrowing)

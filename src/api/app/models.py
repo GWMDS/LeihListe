@@ -38,3 +38,10 @@ class Borrowing(SQLModel, table=True):
     customer_id: int = Field(ForeignKey(Customer.customer_id))
     borrowing_date: date = Field()
     return_date: date = Field()
+
+class BorrowingDetails(Borrowing, table=False):
+    """
+    This is a borrowing.
+    A borrowing shows who borrowed what when
+    """
+    item_name: str = Field()
