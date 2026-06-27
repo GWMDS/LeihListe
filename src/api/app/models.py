@@ -41,7 +41,6 @@ class Borrowing(SQLModel, table=True):
 
 class BorrowingDetails(Borrowing, table=False):
     """
-    This is a borrowing.
-    A borrowing shows who borrowed what when
+    This is the base class for a borrowing that is stored in the database.
     """
     item_name: str = Field()

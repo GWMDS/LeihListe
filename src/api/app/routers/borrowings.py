@@ -17,27 +17,25 @@ def get_borrowings_with_details(session: Session = Depends(get_session))-> list[
     return borrowings
 
 
-# issue 63 - get all borrowings with details for one person
-@router.get("/all/details/{customer_id}")#, response_model=Borrowing)
-def get_borrowings_with_details_for_customer(customer_id: int, session: Session = Depends(get_session))-> list[Borrowing]:
+# issue 63 - get all borrowings with details
+@router.get("/all/details")#, response_model=Borrowing)
+def get_borrowings_with_details_for_customer(session: Session = Depends(get_session))-> list[Borrowing]:
     """Returns all borrowings for a specific customer."""
-    borrowings = session.exec(select(Borrowing).where(Borrowing.customer_id == customer_id)).all()
-    if (1==1):
-        raise HTTPException(status_code=404, detail="Item not found")
+    borrowings = session.exec(select(Borrowing)).all()
 
-    if  not customer_id in [borrowing.customer_id for borrowing in borrowings]:
-        raise HTTPException(status_code=404, detail="no borrowings for customer found")
+    if not borrowings:
+        raise HTTPException(status_code=404, detail="no borrowings found")
 
     return borrowings
 
-# issue 63 - get all borrowings with details for one person
-@router.get("/all/details/item/{customer_id}")#, response_model=Borrowing)
-def get_borrowings_with_details_and_itemdetails_for_customer(customer_id: int, session: Session = Depends(get_session))-> list[BorrowingDetails]:
+# issue 63 - get all borrowings with details and with item_name
+@router.get("/all/details/item")#, response_model=Borrowing)
+def get_borrowings_with_details_and_itemdetails_for_customer(session: Session = Depends(get_session))-> list[BorrowingDetails]:
     """Returns all borrowings for a specific customer."""
-    borrowings = session.exec(select(Borrowing).where(Borrowing.customer_id == customer_id)).all()
+    borrowings = session.exec(select(Borrowing)).all()
 
     if not borrowings:
-        raise HTTPException(status_code=404, detail=f"no borrowings for customer {customer_id} found")
+        raise HTTPException(status_code=404, detail="no borrowings found")
 
     for borrowing in borrowings:
         # get the item name for each borrowing
@@ -46,7 +44,7 @@ def get_borrowings_with_details_and_itemdetails_for_customer(customer_id: int, s
         borrowingDetails = BorrowingDetails(
             borrowing_id=borrowing.borrowing_id,
             item_id=borrowing.item_id,
-            customer_id=borrowing.customer_id,
+            customer_id=0,
             borrowing_date=borrowing.borrowing_date,
             return_date=borrowing.return_date,
             item_name=item.name
