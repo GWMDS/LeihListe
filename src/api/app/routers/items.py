@@ -15,13 +15,6 @@ def get_items(session: Session = Depends(get_session))-> list[Item]:
     items = session.exec(select(Item)).all()
     return items
 
-# issue 109 (story 63) - get all borrowed items with details
-@router.get("/borrowed")#, response_model=Item)
-def get_items_borrowed(session: Session = Depends(get_session))-> list[Item]:
-    """Returns borrowed items from database for all users"""
-    items = session.exec(select(Item).where(Item.isBorrowed)).all()
-    return items
-
 # issue 102 (story 101) - get single item with details
 # issue 93 (story 66) - get single item with details
 @router.get("/{item_id}")#, response_model=Item)
@@ -48,8 +41,8 @@ def create_item(item: Item, session: Session = Depends(get_session)) -> Item:
     return item
 
 # issue 93 (story 66) - modify details (not id) of a single item
-@router.put("/{item_id}/{item_name}/{item_description}/{item_state}/{item_isborrowed}/{item_category}")#, response_model=Item)
-def update_item(item_id: int, item_name: str, item_description: str, item_state: str, item_isborrowed: bool, item_category: str, session: Session = Depends(get_session)) -> Item:
+@router.put("/{item_id}/{item_name}/{item_description}/{item_state}/{item_isBorrowed}/{item_category}")#, response_model=Item)
+def update_item(item_id: int, item_name: str, item_description: str, item_state: str, item_isBorrowed: bool, item_category: str, session: Session = Depends(get_session)) -> Item:
     """Updates an item in the database."""
     db_item = session.get(Item, item_id)
 
@@ -59,7 +52,7 @@ def update_item(item_id: int, item_name: str, item_description: str, item_state:
     db_item.name = item_name
     db_item.description = item_description
     db_item.state = item_state
-    db_item.isBorrowed = item_isborrowed
+    db_item.isBorrowed = item_isBorrowed
     db_item.category = item_category
     session.commit()
     session.refresh(db_item)
@@ -110,6 +103,23 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
         raise HTTPException(status_code=400, detail="Item is already borrowed")
 
     item.isBorrowed = True
+    session.commit()
+    session.refresh(item)
+    return item
+
+# issue 63 - return single item
+@router.put("/{item_id}/return")#, response_model=Item)
+def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
+    """Marks an item as returned."""
+    item = session.get(Item, item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    if (item.isBorrowed) == False:
+        raise HTTPException(status_code=400, detail="Item is already returned")
+
+    item.isBorrowed = False
     session.commit()
     session.refresh(item)
     return item
