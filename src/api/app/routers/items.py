@@ -131,3 +131,21 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     session.commit()
     session.refresh(item)
     return item
+
+
+# issue 63 - return single item
+@router.put("/{item_id}/return")#, response_model=Item)
+def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
+    """Marks an item as returned."""
+    item = session.get(Item, item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    if (item.isBorrowed) is False:
+        raise HTTPException(status_code=400, detail="Item is already returned")
+
+    item.isBorrowed = False
+    session.commit()
+    session.refresh(item)
+    return item

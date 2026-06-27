@@ -1,4 +1,6 @@
+from datetime import date
 from sqlmodel import SQLModel, Field
+from sqlalchemy import ForeignKey
 
 class ItemBase(SQLModel):
     """
@@ -18,3 +20,21 @@ class Item(ItemBase, table=True):
     """
     id: int = Field(default=None, primary_key=True)
     
+class Customer(SQLModel, table=True):
+    """
+    This is a customer who is stored in the database.
+    Customers can borrow/return Items.
+    """
+    customer_id: int = Field(default=None, primary_key=True)
+    customer_name: str = Field()
+
+class Borrowing(SQLModel, table=True):
+    """
+    This is a borrowing.
+    A borrowing shows who borrowed what when
+    """
+    borrowing_id: int = Field(default=None, primary_key=True)
+    item_id: int = Field(ForeignKey(Item.id))
+    customer_id: int = Field(ForeignKey(Customer.customer_id))
+    borrowing_date: date = Field()
+    return_date: date = Field()
