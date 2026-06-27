@@ -370,17 +370,18 @@ Problem auf unterschiedliche Weise lösen._
 | Aspekt | Konvention
 
 | URL-Struktur
-| Ressourcenorientiert im Plural: `/buchungen`, `/raeume`, `/nutzer`
+| `/api/items` für alle Items; +
+  `/api/items/{id}` für einen einzelnen Gegenstand; +
+  `/api/items/borrow/{id}` für das Ausleihen eines Gegenstands
 
 | HTTP-Methoden
-| GET = lesen; POST = erstellen; PUT = ersetzen; PATCH = teilweise ändern;
-  DELETE = löschen
+| GET = lesen; POST = erstellen; PUT = aktualisieren; DELETE = löschen
 
 | Antwortformat
-| JSON in allen Fällen; Datumsformat ISO 8601: `2024-06-01T09:00:00Z`
+| JSON in allen Fällen
 
 | Versionierung
-| [z. B. URL-Präfix `/api/v1/` - Version nur erhöhen bei Breaking Changes]
+| Kein Versionspräfix im Pfad
 |===
 
 _Diagramme in diesem Dokument sollten den aktuellen Stand des Codes widerspiegeln.
