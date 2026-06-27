@@ -101,7 +101,7 @@ zusammengehörige Einheit von Code mit einer klar definierten Aufgabe._
 
 LAYOUT_WITH_LEGEND()
 
-title Component Diagram – [Systemname]
+title Component Diagram – [LeihListe]
 
 Container_Boundary(frontend, "Frontend") {
   Component(booking_ui, "Buchungskomponente", "z. B. React / Angular", "Ermöglicht Nutzern das Erstellen und Verwalten von Buchungen")
@@ -109,30 +109,21 @@ Container_Boundary(frontend, "Frontend") {
   Component(shared_ui, "Gemeinsame UI-Komponenten", "z. B. Design System", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Navigation")
 }
 
-Container_Boundary(backend, "Backend") {
-  Component(booking_ctrl, "Buchungs-Controller", "z. B. REST Controller", "Nimmt eingehende Buchungsanfragen entgegen und delegiert an den Service")
-  Component(booking_svc, "Buchungs-Service", "z. B. Spring Service", "Enthält die Buchungslogik und orchestriert Repository und Benachrichtigung")
-  Component(user_svc, "Nutzer-Service", "z. B. Spring Service", "Verwaltung von Nutzerdaten und Authentifizierungslogik")
-  Component(notification_svc, "Benachrichtigungs-Service", "z. B. Spring Service", "Erstellt und versendet Benachrichtigungen an Nutzer:innen")
+Container_Boundary(backend, "Backend (FastAPI)") {
+  Component(items_router, "Items-Router", "FastAPI Router", "Nimmt eingehende Item-Anfragen entgegen; enthält CRUD- und Ausleih-Logik")
 }
 
 Container_Boundary(persistence, "Persistenz") {
-  Component(booking_repo, "Buchungs-Repository", "z. B. JPA Repository", "Datenzugriff für Buchungsentitäten")
-  Component(user_repo, "Nutzer-Repository", "z. B. JPA Repository", "Datenzugriff für Nutzerentitäten")
-  ContainerDb(db, "Datenbank", "z. B. PostgreSQL", "Persistente Datenhaltung für alle Entitäten")
+  Component(item_model, "Item-Modell", "SQLModel", "Definiert die Item-Entität; ORM-Mapping zur Datenbank")
+  Component(dependencies, "Dependencies", "FastAPI", "Stellt Datenbank-Sessions bereit; schreibt Startdaten beim ersten Start")
+  ContainerDb(db, "Datenbank", "PostgreSQL 17", "Persistente Datenhaltung für alle Item-Entitäten")
 }
 
-System_Ext(ext, "Externer E-Mail-Dienst", "Zustellung von E-Mail-Benachrichtigungen, z. B. via SMTP")
-
-Rel(booking_ui, booking_ctrl, "sendet Buchungsanfragen", "REST / HTTPS")
-Rel(auth_ui, user_svc, "authentifiziert Nutzer:in", "REST / HTTPS")
-Rel(booking_ctrl, booking_svc, "delegiert an", "Java API")
-Rel(booking_svc, booking_repo, "liest / schreibt Buchungen", "JPA")
-Rel(booking_svc, notification_svc, "löst Benachrichtigung aus", "Java API")
-Rel(user_svc, user_repo, "liest / schreibt Nutzerdaten", "JPA")
-Rel(booking_repo, db, "persistiert Daten", "SQL")
-Rel(user_repo, db, "persistiert Daten", "SQL")
-Rel(notification_svc, ext, "sendet E-Mails über", "SMTP")
+Rel(booking_ui, items_router, "sendet Anfragen", "REST / HTTP")
+Rel(items_router, item_model, "liest / schreibt", "SQLModel")
+Rel(items_router, dependencies, "erhält Session", "FastAPI")
+Rel(dependencies, db, "öffnet Verbindung", "SQL")
+Rel(item_model, db, "speichert Daten", "SQLModel")
 
 @enduml
 ....
@@ -143,29 +134,19 @@ Rel(notification_svc, ext, "sendet E-Mails über", "SMTP")
 |===
 | Komponente | Verantwortung | Schnittstellen
 
-| [z. B. Buchungs-Controller]
-| HTTP-Anfragen für Buchungsvorgänge entgegennehmen;
-  Eingaben validieren; Antworten zurückgeben
-| REST-API (eingehend); Buchungs-Service (ausgehend)
+| Items-Router
+| HTTP-Anfragen für Gegenstände entgegennehmen;
+  CRUD- und Ausleih-Logik ausführen; Antworten zurückgeben
+| REST-API (eingehend); Item-Modell, Dependencies (ausgehend)
 
-| [z. B. Buchungs-Service]
-| Buchungslogik koordinieren; Verfügbarkeit prüfen;
-  Transaktionen verwalten; Benachrichtigungen auslösen
-| Buchungs-Repository; Benachrichtigungs-Service
+| Item-Modell
+| Item-Entität definieren; ORM-Mapping zur Datenbank
+| Items-Router (eingehend); Datenbank (ausgehend)
 
-| [z. B. Buchungs-Repository]
-| Buchungsdaten lesen und schreiben;
-  Datenbankabfragen kapseln
-| Datenbank (JPA / SQL)
-
-| [z. B. Benachrichtigungs-Service]
-| E-Mail-Benachrichtigungen versenden;
-  Vorlagen verwalten
-| Externer SMTP-Dienst
-
-| [Weitere Komponente]
-| [Verantwortung]
-| [Schnittstellen]
+| Dependencies
+| Datenbank-Sessions als FastAPI-Dependency bereitstellen;
+  Startdaten beim ersten Start schreiben
+| Items-Router (eingehend); Datenbank (ausgehend)
 |===
 
 ---
