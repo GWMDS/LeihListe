@@ -157,61 +157,51 @@ Sequenzdiagramme zeigen, wie Komponenten bei typischen Abläufen zusammenarbeite
 Dokumentiert werden hier nur die wichtigsten und komplexesten Flüsse —
 nicht jede einfache CRUD-Operation.
 
-=== [Flussname, z. B. Raum buchen]
+=== Item ausleihen
 
-_Beschreibe kurz, was dieser Ablauf zeigt und warum er dokumentiert wird._
+Zeigt wie ein Item erfolgreich ausgeliehen wird.
 
 //Beispielhaftes Sequenzdiagramm für den Buchungsprozess
 //Die tatsächlichen Flüsse müssen auf das konkrete Projekt zugeschnitten sein
 
-[plantuml, sequence-booking, svg]
+[plantuml, sequence-borrow, svg]
 ....
 @startuml
 skinparam monochrome true
 skinparam defaultFontSize 12
 
 actor "Nutzer:in" as user
-participant "Buchungs-\nController" as ctrl
-participant "Buchungs-\nService" as svc
-participant "Buchungs-\nRepository" as repo
-participant "Benachrichtigungs-\nService" as notify
+participant "Items-Router" as router
+participant "Datenbank" as db
 
-user -> ctrl : POST /buchungen\n{raumId, zeitraum}
-ctrl -> ctrl : Eingabe validieren
-ctrl -> svc : buchungErstellen(raumId, zeitraum, nutzerId)
-svc -> repo : istVerfuegbar(raumId, zeitraum)
-repo --> svc : true
-svc -> repo : buchungSpeichern(buchung)
-repo --> svc : gespeicherteBuchung
-svc -> notify : bestaetigungSenden(buchung)
-notify --> svc : OK
-svc --> ctrl : buchung
-ctrl --> user : 201 Created\n{buchungsId, details}
+user -> router : PUT /api/items/{id}/borrow
+router -> db : Item aus Datenbank laden
+db --> router : Item (isBorrowed = false)
+router -> db : isBorrowed auf true setzen und speichern
+db --> router : gespeichertes Item
+router --> user : 200 OK – ausgeliehenes Item
 
 @enduml
 ....
 
 ---
 
-=== [Weiterer Fluss, z. B. Fehlerfall: Raum nicht verfügbar]
+=== Fehlerfall: Item bereits ausgeliehen
 
-[plantuml, sequence-conflict, svg]
+[plantuml, sequence-borrow-conflict, svg]
 ....
 @startuml
 skinparam monochrome true
 skinparam defaultFontSize 12
 
 actor "Nutzer:in" as user
-participant "Buchungs-\nController" as ctrl
-participant "Buchungs-\nService" as svc
-participant "Buchungs-\nRepository" as repo
+participant "Items-Router" as router
+participant "Datenbank" as db
 
-user -> ctrl : POST /buchungen\n{raumId, zeitraum}
-ctrl -> svc : buchungErstellen(raumId, zeitraum, nutzerId)
-svc -> repo : istVerfuegbar(raumId, zeitraum)
-repo --> svc : false
-svc --> ctrl : RaumNichtVerfuegbarException
-ctrl --> user : 409 Conflict\n{message, alternativen}
+user -> router : PUT /api/items/{id}/borrow
+router -> db : Item aus Datenbank laden
+db --> router : Item (isBorrowed = true)
+router --> user : 400 Bad Request – Item bereits ausgeliehen
 
 @enduml
 ....
