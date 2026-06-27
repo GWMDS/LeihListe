@@ -174,7 +174,7 @@ actor "Nutzer:in" as user
 participant "Items-Router" as router
 participant "Datenbank" as db
 
-user -> router : PUT /api/items/{id}/borrow
+user -> router : PUT /api/items/borrow/{id}
 router -> db : Item aus Datenbank laden
 db --> router : Item (isBorrowed = false)
 router -> db : isBorrowed auf true setzen und speichern
@@ -198,7 +198,7 @@ actor "Nutzer:in" as user
 participant "Items-Router" as router
 participant "Datenbank" as db
 
-user -> router : PUT /api/items/{id}/borrow
+user -> router : PUT /api/items/borrow/{id}
 router -> db : Item aus Datenbank laden
 db --> router : Item (isBorrowed = true)
 router --> user : 400 Bad Request – Item bereits ausgeliehen
@@ -347,20 +347,15 @@ Problem auf unterschiedliche Weise lösen._
 | Aspekt | Konvention
 
 | Fachliche Fehler
-| Als eigene Exception-Klassen modellieren
-  (z. B. `RaumNichtVerfuegbarException`, `BuchungNichtGefundenException`)
+| Über `HTTPException` mit passendem Status-Code und Fehlermeldung
 
 | HTTP-Fehlercodes
-| 400 für Validierungsfehler; 404 für nicht gefundene Ressourcen;
-  409 für Konflikte; 500 nur für unerwartete Systemfehler
+| 400 wenn Item bereits ausgeliehen; 
+  404 wenn Item nicht gefunden
 
 | Fehlermeldungen
 | Immer strukturiert zurückgeben:
-  `{ "fehler": "...", "details": "..." }` — kein Stack Trace an den Client
-
-| Logging
-| Fachliche Fehler als WARN; unerwartete Fehler als ERROR;
-  keine personenbezogenen Daten in Log-Ausgaben (DSGVO)
+  `{"detail": "..." }` — kein Stack Trace an den Client
 |===
 
 === API-Konventionen
