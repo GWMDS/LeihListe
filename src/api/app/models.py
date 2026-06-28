@@ -34,9 +34,14 @@ class BorrowingBase(SQLModel):
     """
     item_id: int = Field(ForeignKey(Item.id))
     borrowing_date: date = Field()
-    return_date: date = Field(nullable=True)
+    return_date: date | None = Field()
     due_date: date = Field()
 
+class BorrowingDetails(BorrowingBase):
+    """
+    This is the base class for a borrowing that is stored in the database.
+    """
+    item_name: str = Field()
 
 class Borrowing(BorrowingBase, table=True):
     """
@@ -45,11 +50,6 @@ class Borrowing(BorrowingBase, table=True):
     """
     borrowing_id: int | None = Field(default=None, primary_key=True)
 
-class BorrowingDetails(Borrowing):
-    """
-    This is the base class for a borrowing that is stored in the database.
-    """
-    item_name: str = Field()
 
 class BorrowingNew(SQLModel):
     """

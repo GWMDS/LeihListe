@@ -62,19 +62,36 @@ def return_item(item_id: int, session: Session = Depends(get_session))-> None:
 
 # issue 63 - get all borrowings with details
 @router.get("/all/details")#, response_model=Borrowing)
-def get_borrowings_with_details(session: Session = Depends(get_session))-> list[BorrowingBase]:
+def get_borrowings_with_details(session: Session = Depends(get_session))-> list[BorrowingDetails]:
     """Returns all borrowings with details from the database."""
     borrowings = session.exec(select(Borrowing)).all()
 
     if not borrowings:
         raise HTTPException(status_code=404, detail="no borrowings found")
 
-    return borrowings
+    borrowingresponse:list[BorrowingDetails] = []
+
+    for borrowing in borrowings:
+        borrowed_item_name = session.get(Item,borrowing.item_id).name
+
+        borrow_response = BorrowingDetails(
+            item_id=borrowing.item_id,
+            borrowing_date=borrowing.borrowing_date,
+            return_date=borrowing.return_date,
+            due_date=borrowing.due_date,
+            item_name=borrowed_item_name
+        )
+
+        print(borrowing.return_date)
+
+        borrowingresponse.append(borrow_response)
+
+    return borrowingresponse
 
 
 # issue 63 - get all borrowings with details and with item_name
 @router.get("/all/details/item_name")#, response_model=Borrowing)
-def get_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingBase]:
+def get_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingDetails]:
     """Returns all borrowings with details and item names from the database."""
     borrowings = session.exec(select(Borrowing)).all()
 
