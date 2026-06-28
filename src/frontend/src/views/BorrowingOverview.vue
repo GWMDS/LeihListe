@@ -78,7 +78,6 @@ async function getBorrowList() {
 }
 
 async function returnItem(id: number) {
-  console.log("ID: "+ id);
    try {
     await api.put(`/api/items/${id}/return/`)
 

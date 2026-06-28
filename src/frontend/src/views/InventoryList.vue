@@ -26,12 +26,12 @@
         <v-card-actions>
           <v-row justify="space-between">
             <v-col cols="auto">
-              <v-btn @click.stop="showDetails(item.id)">
+              <v-btn @click="showDetails(item.id)">
                 Details
               </v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn title="Bearbeiten" @click.stop="openEditDialog(item)">
+              <v-btn title="Bearbeiten" @click="openEditDialog(item)">
                 <v-icon size="large">mdi-pencil</v-icon>
               </v-btn>
               <v-btn title="Löschen" color="error" @click="triggerDelete(item)">
