@@ -28,25 +28,30 @@ class Customer(SQLModel, table=True):
     customer_id: int = Field(default=None, primary_key=True)
     customer_name: str = Field()
 
-class Borrowing(SQLModel, table=True):
+class BorrowingBase(SQLModel):
+    """
+    Base class for a borrowing that holds minimally necessary information about a borrowing
+    """
+    item_id: int = Field(ForeignKey(Item.id))
+    borrowing_date: date = Field()
+    return_date: date = Field(nullable=True)
+    due_date: date = Field()
+
+
+class Borrowing(BorrowingBase, table=True):
     """
     This is a borrowing.
     A borrowing shows who borrowed what when
     """
     borrowing_id: int | None = Field(default=None, primary_key=True)
-    item_id: int = Field(ForeignKey(Item.id))
-    customer_id: int = Field(ForeignKey(Customer.customer_id))
-    borrowing_date: date = Field()
-    return_date: date = Field(nullable=True)
-    due_date: date = Field()
 
-class BorrowingDetails(Borrowing, table=False):
+class BorrowingDetails(Borrowing):
     """
     This is the base class for a borrowing that is stored in the database.
     """
     item_name: str = Field()
 
-class BorrowingNew(SQLModel, table=False):
+class BorrowingNew(SQLModel):
     """
     TODO: This is the base class for a borrowing that is created in the database.
     """

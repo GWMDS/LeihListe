@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from sqlalchemy.sql.operators import is_
-from models import Borrowing, BorrowingDetails, Item, BorrowingNew
+from models import BorrowingBase, Borrowing, BorrowingDetails, Item, BorrowingNew
 from dependencies import get_session
 from datetime import date
 
@@ -62,7 +62,7 @@ def return_item(item_id: int, session: Session = Depends(get_session))-> None:
 
 # issue 63 - get all borrowings with details
 @router.get("/all/details")#, response_model=Borrowing)
-def get_borrowings_with_details(session: Session = Depends(get_session))-> list[Borrowing]:
+def get_borrowings_with_details(session: Session = Depends(get_session))-> list[BorrowingBase]:
     """Returns all borrowings with details from the database."""
     borrowings = session.exec(select(Borrowing)).all()
 
@@ -74,7 +74,7 @@ def get_borrowings_with_details(session: Session = Depends(get_session))-> list[
 
 # issue 63 - get all borrowings with details and with item_name
 @router.get("/all/details/item_name")#, response_model=Borrowing)
-def get_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingDetails]:
+def get_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingBase]:
     """Returns all borrowings with details and item names from the database."""
     borrowings = session.exec(select(Borrowing)).all()
 
@@ -100,7 +100,7 @@ def get_borrowings_with_details_and_itemname(session: Session = Depends(get_sess
 
 # issue 63 - get all active borrowings with details and with item_name
 @router.get("/all/details/item_name/<active>")#, response_model=Borrowing)
-def get_active_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingDetails]:
+def get_active_borrowings_with_details_and_itemname(session: Session = Depends(get_session))-> list[BorrowingBase]:
     """Returns all borrowings with details and item names from the database."""
     borrowings = session.exec(select(Borrowing).where(is_(Borrowing.return_date, None)))
 
