@@ -65,7 +65,6 @@ router = APIRouter(
 def get_borrowings_with_details(session: Session = Depends(get_session))-> list[BorrowingDetails]:
     """Returns all borrowings with details from the database."""
     borrowings = session.exec(select(Borrowing)).all()
-
     if not borrowings:
         raise HTTPException(status_code=404, detail="no borrowings found")
 
@@ -82,9 +81,8 @@ def get_borrowings_with_details(session: Session = Depends(get_session))-> list[
             item_name=borrowed_item_name
         )
 
-        print(borrowing.return_date)
-
-        borrowingresponse.append(borrow_response)
+        if borrow_response.return_date is None:
+            borrowingresponse.append(borrow_response)
 
     return borrowingresponse
 
