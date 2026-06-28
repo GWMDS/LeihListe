@@ -101,7 +101,8 @@ Diese Sicht gibt an, welche Umgebungen für den Code vorgesehen sind, z.B. JVM, 
 ' C4 Model
 !include <c4/C4_Container.puml>
 
-Person(user, "Nutzeri:in", "Hochschulmitarbeiter:in oder Ausleiher")
+Person(user1, "Ausleiher", "leiht interessante Gegenstände aus")
+Person(user2, "Hochschulmitarbeiter:in", "pflegt und überwacht das Inventar")
 
 System_Boundary(c1, "Frontend") {
     Container(UI, "Browser", "Firefox, Chrome...", "Benutzeroberfläche, über die Nutzer:innen mit dem restlichen System interagieren")
@@ -116,9 +117,10 @@ System_Boundary(c2, "Backend - VM") {
   }
 }
 
-Rel(user, UI, "bedient", "")
+Rel(user1, UI, "bedient", "")
+Rel(user2, UI, "bedient", "")
 Rel(UI,api, "kommuniziert mit","HTTP")
-Rel(api,db,"liest/schreibt","ODBC")
+Rel_L(api,db,"liest/schreibt","ODBC")
 
 @enduml
 ....
