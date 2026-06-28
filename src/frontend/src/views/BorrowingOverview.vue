@@ -18,7 +18,7 @@
         <div>Rückgabedatum: {{ item.return_date }}</div>
       </v-card-text>
       <v-card-actions>
-        <v-btn>
+        <v-btn @click="returnItem(item.item_id)">
           Zurückgeben
         </v-btn>
       </v-card-actions>
@@ -47,7 +47,7 @@ interface Item {
   borrowing_date: string
   return_date: string
   item_name: string
-  id: number
+  item_id: number
 }
 const items = ref(<Item[]>[])
 
@@ -71,6 +71,28 @@ async function getBorrowList() {
       snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
       snackbarMessage.value = "Fehler: " + error.message
+    }
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
+  }
+}
+
+async function returnItem(id: number) {
+  console.log("ID: "+ id);
+   try {
+    await api.put(`/api/items/${id}/return/`)
+
+    await getBorrowList();
+    snackbarColor.value = 'success'
+    snackbarMessage.value = 'Gegenstand wurde erfolgreich zurückgegeben!'
+    showSnackbar.value = true
+  }
+  catch (error: any) {
+    snackbarColor.value = 'error'
+    if (error.response) {
+      snackbarMessage.value = "Fehler bei Rückgabe: " + error.response.status + " - " + error.response.data?.detail
+    } else {
+      snackbarMessage.value = "Fehler beim Rückgabe: " + error.message
     }
     console.error(snackbarMessage.value)
     showSnackbar.value = true
