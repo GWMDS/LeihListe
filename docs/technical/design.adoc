@@ -104,9 +104,9 @@ LAYOUT_WITH_LEGEND()
 title Component Diagram – [LeihListe]
 
 Container_Boundary(frontend, "Frontend") {
-  Component(booking_ui, "Buchungskomponente", "z. B. React / Angular", "Ermöglicht Nutzern das Erstellen und Verwalten von Buchungen")
-  Component(auth_ui, "Authentifizierungskomponente", "z. B. React / Angular", "Handhabt Login, Logout und Session-Management")
-  Component(shared_ui, "Gemeinsame UI-Komponenten", "z. B. Design System", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Navigation")
+  Component(vue_router, "Navigation/Routing", "Vue-Router", "Ermöglicht Wechseln zwischen mehrerer Seiten ohne Neuladen")
+  Component(api_service, "API Service Layer", "Axios", Kommuniziert über die Rest-API mit dem Backend)
+  Component(shared_ui, "Gemeinsame UI-Komponenten", "Vuetify", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Karten")
 }
 
 Container_Boundary(backend, "Backend (FastAPI)") {
@@ -119,7 +119,7 @@ Container_Boundary(persistence, "Persistenz") {
   ContainerDb(db, "Datenbank", "PostgreSQL 17", "Persistente Datenhaltung für alle Item-Entitäten")
 }
 
-Rel(booking_ui, items_router, "sendet Anfragen", "REST / HTTP")
+Rel(api_service, items_router, "sendet Anfragen", "REST / HTTP")
 Rel(items_router, item_model, "liest / schreibt", "SQLModel")
 Rel(items_router, dependencies, "erhält Session", "FastAPI")
 Rel(dependencies, db, "öffnet Verbindung", "SQL")
