@@ -42,9 +42,8 @@ import { ref, onMounted } from 'vue'
 import api from '../api.ts'
 
 interface Item {
-  borrowing_id: number
-  customer_id: number
   borrowing_date: string
+  due_date: string
   return_date: string
   item_name: string
   item_id: number
@@ -62,7 +61,7 @@ onMounted(async () => {
 
 async function getBorrowList() {
   try {
-    const response = await api.get('/api/borrowings/all/details/item/')
+    const response = await api.get('/api/borrowings/all/details/')
     items.value = response.data
     console.log(response.data)
   } catch (error: any) {
@@ -79,7 +78,7 @@ async function getBorrowList() {
 
 async function returnItem(id: number) {
    try {
-    await api.put(`/api/items/${id}/return/`)
+    await api.put(`/api/items/return/${id}`)
 
     await getBorrowList();
     snackbarColor.value = 'success'
