@@ -134,7 +134,7 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
 
 
 # issue 63 - return single item
-@router.put("/{item_id}/return")#, response_model=Item)
+@router.put("/return/{item_id}")#, response_model=Item)
 def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
     """Marks an item as returned."""
     item = session.get(Item, item_id)

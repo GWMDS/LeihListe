@@ -9,8 +9,12 @@ router = APIRouter(
 )
 
 # issue 63 - get all customers with details
-@router.get("/all")#, response_model=Customers)
+@router.get("/all")#, response_model=Customer)
 def get_customers(session: Session = Depends(get_session))-> list[Customer]:
     """Returns all customers in the database."""
     customers = session.exec(select(Customer)).all()
+
+    if not customers:
+        raise HTTPException(status_code=404, detail="no customers found")
+
     return customers

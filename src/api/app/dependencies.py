@@ -1,5 +1,5 @@
-from datetime import date
-from sqlmodel import Session
+from datetime import date, timedelta
+from sqlmodel import Session, func, select
 from models import Item, Customer, Borrowing
 from database import engine
 
@@ -22,18 +22,30 @@ def write_starting_data(session: Session):
                 session.add(db_item)
         session.commit()
 
-        for k in range(1):
-            if session.get(Customer, k) is None:
-                    db_customer = Customer(customer_id=k,
-                                customer_name=f"Customer {k}")
+        for j in range(1):
+            if session.get(Customer, j) is None:
+                    db_customer = Customer(customer_id=j,
+                                customer_name=f"Customer {j}")
                     session.add(db_customer)
 
-        for j in range(5):
-            if session.get(Borrowing, j) is None:
-                db_borrowing = Borrowing(borrowing_id=j,
-                            item_id=((j+1)%2),
+        cnt = session.exec(select(func.count(Borrowing.borrowing_id))).first()
+        if cnt == 0:
+            anzahl_demo = 3
+            for k in range(anzahl_demo):
+                db_borrowing = Borrowing(
+                            item_id=((k+1)% anzahl_demo),
                             customer_id=0,
                             borrowing_date=date.today(),
-                            return_date=date.today())
+                            return_date=(date.today() + timedelta(7)),
+                            due_date=(date.today() + timedelta(7)))
+                session.add(db_borrowing)
+
+            for l in range(anzahl_demo):
+                db_borrowing = Borrowing(
+                            item_id=((l+1)% anzahl_demo),
+                            customer_id=0,
+                            borrowing_date=date.today(),
+                            return_date=None,
+                            due_date=(date.today() + timedelta(7)))
                 session.add(db_borrowing)
         session.commit()
