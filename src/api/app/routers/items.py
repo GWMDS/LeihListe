@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from models import Item, ItemBase
+from models import Item, ItemBase, Borrowing
 from dependencies import get_session
+from datetime import date, timedelta
 
 router = APIRouter(
     prefix="/api/items",
@@ -128,6 +129,14 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
         raise HTTPException(status_code=400, detail="Item is already borrowed")
 
     item.isBorrowed = True
+    new_borrowing = Borrowing(
+        item_id = item.id,
+        borrowing_date = date.today(),
+        due_date = date.today() + timedelta(days=7),
+        return_date = None
+    )
+    session.add(new_borrowing)
+
     session.commit()
     session.refresh(item)
     return item

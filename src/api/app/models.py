@@ -18,14 +18,14 @@ class Item(ItemBase, table=True):
     This is an item that is stored in the database.
     The items can be borrowed.
     """
-    id: int = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
 
 class Customer(SQLModel, table=True):
     """
     This is a customer who is stored in the database.
     Customers can borrow/return Items.
     """
-    customer_id: int = Field(default=None, primary_key=True)
+    customer_id: int | None= Field(default=None, primary_key=True)
     customer_name: str = Field()
 
 class BorrowingBase(SQLModel):
