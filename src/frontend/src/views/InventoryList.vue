@@ -1,8 +1,5 @@
 <template>
-  <h1>Inventarliste</h1>
-  <v-btn color="primary" @click="getInventoryList()" class="mt-4">
-    Liste holen
-  </v-btn>
+  <h1>Inventar</h1>
   <v-row class="mt-4">
     <!--
     cols="12": 12/12 (volle Breite)
@@ -41,6 +38,10 @@
         Beschreibung: {{ selectedItem.description }}
       </v-card-text>
       <v-card-actions>
+        <v-btn color="primary" variant="elevated" :disabled="selectedItem.isBorrowed"
+          @click="borrowItem(selectedItem.id)">
+          {{ selectedItem.isBorrowed ? 'Bereits verliehen' : 'Ausleihen' }}
+        </v-btn>
         <v-btn variant="text" @click="dialogOpen = false">
           Schließen
         </v-btn>
@@ -48,19 +49,19 @@
     </v-card>
   </v-dialog>
 
-  <v-snackbar v-model="showError" color="error" timeout="5000" location="bottom" variant="elevated">
-    {{ errorMessage }}
+  <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="5000" location="bottom" variant="elevated">
+    {{ snackbarMessage }}
 
     <template v-slot:actions>
-      <v-btn variant="text" @click="showError = false">
-        Schließen
+      <v-btn variant="text" @click="showSnackbar = false">
+        <v-icon>mdi-window-close</v-icon>
       </v-btn>
     </template>
   </v-snackbar>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import api from '../api.ts'
 
 interface Item {
@@ -73,24 +74,30 @@ interface Item {
 }
 
 const items = ref(<Item[]>[])
-const showError = ref(false)
-const errorMessage = ref('')
+const showSnackbar = ref(false)
+const snackbarMessage = ref('')
+const snackbarColor = ref('success')
 const dialogOpen = ref(false)
 const selectedItem = ref<Item | null>(null)
 
+onMounted(async () => {
+  getInventoryList();
+})
+
 async function getInventoryList() {
   try {
-    const response = await api.get('/api/items')
+    const response = await api.get('/api/items/')
     items.value = response.data
     console.log(response.data)
   } catch (error: any) {
+    snackbarColor.value = 'error'
     if (error.response) {
-      errorMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value = "Fehler: " + error.message
+      snackbarMessage.value = "Fehler: " + error.message
     }
-    console.error(errorMessage.value)
-    showError.value = true
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
   }
 }
 
@@ -100,15 +107,38 @@ async function showDetails(id: number) {
     selectedItem.value = response.data
     dialogOpen.value = true
   } catch (error: any) {
+    snackbarColor.value = 'error'
     if (error.response) {
-      errorMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
+      snackbarMessage.value = "Fehler: " + error.response.status + " - " + error.response.data?.detail
     } else {
-      errorMessage.value = "Fehler beim Laden der Details: " + error.message
+      snackbarMessage.value = "Fehler beim Laden der Details: " + error.message
     }
-    console.error(errorMessage.value)
-    showError.value = true
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
   }
-
 }
+
+async function borrowItem(id: number) {
+  try {
+    await api.put(`/api/items/borrow/${id}`)
+    dialogOpen.value = false
+    await getInventoryList()
+    snackbarColor.value = 'success'
+    snackbarMessage.value = 'Gegenstand wurde erfolgreich ausgeliehen!'
+    showSnackbar.value = true
+
+  }
+  catch (error: any) {
+    snackbarColor.value = 'error'
+    if (error.response) {
+      snackbarMessage.value = "Fehler beim Ausleihen: " + error.response.status + " - " + error.response.data?.detail
+    } else {
+      snackbarMessage.value = "Fehler beim Ausleihen: " + error.message
+    }
+    console.error(snackbarMessage.value)
+    showSnackbar.value = true
+  }
+}
+
 
 </script>
