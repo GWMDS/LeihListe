@@ -106,7 +106,7 @@ title Component Diagram – [LeihListe]
 Container_Boundary(frontend, "Frontend") {
   Component(vue_router, "Navigation/Routing", "Vue-Router", "Ermöglicht Wechseln zwischen mehrerer Seiten ohne Neuladen")
   Component(api_service, "API Service Layer", "Axios", Kommuniziert über die Rest-API mit dem Backend)
-  Component(shared_ui, "Gemeinsame UI-Komponenten", "Vuetify", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Karten")
+  Component(shared_ui, "Gemeinsame UI-Komponenten", "Vuetify", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Dialoge")
 }
 
 Container_Boundary(backend, "Backend (FastAPI)") {
@@ -147,6 +147,18 @@ Rel(item_model, db, "speichert Daten", "SQLModel")
 | Datenbank-Sessions als FastAPI-Dependency bereitstellen;
   Startdaten beim ersten Start schreiben
 | Items-Router (eingehend); Datenbank (ausgehend)
+
+| Navigation/Routing
+| Verwaltet die clientseitigen Routen der Anwendung; ermöglicht den       nahtlosen Wechsel zwischen verschiedenen Ansichten der SPA.
+| Vue-Core-Anwendung (eingehend); Browser-History-API, UI-Komponenten (ausgehend)
+
+| API Service Layer
+| Beinhaltet gesamte HTTP-Kommunikation; Sendet asynchrone REST-Anfragen an das Fast API-Backend
+| Frontend-UI-Komponenten (eingehend); REST-API des Backends via HTTP (ausgehend)
+
+| Gemeinsame UI-Komponenten
+| Stellt die visuelle Schnittstelle für den Verleiher bereit; rendert reaktive, responsive UI-Elemente(v-card, v-dialog, v-btn) basierend auf den aktuellen Zustandsdaten
+| Verleiher/Endnutzer via Klick- und Eingabe-Events (eingehend); API Service Layer, Vue-Router (ausgehend)
 |===
 
 ---
