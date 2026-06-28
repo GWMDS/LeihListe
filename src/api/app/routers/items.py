@@ -155,6 +155,10 @@ def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
         raise HTTPException(status_code=400, detail="Item is already returned")
 
     item.isBorrowed = False
+
+    borrowing = session.exec(select(Borrowing).where(Borrowing.item_id==item.id and Borrowing.return_date is None)).all()[0]
+    borrowing.return_date = date.today()
+    session.add(borrowing)
     session.commit()
     session.refresh(item)
     return item
