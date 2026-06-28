@@ -2,12 +2,6 @@
   <h1>Ausleihen</h1>
 
   <v-row class="mt-4">
-  <!--
-    cols="12": 12/12 (volle Breite)
-    sm="6"   : 6/12 (2 Spalten)
-    md="4"   : 4/12 (3 Spalten)
-    lg="3"   : 3/12 (4 Spalten)
-    -->
   <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
     <v-card class="d-flex flex-column fill-height">
       <v-card-title class="d-flex align-center">
@@ -15,7 +9,7 @@
       </v-card-title>
       <v-card-text>
         <div>Ausleihdatum: {{ item.borrowing_date }}</div>
-        <div>Rückgabedatum: {{ item.return_date }}</div>
+        <div>Abgabetermin: {{ item.due_date }}</div>
       </v-card-text>
       <v-card-actions>
         <v-btn @click="returnItem(item.item_id)">
@@ -76,6 +70,7 @@ async function getBorrowList() {
   }
 }
 
+// Rückgabe
 async function returnItem(id: number) {
    try {
     await api.put(`/api/items/return/${id}`)
