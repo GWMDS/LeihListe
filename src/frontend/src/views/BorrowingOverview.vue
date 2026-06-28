@@ -2,22 +2,28 @@
   <h1>Ausleihen</h1>
 
   <v-row class="mt-4">
-  <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-    <v-card class="d-flex flex-column fill-height">
-      <v-card-title class="d-flex align-center">
-        {{ item.item_name }}
-      </v-card-title>
-      <v-card-text>
-        <div>Ausleihdatum: {{ item.borrowing_date }}</div>
-        <div>Abgabetermin: {{ item.due_date }}</div>
-      </v-card-text>
-      <v-card-actions>
-        <v-btn @click="returnItem(item.item_id)">
-          Zurückgeben
-        </v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-col>
+    <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
+      <v-card class="d-flex flex-column fill-height">
+        <v-card-title class="d-flex align-center">
+          {{ item.item_name }}
+          <v-spacer />
+          <v-chip color="error" v-if="(daysSinceLastDate(new Date(Date.now()), new Date(item.due_date)) > 0)">
+            <v-icon>mdi-exclamation</v-icon>Verspätet
+          </v-chip>
+        </v-card-title>
+        <v-card-text>
+          <div>Ausleihdatum: {{ dateFormatter.format(new Date(item.borrowing_date)) }}</div>
+          <div>Abgabetermin: {{ dateFormatter.format(new Date(item.due_date)) }}</div>
+
+          <!--<div>Days over due_date: {{ daysSinceLastDate(new Date(Date.now()), new Date(item.due_date)) }}</div>-->
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="returnItem(item.item_id)">
+            Zurückgeben
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-col>
   </v-row>
 
   <v-snackbar v-model="showSnackbar" :color="snackbarColor" timeout="5000" location="bottom" variant="elevated">
@@ -42,7 +48,14 @@ interface Item {
   item_name: string
   item_id: number
 }
+
 const items = ref(<Item[]>[])
+
+const dateFormatter = new Intl.DateTimeFormat("de-DE", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric",
+});
 
 const showSnackbar = ref(false)
 const snackbarMessage = ref('')
@@ -72,7 +85,7 @@ async function getBorrowList() {
 
 // Rückgabe
 async function returnItem(id: number) {
-   try {
+  try {
     await api.put(`/api/items/return/${id}`)
 
     await getBorrowList();
@@ -90,6 +103,12 @@ async function returnItem(id: number) {
     console.error(snackbarMessage.value)
     showSnackbar.value = true
   }
+}
+
+function daysSinceLastDate(currentDate: Date, previousDate: Date) {
+  const timeDifference = currentDate.getTime() - previousDate.getTime()
+  const daysDifference = Math.floor(timeDifference / (1000 * 60 * 60 * 24))
+  return daysDifference
 }
 
 </script>
