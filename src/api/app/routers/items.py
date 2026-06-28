@@ -156,9 +156,14 @@ def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
 
     item.isBorrowed = False
 
-    borrowing = session.exec(select(Borrowing).where(Borrowing.item_id==item.id and Borrowing.return_date is None)).all()[0]
+    borrowing = session.exec(select(Borrowing).where(Borrowing.item_id==item.id, Borrowing.return_date.is_(None))).all()[0]
     borrowing.return_date = date.today()
+
     session.add(borrowing)
     session.commit()
     session.refresh(item)
+    session.refresh(borrowing)
+
+    print(borrowing)
+
     return item
