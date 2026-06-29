@@ -5,9 +5,10 @@
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
       <v-card class="d-flex flex-column fill-height">
         <v-card-title class="d-flex align-center">
-          {{ item.item_name }}
+          <div class="text-truncate">{{ item.item_name }}</div>
           <v-spacer />
-          <v-chip color="error" v-if="(daysSinceLastDate(new Date(Date.now()), new Date(item.due_date)) > 0)">
+          <v-chip class="flex-shrink-0" color="error"
+            v-if="(daysSinceLastDate(new Date(Date.now()), new Date(item.due_date)) > 0)">
             <v-icon>mdi-exclamation</v-icon>Verspätet
           </v-chip>
         </v-card-title>
