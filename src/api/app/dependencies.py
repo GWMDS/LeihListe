@@ -46,13 +46,17 @@ def write_starting_data(session: Session):
 
                 borrowing = Borrowing(
                     item_id = i,
-                    borrowing_date = date.today(),
+                    borrowing_date = date.today()-timedelta(days=2),
                     due_date = date.today() + timedelta(days=7)
                 )
                 if bool(i%2) is True:
                     borrowing.return_date=None
                 else:
-                    borrowing.return_date = date.today()
+                    if bool(i%3) is True:
+                        borrowing.return_date = date.today()
+                        borrowing.due_date = date.today() - timedelta(days=1)
+                    else:
+                        borrowing.return_date = date.today()
                 session.add(borrowing)
 
         session.flush()
