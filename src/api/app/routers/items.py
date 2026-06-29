@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
-from models import Item, ItemBase
+from models import Item, ItemBase, Borrowing
 from dependencies import get_session
+from datetime import date, timedelta
 
 router = APIRouter(
     prefix="/api/items",
@@ -128,6 +129,41 @@ def borrow_item(item_id: int, session: Session = Depends(get_session)) -> Item:
         raise HTTPException(status_code=400, detail="Item is already borrowed")
 
     item.isBorrowed = True
+    new_borrowing = Borrowing(
+        item_id = item.id,
+        borrowing_date = date.today(),
+        due_date = date.today() + timedelta(days=7),
+        return_date = None
+    )
+    session.add(new_borrowing)
+
     session.commit()
     session.refresh(item)
+    return item
+
+
+# issue 63 - return single item
+@router.put("/return/{item_id}")#, response_model=Item)
+def return_item(item_id: int, session: Session = Depends(get_session)) -> Item:
+    """Marks an item as returned."""
+    item = session.get(Item, item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Item not found")
+
+    if (item.isBorrowed) is False:
+        raise HTTPException(status_code=400, detail="Item is already returned")
+
+    item.isBorrowed = False
+
+    borrowing = session.exec(select(Borrowing).where(Borrowing.item_id==item.id, Borrowing.return_date.is_(None))).all()[0]
+    borrowing.return_date = date.today()
+
+    session.add(borrowing)
+    session.commit()
+    session.refresh(item)
+    session.refresh(borrowing)
+
+    print(borrowing)
+
     return item
