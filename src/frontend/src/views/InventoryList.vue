@@ -31,10 +31,10 @@
               </v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn title="Bearbeiten" @click="openEditDialog(item)">
+              <v-btn :disabled="item.isBorrowed" title="Bearbeiten" @click="openEditDialog(item)">
                 <v-icon size="large">mdi-pencil</v-icon>
               </v-btn>
-              <v-btn title="Löschen" color="error" @click="triggerDelete(item)">
+              <v-btn :disabled="item.isBorrowed" title="Löschen" color="error" @click="triggerDelete(item)">
                 <v-icon size="large">mdi-delete</v-icon>
               </v-btn>
             </v-col>
