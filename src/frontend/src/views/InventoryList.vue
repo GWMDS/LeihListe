@@ -13,14 +13,14 @@
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
       <v-card :class="{ 'opacity-70': item.isBorrowed }" class="d-flex flex-column fill-height">
         <v-card-title class="d-flex align-center">
-          {{ item.name }}
+          <div class="text-truncate">{{ item.name }}</div>
           <v-spacer />
-          <v-chip :color="item.isBorrowed ? 'error' : 'success'" size="small">
+          <v-chip class="flex-shrink-0" :color="item.isBorrowed ? 'error' : 'success'" size="small">
             {{ item.isBorrowed ? 'Ausgeliehen' : 'Verfügbar' }}
           </v-chip>
         </v-card-title>
         <v-card-text>
-          <div>Kategorie: {{ item.category }}</div>
+          <div class="text-truncate">Kategorie: {{ item.category }}</div>
           <div class="line-clamp"> Beschreibung: {{ item.description }}</div>
         </v-card-text>
         <v-card-actions>
