@@ -38,7 +38,7 @@ def write_starting_data(session: Session):
                         id=i,
                         name=item_list[i-1][0],
                         category=item_list[i-1][1],
-                        description = f"Toller Inventargegenstand {i}",
+                        description = f"Toller Inventargegenstand mit einer sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr sehr langen Beschreibung {i}",
                         isBorrowed= bool(i%2),
                         state = state_list[i%3]
                     )
