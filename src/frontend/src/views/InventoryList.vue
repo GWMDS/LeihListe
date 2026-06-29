@@ -11,7 +11,7 @@
     lg="3"   : 3/12 (4 Spalten)
     -->
     <v-col v-for="item in items" cols="12" sm="6" md="4" lg="3">
-      <v-card :class="{ 'opacity-50': item.isBorrowed }" class="d-flex flex-column fill-height">
+      <v-card :class="{ 'opacity-70': item.isBorrowed }" class="d-flex flex-column fill-height">
         <v-card-title class="d-flex align-center">
           {{ item.name }}
           <v-spacer />
@@ -26,12 +26,12 @@
         <v-card-actions>
           <v-row justify="space-between">
             <v-col cols="auto">
-              <v-btn @click.stop="showDetails(item.id)">
+              <v-btn @click="showDetails(item.id)">
                 Details
               </v-btn>
             </v-col>
             <v-col cols="auto">
-              <v-btn title="Bearbeiten" @click.stop="openEditDialog(item)">
+              <v-btn title="Bearbeiten" @click="openEditDialog(item)">
                 <v-icon size="large">mdi-pencil</v-icon>
               </v-btn>
               <v-btn title="Löschen" color="error" @click="triggerDelete(item)">
