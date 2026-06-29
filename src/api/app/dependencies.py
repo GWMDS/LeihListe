@@ -2,6 +2,7 @@ from datetime import date, timedelta
 from sqlmodel import Session, func, select
 from models import Item, Customer, Borrowing
 from database import engine
+from sqlalchemy import text
 
 def get_session():
     """Returns a new database session as a dependency."""
@@ -10,42 +11,57 @@ def get_session():
 
 def write_starting_data(session: Session):
     """Writes dummy data to the database, if there is no data yet."""
+    item_list = [
+        ("The Scrum Guide","Bücher"),
+        ("Das Kapital","Bücher"),
+        ("1984","Bücher"),
+        ("Edding","Schreibwaren"),
+        ("1000000000V Laserpointer","Kinderspielzeug"),
+        ("Mikroskop","Laborequipment"),
+        ("Multimeter","Laboreuqipment"),
+        ("Biertischgarnitur","Veranstaltungszubehör"),
+        ("Hunderoboter","Technik"),
+        ("Plakataufsteller","Veranstaltungszubehör"),
+        ("Lastenfahrrad","Fahrzeuge")
+    ]
+    state_list = [
+        "neu",
+        "beschädigt",
+        "gut"
+    ]
+
     with session:
-        for i in range(10):
+        for i in range(1,11):
             if session.get(Item, i) is None:
-                db_item = Item(id=i,
-                            name=f"Item {i}",
-                            description=f"Description for item {i}",
-                            state="new",
-                            isBorrowed= i % 2 == 0,
-                            category="general")
-                session.add(db_item)
-        session.commit()
+                session.add(
+                    Item(
+                        id=i,
+                        name=item_list[i-1][0],
+                        category=item_list[i-1][1],
+                        description = f"Toller Inventargegenstand {i}",
+                        isBorrowed= bool(i%2),
+                        state = state_list[i%3]
+                    )
+                    )
 
-        for j in range(1):
-            if session.get(Customer, j) is None:
-                    db_customer = Customer(customer_id=j,
-                                customer_name=f"Customer {j}")
-                    session.add(db_customer)
+                borrowing = Borrowing(
+                    item_id = i,
+                    borrowing_date = date.today(),
+                    due_date = date.today() + timedelta(days=7)
+                )
+                if bool(i%2) is True:
+                    borrowing.return_date=None
+                else:
+                    borrowing.return_date = date.today()
+                session.add(borrowing)
 
-        cnt = session.exec(select(func.count(Borrowing.borrowing_id))).first()
-        if cnt == 0:
-            anzahl_demo = 3
-            for k in range(anzahl_demo):
-                db_borrowing = Borrowing(
-                            item_id=((k+1)% anzahl_demo),
-                            customer_id=0,
-                            borrowing_date=date.today(),
-                            return_date=(date.today() + timedelta(7)),
-                            due_date=(date.today() + timedelta(7)))
-                session.add(db_borrowing)
+        session.flush()
 
-            for l in range(anzahl_demo):
-                db_borrowing = Borrowing(
-                            item_id=((l+1)% anzahl_demo),
-                            customer_id=0,
-                            borrowing_date=date.today(),
-                            return_date=None,
-                            due_date=(date.today() + timedelta(7)))
-                session.add(db_borrowing)
+        #This is necessary so POST-Requests work, since we set the ids manually
+        session.execute(text("""
+            SELECT setval(
+            pg_get_serial_sequence('item', 'id'),
+            (SELECT MAX(id) FROM item)
+                )
+            """))
         session.commit()
