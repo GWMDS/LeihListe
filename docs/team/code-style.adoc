@@ -23,7 +23,7 @@ Für den Backend-Code gelten die Richtlinien von {pylint-docs}[Pylint].
 * Der Python-Code muss den aktuellen Pylint-Empfehlungen entsprechen.
 * Funktionen, Klassen und Variablen sind gemäß den Pylint-Namenskonventionen zu benennen.
 * Warnungen und Fehler von Pylint sollen vor dem Commit behoben werden.
-* Funktionen und Klassen sind mit aussagekräftigen Docstrings zu dokumentieren.
+* Funktionen und Klassen sind mit aussagekräftigen Docstrings zu dokumentieren. Inklusive Parameter und Rückgabewert
 
 === Dateistruktur
 
@@ -80,7 +80,6 @@ Vor jedem Merge oder Release sind folgende Prüfungen durchzuführen:
 . Ausführung von Pylint für den Backend-Code
 . Ausführung von ESLint für den Frontend-Code
 . Behebung aller relevanten Warnungen und Fehler
-. Durchführung vorhandener Tests
 . Code-Review durch mindestens ein weiteres Teammitglied
 
 == Zusammenfassung
