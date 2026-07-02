@@ -110,7 +110,6 @@ _Eine User Story gilt als fertig, wenn:_
 
 // Hier können die Kriterien individuell angepasst werden, z. B.:
 * [ ] Der Code wurde implementiert und in den Hauptbranch gemergt
-* [ ] Unit- und Integrationstests wurden geschrieben und sind grün
 * [ ] Der Code wurde von mindestens einer weiteren Person reviewt
 * [ ] Die Funktionalität wurde im Staging-System getestet
 * [ ] Dokumentation wurde aktualisiert (falls erforderlich)
