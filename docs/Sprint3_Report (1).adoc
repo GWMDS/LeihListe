@@ -27,13 +27,13 @@ Formulieren Sie Ihr Sprintziel in 1–2 Sätzen. Leitfragen:
 | Kriterium | Ihre Antwort
 
 | Sprintziel
-| Minimum Viable Product (MVP) für die Verleih- und Ausleihplattform Lendify umsetzen, um den Nutzern die Möglichkeit zu geben, Gegenstände zu verleihen und auszuleihen.
+| Es soll ein Minimum Viable Product umgesetzt werden, das die zentralsten Funktionalitäten einer Inventarisierungs- und Verleihsoftware umsetzt.
 
 | Ausgewählter MVP-Ausschnitt / Nutzerfluss
-| Verleih- und Ausleihworkflow
+| CRUD-Operationen für die Inventarverwaltung und einfacher Ausleihworkflow.
 
 | Zentrale Annahme oder Umsetzungsfrage
-| Die zentrale Annahme ist, dass Nutzer eine einfache und intuitive Plattform benötigen, um Gegenstände zu verleihen und auszuleihen. Die Umsetzungsfrage lautet, ob die Implementierung des Verleih- und Ausleihworkflows den Nutzern einen Mehrwert bietet und ihre Bedürfnisse erfüllt.
+| Die zentrale Anname ist, dass die Inventarisierungsfunktionalitäten zunächst Priorität über den Ausleihfunktionalitäten haben. Aus diesem Grund ist ein Großteil des geschriebenen Quellcodes für manuelle Änderungen am Inventar da. Der Ausleihworkflow ist hingegen sehr rudimentär. 
 |===
 
 == 2. Erwartete Praktiken in Sprint 3
@@ -67,22 +67,13 @@ Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 3 be
 | Pull Requests mit Bezug zu Issues, Tasks oder User Stories vorbereiten
 | Es wurden PRs erstellt, die sich auf die entsprechenden Issues und Tasks bezogen, um die Implementierung nachzuvollziehen und die Zusammenarbeit im Team zu erleichtern.
 | https://github.com/GWMDS/LeihListe/pull/125[ Pull Request #125 ]
-| Durch die Verknüpfung von Pull Requests mit den zugehörigen Anforderungen wurde eine lückenlose Rückverfolgbarkeit zwischen Planung, Umsetzung und Code-Review geschaffen.
-
-| einfachen User-Flow- oder Usability-Check durchführen
-|
-|
-|
+| Die Verknüpfung von Pull Requests mit den zugehörigen Aufgaben sorgte für eine gute Nachvollziehbarkeit.
 
 | Code Reviews durchführen und Review-Ergebnisse einarbeiten
-|
-|
-|
+| Die Änderungen am Quellcode wurden von anderen Personen aus dem Developer Team gesichtet und kritisiert, um die korrekte Funktion zu gewährleisten und eine akzeptable Codequalität durchzusetzen. 
+| https://github.com/GWMDS/LeihListe/pull/117[ Pull Request #117 ]
+| Gegenseitige Kontrolle ist unfassbar wichtig. Es kam mehr als einmal vor, dass durch das Code Review die Codequalität verbessert oder Fehler gefunden wurden. Dadurch ist nicht nur der entstehende Code besser, sondern auch ein Lerneffekt bei den Entwicklern zu sehen.
 
-|
-|
-|
-|
 |===
 
 == 3. Wichtigste Lernergebnisse aus Sprint 3
@@ -98,13 +89,13 @@ Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 3. Leitfragen:
 | Kriterium | Ihre Antwort
 
 | Erkenntnis 1
-| Die Aufteilung von User Stories in kleinere, klar abgegrenzte Aufgaben erleichterte die Sprint-Planung und die Umsetzung erheblich. Durch die Erstellung von Sub-Issues konnten Abhängigkeiten frühzeitig erkannt und der Fortschritt einzelner Arbeitspakete besser nachverfolgt werden.
+| Die Aufteilung der User Stories in einzelne Subtasks hat zu einem deutlich besseren Überblick über den Sprintfortschritt geführt.
 
 | Erkenntnis 2
-| Die konsequente Verknüpfung von Issues, Tasks und Pull Requests erhöhte die Nachvollziehbarkeit der Entwicklung. Anforderungen, Implementierung und Reviews konnten dadurch transparent dokumentiert werden, was die Zusammenarbeit im Team und die Qualitätssicherung verbesserte.
+| Durch die Trennung in Front- und Backend ergeben sich Schwierigkeiten über die Schnittstelle zwischen beiden Schichten. Zudem war die exakte Handhabung vom Branching durch die beiden Teams nicht ausreichend geklärt.
 
 | Erkenntnis 3
-| Regelmäßige Reviews der umgesetzten Funktionen zeigten, dass eine frühe Überprüfung von Anforderungen und Implementierungsdetails Missverständnisse reduziert. Dadurch konnten Anpassungen bereits während des Sprints vorgenommen werden, bevor sich fehlerhafte Annahmen in der Codebasis verfestigten.
+| Eine verbindliche Festlegung von Codequalitätstandards ist sinnvoll und nötig, bevor man mit dem Implementieren beginnt. Das Code Review kann hier Abhilfe schaffen, hat dann aber keine Arbeitsgrundlage. Die Erarbeitung von solchen Vereinbarungen muss also frühzeitig geschehen.
 |===
 
 == 4. Änderungen am Inkrement, Backlog oder an Projektdokumentation
@@ -119,15 +110,15 @@ Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Implementieru
 
 |Inventarliste mit 2 Spalten für die Items
 |2 Spalten für die Items in der Inventarliste sind zu viel. Mit späteren Bildern bietet ein Handybildschirm zu wenig Platz dafür.
-|Die Inventarliste hat nur noch eine Spalte für die Items, somit ist genügend Platz für Bilder und Inforamtionen der Items.
+|Die Inventarliste hat nur noch eine Spalte für die Items, somit ist genügend Platz für Bilder und Informationen der Items.
 
-|
-|
-|
+| Durch das Code-Review werden Qualitätsstandards sichergestellt.
+| Insbesondere durch die Tatsache, dass der dritte Sprint leicht verkürzt war, ergab sich ein erhöhter Zeitdruck. Einige Codeinkremente kamen daher erst kurz vor Sprintende. Das Review ergab, dass einige Änderungen am Code nötig waren, aus Zeitgründen wurden diese jedoch nicht angewandt.
+| Die technischen Schulden wurden dokumentiert und müssen im nächsten Sprint behoben werden. Zudem müssen verbindliche Codestandards festgelegt werden.
 
-|
-|
-|
+| Die Eigenschaften (Name, Beschreibung...) eines Gegenstandes können geändert werden.
+| Beim Durchgehen möglicher Nutzerinteraktionen fiel auf, dass ausgeliehene Gegenstände weiter bearbeitet werden konnten. Das ist nicht sinnvoll und auch zu technischen Problemen geführt.
+| Gegenstände können nun nur noch dann bearbeitet werden, wenn sie nicht ausgeliehen sind. Der Button zum Bearbeiten ist sonst ausgegraut.
 |===
 
 == 5. Produktinkrement, Verifikation und Umsetzungsqualität
@@ -144,19 +135,19 @@ Beschreiben Sie kurz, welche Nachweise zeigen, dass Ihr Produktinkrement nützli
 | Kriterium | Ihre Antwort
 
 | Umgesetzter End-to-End-Nutzerfluss
-|
+| 
 
 | Akzeptanzkriterien und Definition of Done
-|
+| Die Einhaltung von Akzeptanzkriterien und der DoD wurden nicht überprüft, auch aus Zeitgründen. Probleme konnten hier nur über das Code Review auffallen.
 
 | Akzeptanzorientierte Verifikation
-|
+| Zu den User Stories wurden Akzeptanzkriterien aufgestellt und dokumentiert. Die Überprüfung dieser wurde den Entwicklern größtenteils selber überlassen, eine weitere Kontrolle fand aus Zeitgründen nicht statt.
 
 | Code Review, Integration und main branch
-| Die Änderungen wurden über Pull Requests zur Prüfung bereitgestellt. Durch das Review konnten Verbesserungsvorschläge frühzeitig erkannt und eingearbeitet werden. Nach erfolgreicher Prüfung wurden die Änderungen in den dev branch integriert, wodurch ein konsistenter und lauffähiger Entwicklungsstand sichergestellt wurde.
+| Die Änderungen wurde auf einzelnen Branches per Pull Request zur Verfügung gestellt und reviewt. Erst nach abgeschlossenem Review wurden die Änderungen auf den dev Branch übernommen.
 
 | Wartbarkeitsverbesserung / Refactoring
-|
+| Dies war während des Sprint nur ein untergeordnetes Thema.
 
 | User-Flow- oder Usability-Check
 | Der Nutzerfluss wurde durchgespielt und auf Verständlichkeit sowie Bedienbarkeit überprüft. Dabei zeigte sich, dass die Funktionen ohne zusätzliche Erläuterungen nutzbar sind und sich konsistent in die bestehende Benutzeroberfläche einfügen.
@@ -176,14 +167,14 @@ Beschreiben Sie, was Ihr Team nach Sprint 3 beibehalten, ändern oder gezielt ve
 | Kriterium | Ihre Antwort
 
 | Beibehalten
-| 
+| Git-Vereinbarungen. Es wurde während des Sprints ersichtlich, dass die aufgestellten Regeln nicht perfekt waren. Insbesondere die Branchingstrategie zeigte jedoch Wirkung und erleichterte die Zusammenarbeit **immens**.
 
 | Ändern / verbessern
-| Es sollte noch das Coding-Style.adoc Dokument mit integriert werden, um die Einhaltung der Coding-Standards zu gewährleisten. Außerdem sollten noch Tests für die Implementierung der User Stories erstellt werden, um die Qualität und Stabilität des Codes zu erhöhen.
+| Es sollten dringend verbindliche, konkrete Codestandards festgelegt werden. Zudem muss ein konkreterer Ablauf zur Überprüfung der Einhaltung der Akzeptanzkriterien erarbeitet und umgesetzt werden. Die Sprint-Planung ist ebenfalls verbesserungswürdig. Es sollte sich über konkrete Zuständigkeiten und Aufgaben bei der Planung Gedanken gemacht sowie feste Deadlines für den Sprint festgelegt werden.
 
 | Nächster MVP-Schritt
-|
+| 
 
 | Offene Fragen / Risiken für die weitere Projektarbeit
-|
+| Wie setzt man eine Nutzerauthentifizierung,, bzw. eine allgemeine Nutzertrennung am besten technisch um?
 |===
