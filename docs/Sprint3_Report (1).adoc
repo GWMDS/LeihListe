@@ -117,9 +117,9 @@ Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Implementieru
 | Neue Erkenntnisse
 | Anpassung am Inkrement, Backlog, Code oder an der Dokumentation
 
-|
-|
-|
+|Inventarliste mit 2 Spalten für die Items
+|2 Spalten für die Items in der Inventarliste sind zu viel. Mit späteren Bildern bietet ein Handybildschirm zu wenig Platz dafür.
+|Die Inventarliste hat nur noch eine Spalte für die Items, somit ist genügend Platz für Bilder und Inforamtionen der Items.
 
 |
 |
