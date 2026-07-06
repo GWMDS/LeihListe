@@ -31,7 +31,7 @@ keine andere.
 | Umgebung | URL | Zweck | Branch | Deployment
 
 | Lokal
-| http://localhost:8080
+| http://localhost:5173
 | Entwicklung und manuelle Tests auf dem eigenen Rechner
 | Beliebig
 | Manuell (Docker Compose)
@@ -42,17 +42,17 @@ keine andere.
 | Alle Branches
 | Automatisch (GitHub Actions)
 
-| Staging
-| [z. B. https://staging.example.com]
-| Integrationstest; Abnahme durch Product Owner vor Release
-| `main`
-| Automatisch nach Merge in `main`
+| Staging/Development
+| http://141.56.137.86:5173/ (VM der Hochschule, VPN nötig!)
+| Abnahme durch andere Teammitglieder und Bereitstellung der aktuellsten API für Frontend-Entwicklung
+| dev
+| Manuell, nach merge in `dev`
 
 | Produktion
-| [z. B. https://example.com]
+| -
 | Live-System für Endnutzer:innen
-| `main` (getaggt)
-| Manuell mit Freigabe
+| -
+| -
 |===
 
 NOTE: In der Hochschulumgebung entfällt oft eine separate Produktionsumgebung.
@@ -77,13 +77,13 @@ Mal lokal zum Laufen bringen wollen.
 | ≥ 2.0
 | Wird mit Docker Desktop mitgeliefert
 
-| [z. B. Node.js]
-| [z. B. ≥ 20 LTS]
-| [z. B. https://nodejs.org — oder via `nvm`]
+| Python
+| maximal 3.13
+| Auf den meisten Geräten bereits installiert. Zu hohe Versionen führen derzeit zu Problemen bei der Paketinstallation.
 
-| [z. B. Java JDK]
-| [z. B. ≥ 21]
-| [z. B. https://adoptium.net]
+| npm
+| Aktuell
+| https://docs.npmjs.com/cli/v11/configuring-npm/install
 
 | Git
 | Aktuell
@@ -92,35 +92,15 @@ Mal lokal zum Laufen bringen wollen.
 
 === System lokal starten
 
-[source,bash]
-----
-# 1. Repository klonen
-git clone [Repository-URL]
-cd [projektname]
+Siehe link:../../src/database/README.md[README.md]
 
-# 2. Umgebungsvariablen konfigurieren
-cp .env.example .env
-# .env mit einem Editor öffnen und ggf. anpassen
+Siehe link:../../src/api/README.md[README.md] für API
 
-# 3. Alle Dienste starten
-docker compose up --build
-
-# 4. Prüfen, ob alles läuft
-# Frontend:  http://localhost:3000
-# Backend:   http://localhost:8080
-# API-Docs:  http://localhost:8080/swagger-ui
-----
+Siehe link:../../src/frontend/README.md[README.md] für Frontend
 
 === System stoppen und aufräumen
 
-[source,bash]
-----
-# Dienste stoppen (Daten bleiben erhalten)
-docker compose down
-
-# Dienste stoppen und Volumes löschen (Datenbank wird geleert)
-docker compose down -v
-----
+Siehe oben verlinkte README.md Dateien
 
 === Häufige Probleme beim lokalen Start
 
@@ -138,8 +118,12 @@ docker compose down -v
 | Umgebungsvariablen fehlen
 | Prüfen ob `.env`-Datei vorhanden ist; Beispielwerte in `.env.example` ansehen
 
-| [Weiteres Problem]
-| [Lösung]
+| Python-Paktete installieren nicht
+| prüfen ob virtuelle Umgebung aktiv ist, sonst `source .venv/bin/activate` im richtigen Verzeichnis. Ansonsten Pythonversion überprüfen und Umgebung mit passender Version neu erstellen + Pakete installieren
+
+| fehlende Berechtigung für Docker
+| Befehl als `sudo` ausführen (kurzfristige Lösung). Alternativ eigenen Nutzer zur docker Gruppe hinzufügen (langfristige Lösung).
+
 |===
 
 
@@ -154,25 +138,11 @@ existieren, wie sie konfiguriert werden, und wie sie zusammenarbeiten.
 |===
 | Service | Image | Zweck | Port (intern → extern)
 
-| [z. B. frontend]
-| [z. B. node:20-alpine (Build-Image)]
-| React-Anwendung — wird als statische Dateien gebaut und über nginx ausgeliefert
-| 80 → 3000
-
-| [z. B. backend]
-| [z. B. eclipse-temurin:21-jre-alpine]
-| Spring Boot REST-API
-| 8080 → 8080
-
-| [z. B. db]
-| [z. B. postgres:15-alpine]
+| Datenbank
+| postgres:17
 | PostgreSQL-Datenbank
 | 5432 → 5432
 
-| [z. B. mailhog]
-| [z. B. mailhog/mailhog]
-| E-Mail-Testserver (nur lokal); fängt alle ausgehenden E-Mails ab
-| 1025 (SMTP), 8025 (UI) → 8025
 |===
 
 === Umgebungsvariablen
@@ -184,40 +154,25 @@ im Code. Eine vollständige Liste mit Beispielwerten befindet sich in `.env.exam
 |===
 | Variable | Beispielwert | Beschreibung | Pflicht
 
-| `DATABASE_URL`
-| `jdbc:postgresql://db:5432/projektname`
-| Verbindungs-URL zur Datenbank
-| Ja
+DB_USER="username"
+DB_PASS="password"
+DB_ADDR="localhost"
 
-| `DATABASE_USER`
-| `projektname`
+| `DB_USER`
+| username
 | Datenbankbenutzername
 | Ja
 
 | `DATABASE_PASSWORD`
-| `[sicheres Passwort]`
+| `passwd`
 | Datenbankpasswort — nie im Repository speichern
 | Ja
 
-| `JWT_SECRET`
-| `[min. 32 Zeichen]`
-| Geheimnis für JWT-Token-Signierung
+| `DB_ADDR`
+| `localhost`
+| Adresse der Laufumgebung der Datenbank.
 | Ja
 
-| `SMTP_HOST`
-| `mailhog` (lokal) / `smtp.example.com` (prod)
-| E-Mail-Serveradresse
-| Ja
-
-| `LOG_LEVEL`
-| `INFO`
-| Log-Level: DEBUG / INFO / WARN / ERROR
-| Nein (Standard: INFO)
-
-| [Weitere Variable]
-| [Beispielwert]
-| [Beschreibung]
-| [Ja / Nein]
 |===
 
 IMPORTANT: Produktions-Secrets (Passwörter, API-Keys, JWT-Secrets) werden *nie*
@@ -237,40 +192,11 @@ dass kein Code in `main` gelangt, der Tests bricht oder Qualitätsstandards verl
 |===
 | Schritt | Beschreibung | Schlägt fehl bei | Ausgeführt bei
 
-| Linting
-| Code-Stil und statische Analyse prüfen
-| Stilfehler oder Warnungen über Schwellwert
-| Jedem Push
+| Smoke-Test
+| Build für alle Komponenten durchführen
+| Fehlerrückgaben der jeweiligen Buildprozesse
+| offenen Pull-Requests.
 
-| Unit-Tests
-| Alle Unit-Tests ausführen
-| Fehlschlagende Tests
-| Jedem Push
-
-| Integrationstests
-| Tests gegen echte Datenbank (Testcontainers)
-| Fehlschlagende Tests
-| Jedem Push
-
-| Abdeckungsprüfung
-| Testabdeckung messen und mit Mindestwert vergleichen
-| Unterschreitung des Mindestwerts (siehe Testkonzept)
-| Jedem Push
-
-| Image-Build
-| Docker-Images für alle Services bauen
-| Build-Fehler
-| Jedem Push auf `main` und PRs
-
-| Staging-Deployment
-| Neue Images auf Staging-Umgebung ausrollen
-| Deployment-Fehler oder fehlschlagende Smoke Tests
-| Merge in `main`
-
-| Produktions-Deployment
-| Neues Release auf Produktion ausrollen
-| Deployment-Fehler oder fehlschlagende Smoke Tests
-| Manuell nach Tag-Erstellung
 |===
 
 === Pipeline-Konfiguration
@@ -280,8 +206,7 @@ Die vollständige Pipeline-Konfiguration befindet sich in:
 [source]
 ----
 .github/workflows/
-├── ci.yml          ← Qualitätsprüfung (bei jedem Push)
-└── deploy.yml      ← Deployment (Staging & Produktion)
+└── build-test.yml          ← Smoke-Test
 ----
 
 
