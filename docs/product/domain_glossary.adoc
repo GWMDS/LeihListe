@@ -59,7 +59,13 @@ Technische Implementierungsdetails gehören nicht hierher!
 | Eine logische Gruppierung von Gegenständen
 | Genre, Fachbereich
 
+| Standort
+| Ein Ort an dem Gegenstände gelagert bzw. vom Ausleiher abgeholt werden.
+| Lagerort, Ausleihort
 
+| CRUD
+| CRUD umfasst die vier grundlegenden Operationen: Create, Datensatz anlegen; Read, Datensatz lesen; Update, Datensatz aktualisieren; und Delete, Datensatz löschen.
+| RUDI (insert, statt create) 
 
 | [Begriff]
 | [Präzise, fachliche Definition in 1–3 Sätzen]

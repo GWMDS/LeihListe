@@ -1,0 +1,93 @@
+= Code-Stilrichtlinien
+:toc:
+:toclevels: 2
+:pylint-docs: https://pylint.readthedocs.io
+:eslint-docs: https://eslint.org/docs/latest/
+== Zweck
+
+Dieses Dokument definiert die verbindlichen Code-Stilrichtlinien für die Entwicklung innerhalb des Projekts. Ziel ist es, eine einheitliche, wartbare und nachvollziehbare Codebasis sicherzustellen.
+
+== Allgemeine Richtlinien
+
+* Der Quellcode muss verständlich, wartbar und konsistent strukturiert sein.
+* Namenskonventionen sind projektweit einheitlich einzuhalten.
+* Wiederverwendbare Logik soll in separaten Funktionen oder Modulen gekapselt werden.
+* Unnötige Komplexität ist zu vermeiden.
+
+== Backend (Python)
+
+Für den Backend-Code gelten die Richtlinien von {pylint-docs}[Pylint].
+
+=== Anforderungen
+
+* Der Python-Code muss den aktuellen Pylint-Empfehlungen entsprechen.
+* Funktionen, Klassen und Variablen sind gemäß den Pylint-Namenskonventionen zu benennen.
+* Warnungen und Fehler von Pylint sollen vor dem Commit behoben werden.
+* Funktionen und Klassen sind mit aussagekräftigen Docstrings zu dokumentieren. Inklusive Parameter und Rückgabewert
+
+=== Dateistruktur
+
+Jede Python-Datei beginnt mit einem Modul-Docstring, der den Zweck und die Verantwortlichkeiten des Dokuments beschreibt.
+
+.Beispiel
+[source,python]
+---------------
+
+"""
+Dieses Modul verwaltet die Authentifizierung und Autorisierung
+von Benutzern innerhalb des Systems.
+"""
+---------------
+
+== Frontend (JavaScript)
+
+Für den Frontend-Code gelten die Richtlinien von {eslint-docs}[ESLint].
+
+=== Anforderungen
+
+* Der JavaScript-Code muss den definierten ESLint-Regeln entsprechen.
+* ESLint-Warnungen und -Fehler sind vor dem Merge zu beheben.
+* Variablen, Funktionen und Komponenten sind konsistent und sprechend zu benennen.
+* Nicht verwendeter Code ist zu entfernen.
+
+== Funktionsstruktur
+
+Zur Verbesserung der Lesbarkeit und Wartbarkeit gelten folgende Vorgaben:
+
+* Funktionen sollen möglichst klein und übersichtlich gehalten werden.
+* Funktionen mit mehr als 50 Zeilen sind zu prüfen und bei Bedarf in mehrere kleinere Funktionen aufzuteilen.
+* Jede Funktion soll möglichst nur eine klar definierte Aufgabe erfüllen (Single Responsibility Principle).
+* Komplexe Logik ist durch geeignete Hilfsfunktionen zu strukturieren.
+
+== Dokumentation
+
+=== Docstrings
+
+* Jedes Dokument beginnt mit einem Docstring, der den Zweck des Dokuments beschreibt.
+* Öffentliche Funktionen, Klassen und Module sind mit Docstrings zu versehen.
+* Docstrings sollen Zweck, Parameter und Rückgabewerte beschreiben.
+
+=== Kommentare
+
+* Kommentare dienen der Erklärung von Entscheidungen und komplexer Logik.
+* Offensichtliche Codebestandteile sollen nicht kommentiert werden.
+* Kommentare sind aktuell zu halten und bei Änderungen anzupassen.
+
+== Qualitätssicherung
+
+Vor jedem Merge oder Release sind folgende Prüfungen durchzuführen:
+
+. Ausführung von Pylint für den Backend-Code
+. Ausführung von ESLint für den Frontend-Code
+. Behebung aller relevanten Warnungen und Fehler
+. Code-Review durch mindestens ein weiteres Teammitglied
+
+== Zusammenfassung
+
+Die Einhaltung dieser Richtlinien gewährleistet:
+
+* Höhere Codequalität
+* Bessere Wartbarkeit
+* Einheitliche Projektstandards
+* Schnellere Einarbeitung neuer Teammitglieder
+* Reduzierung technischer Schulden
