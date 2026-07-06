@@ -33,7 +33,7 @@ Formulieren Sie Ihr Sprintziel in 1–2 Sätzen. Leitfragen:
 | CRUD-Operationen für die Inventarverwaltung und einfacher Ausleihworkflow.
 
 | Zentrale Annahme oder Umsetzungsfrage
-| Die zentrale Anname ist, dass die Inventarisierungsfunktionalitäten zunächst Priorität über den Ausleihfunktionalitäten haben. Aus diesem Grund ist ein Großteil des geschriebenen Quellcodes für manuelle Änderungen am Inventar da. Der Ausleihworkflow ist hingegen sehr rudimentär. 
+| Die zentrale Annahme ist, dass die Inventarisierungsfunktionalitäten zunächst Priorität über den Ausleihfunktionalitäten haben. Aus diesem Grund ist ein Großteil des geschriebenen Quellcodes für manuelle Änderungen am Inventar da. Der Ausleihworkflow ist hingegen sehr rudimentär. 
 |===
 
 == 2. Erwartete Praktiken in Sprint 3
@@ -67,7 +67,7 @@ Beziehen Sie sich bevorzugt auf Praktiken, die in den Hinweisen für Sprint 3 be
 | Pull Requests mit Bezug zu Issues, Tasks oder User Stories vorbereiten
 | Es wurden PRs erstellt, die sich auf die entsprechenden Issues und Tasks bezogen, um die Implementierung nachzuvollziehen und die Zusammenarbeit im Team zu erleichtern.
 | https://github.com/GWMDS/LeihListe/pull/125[ Pull Request #125 ]
-| Die Verknüpfung von Pull Requests mit den zugehörigen Aufgaben sorgte für eine gute Nachvollziehbarkeit.
+| Die Verknüpfung von Pull Requests mit den zugehörigen Issues sorgte für eine gute Nachvollziehbarkeit.
 
 | Code Reviews durchführen und Review-Ergebnisse einarbeiten
 | Die Änderungen am Quellcode wurden von anderen Personen aus dem Developer Team gesichtet und kritisiert, um die korrekte Funktion zu gewährleisten und eine akzeptable Codequalität durchzusetzen. 
@@ -92,7 +92,7 @@ Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 3. Leitfragen:
 | Die Aufteilung der User Stories in einzelne Subtasks hat zu einem deutlich besseren Überblick über den Sprintfortschritt geführt.
 
 | Erkenntnis 2
-| Durch die Trennung in Front- und Backend ergeben sich Schwierigkeiten über die Schnittstelle zwischen beiden Schichten. Zudem war die exakte Handhabung vom Branching durch die beiden Teams nicht ausreichend geklärt.
+| Durch die Trennung in Front- und Backend ergeben sich Schwierigkeiten zwischen beiden Teams. Da das Frontend abängig vom Backen ist, benötigt es für die Weiterentwicklung die aktuelleste API. Das ist aufgrund unserer Branching Strategie jedoch nicht immer möglich, Rebasing war auf Dauer zu umständlich. Hier wurde nachgebessert, indem ab sofort die aktuellste Version der API auf einer Hochschul-VM läuft.
 
 | Erkenntnis 3
 | Eine verbindliche Festlegung von Codequalitätstandards ist sinnvoll und nötig, bevor man mit dem Implementieren beginnt. Das Code Review kann hier Abhilfe schaffen, hat dann aber keine Arbeitsgrundlage. Die Erarbeitung von solchen Vereinbarungen muss also frühzeitig geschehen.
@@ -118,7 +118,7 @@ Beschreiben Sie konkret anhand von drei Beispielen, was sich durch Implementieru
 
 | Die Eigenschaften (Name, Beschreibung...) eines Gegenstandes können geändert werden.
 | Beim Durchgehen möglicher Nutzerinteraktionen fiel auf, dass ausgeliehene Gegenstände weiter bearbeitet werden konnten. Das ist nicht sinnvoll und auch zu technischen Problemen geführt.
-| Gegenstände können nun nur noch dann bearbeitet werden, wenn sie nicht ausgeliehen sind. Der Button zum Bearbeiten ist sonst ausgegraut.
+| Gegenstände können nun nur noch dann bearbeitet werden, wenn sie nicht ausgeliehen sind. Der Button zum Bearbeiten ist sonst ausgegraut. Das gleiche gilt für den Button zum Löschen.
 |===
 
 == 5. Produktinkrement, Verifikation und Umsetzungsqualität
