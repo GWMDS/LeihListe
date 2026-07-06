@@ -1,47 +1,30 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
+  <v-app>
+    <v-app-bar :title=APP_TITLE>
+      <v-btn @click="theme.toggle()"><v-icon size="x-large">mdi-theme-light-dark</v-icon></v-btn>
+    </v-app-bar>
+    <v-main>
+      <v-container min-width="100%">
+        <router-view />
+      </v-container>
+    </v-main>
 
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <v-bottom-navigation v-model="activeTab" color="primary">
+      <v-btn to="/">Inventar <v-icon>mdi-home</v-icon></v-btn>
+      <v-btn to="/borrowing-overview">Ausleihen<v-icon>mdi-format-list-bulleted</v-icon></v-btn>
+      <v-btn to="/settings">Einstellungen <v-icon>mdi-cog</v-icon></v-btn>
+    </v-bottom-navigation>
+  </v-app>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script setup lang="ts">
+import { APP_TITLE } from "./config.ts";
+import { ref } from 'vue'
+import { useTheme } from 'vuetify'
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+const activeTab = ref('home')
+const theme = useTheme()
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+</script>
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+<style></style>
