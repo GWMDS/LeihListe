@@ -111,19 +111,20 @@ Container_Boundary(frontend, "Frontend") {
 
 Container_Boundary(backend, "Backend (FastAPI)") {
   Component(items_router, "Items-Router", "FastAPI Router", "Nimmt eingehende Item-Anfragen entgegen; enthält CRUD- und Ausleih-Logik")
+  Component(borrowings_router, "Borrowings-Router", "FastAPI Router", "Nimmt Anfragen zu Ausleihen entgegen, enthält ebenfalls Ausleihlogik (lesend)")
+  Component(dependencies, "Dependencies", "FastAPI", "Stellt Datenbank-Sessions bereit; schreibt Startdaten beim ersten Start")
 }
 
 Container_Boundary(persistence, "Persistenz") {
-  Component(item_model, "Item-Modell", "SQLModel", "Definiert die Item-Entität; ORM-Mapping zur Datenbank")
-  Component(dependencies, "Dependencies", "FastAPI", "Stellt Datenbank-Sessions bereit; schreibt Startdaten beim ersten Start")
+  Component(item_model, "ORM", "SQLModel", "Definiert die Item-Entität; ORM-Mapping zur Datenbank")
   ContainerDb(db, "Datenbank", "PostgreSQL 17", "Persistente Datenhaltung für alle Item-Entitäten")
 }
 
-Rel(api_service, items_router, "sendet Anfragen", "REST / HTTP")
-Rel(items_router, item_model, "liest / schreibt", "SQLModel")
-Rel(items_router, dependencies, "erhält Session", "FastAPI")
-Rel(dependencies, db, "öffnet Verbindung", "SQL")
-Rel(item_model, db, "speichert Daten", "SQLModel")
+Rel(api_service, backend, "sendet Anfragen", "REST / HTTP")
+Rel(items_router, dependencies, "hängt ab", "FastAPI")
+Rel(borrowings_router, dependencies, "hängt ab", "FastAPI")
+Rel(item_model, db, "liest / schreibt", "SQLModel")
+Rel_R(backend,item_model, "benutzt", "")
 
 @enduml
 ....
