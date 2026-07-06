@@ -92,7 +92,7 @@ Beschreiben Sie 2–3 zentrale Erkenntnisse aus Sprint 3. Leitfragen:
 | Die Aufteilung der User Stories in einzelne Subtasks hat zu einem deutlich besseren Überblick über den Sprintfortschritt geführt.
 
 | Erkenntnis 2
-| Durch die Trennung in Front- und Backend ergeben sich Schwierigkeiten zwischen beiden Teams. Da das Frontend abängig vom Backen ist, benötigt es für die Weiterentwicklung die aktuelleste API. Das ist aufgrund unserer Branching Strategie jedoch nicht immer möglich, Rebasing war auf Dauer zu umständlich. Hier wurde nachgebessert, indem ab sofort die aktuellste Version der API auf einer Hochschul-VM läuft.
+| Durch die Trennung in Front- und Backend ergeben sich Schwierigkeiten zwischen beiden Teams. Da das Frontend abängig vom Backend ist, benötigt es für die Weiterentwicklung die aktuelleste API. Das ist aufgrund unserer Branching Strategie jedoch nicht immer möglich, Rebasing war auf Dauer zu umständlich. Hier wurde nachgebessert, indem ab sofort die aktuellste Version der API auf einer Hochschul-VM läuft.
 
 | Erkenntnis 3
 | Eine verbindliche Festlegung von Codequalitätstandards ist sinnvoll und nötig, bevor man mit dem Implementieren beginnt. Das Code Review kann hier Abhilfe schaffen, hat dann aber keine Arbeitsgrundlage. Die Erarbeitung von solchen Vereinbarungen muss also frühzeitig geschehen.
