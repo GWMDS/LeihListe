@@ -149,7 +149,7 @@ Rel(item_model, db, "speichert Daten", "SQLModel")
 | Items-Router (eingehend); Datenbank (ausgehend)
 
 | Navigation/Routing
-| Verwaltet die clientseitigen Routen der Anwendung; ermöglicht den       nahtlosen Wechsel zwischen verschiedenen Ansichten der SPA.
+| Verwaltet die clientseitigen Routen der Anwendung; ermöglicht den nahtlosen Wechsel zwischen verschiedenen Ansichten der SPA.
 | Vue-Core-Anwendung (eingehend); Browser-History-API, UI-Komponenten (ausgehend)
 
 | API Service Layer

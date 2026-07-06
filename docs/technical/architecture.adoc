@@ -101,7 +101,7 @@ Diese Sicht gibt an, welche Umgebungen für den Code vorgesehen sind, z.B. JVM, 
 ' C4 Model
 !include <c4/C4_Container.puml>
 
-Person(user, "Nutzeri:in", "leiht Gegenstände aus")
+Person(user, "Nutzer:in", "leiht Gegenstände aus")
 Person(worker, "Mitarbeiter:in", "Ausleiher")
 
 System_Boundary(c1, "Frontend") {
