@@ -121,8 +121,8 @@ _Eine User Story gilt als fertig, wenn:_
 |===
 | Thema | Vereinbarung
 
-| Branching-Strategie
-| Feature Branches
+| Git-Handhabung
+| link:git-agreement.adoc[Git-Vereinbarungen]
 
 | PR-Review-Regeln
 | mind. 1 Approval, kein Merge ohne grüne Pipeline
