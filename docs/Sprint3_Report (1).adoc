@@ -173,8 +173,8 @@ Beschreiben Sie, was Ihr Team nach Sprint 3 beibehalten, ändern oder gezielt ve
 | Es sollten dringend verbindliche, konkrete Codestandards festgelegt werden. Zudem muss ein konkreterer Ablauf zur Überprüfung der Einhaltung der Akzeptanzkriterien erarbeitet und umgesetzt werden. Die Sprint-Planung ist ebenfalls verbesserungswürdig. Es sollte sich über konkrete Zuständigkeiten und Aufgaben bei der Planung Gedanken gemacht sowie feste Deadlines für den Sprint festgelegt werden.
 
 | Nächster MVP-Schritt
-| Am wichtigsten ist es demanächst die Nutzertrennung zu implementieren. Die Trennung von Ausleihern und Verleihern ist für das Produkt Elementar, ohne dies geht das gesamte Produktkonzept nicht auf. Somit ist der nächste Schritt eine Registrierung und einen Login zu implementieren. Je nach Nutzertyp müssen auch verschiedene Sichten und Berechtigungen festgelegt werden.
+| Am wichtigsten ist es demanächst die Nutzertrennung zu implementieren. Die Trennung von Ausleihern und Verleihern ist für das Produkt elementar, ohne dies geht das gesamte Produktkonzept nicht auf. Somit ist der nächste Schritt eine Registrierung und einen Login zu implementieren. Je nach Nutzertyp müssen auch verschiedene Sichten und Berechtigungen festgelegt werden.
 
 | Offene Fragen / Risiken für die weitere Projektarbeit
-| Wie setzt man eine Nutzerauthentifizierung,, bzw. eine allgemeine Nutzertrennung am besten technisch um?
+| Wie setzt man eine Nutzerauthentifizierung, bzw. eine allgemeine Nutzertrennung am besten technisch um?
 |===
