@@ -101,38 +101,30 @@ zusammengehörige Einheit von Code mit einer klar definierten Aufgabe._
 
 LAYOUT_WITH_LEGEND()
 
-title Component Diagram – [Systemname]
+title Component Diagram – [LeihListe]
 
 Container_Boundary(frontend, "Frontend") {
-  Component(booking_ui, "Buchungskomponente", "z. B. React / Angular", "Ermöglicht Nutzern das Erstellen und Verwalten von Buchungen")
-  Component(auth_ui, "Authentifizierungskomponente", "z. B. React / Angular", "Handhabt Login, Logout und Session-Management")
-  Component(shared_ui, "Gemeinsame UI-Komponenten", "z. B. Design System", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Navigation")
+  Component(vue_router, "Navigation/Routing", "Vue-Router", "Ermöglicht Wechseln zwischen mehrerer Seiten ohne Neuladen")
+  Component(api_service, "API Service Layer", "Axios", Kommuniziert über die Rest-API mit dem Backend)
+  Component(shared_ui, "Gemeinsame UI-Komponenten", "Vuetify", "Wiederverwendbare UI-Elemente wie Buttons, Formulare, Dialoge")
 }
 
-Container_Boundary(backend, "Backend") {
-  Component(booking_ctrl, "Buchungs-Controller", "z. B. REST Controller", "Nimmt eingehende Buchungsanfragen entgegen und delegiert an den Service")
-  Component(booking_svc, "Buchungs-Service", "z. B. Spring Service", "Enthält die Buchungslogik und orchestriert Repository und Benachrichtigung")
-  Component(user_svc, "Nutzer-Service", "z. B. Spring Service", "Verwaltung von Nutzerdaten und Authentifizierungslogik")
-  Component(notification_svc, "Benachrichtigungs-Service", "z. B. Spring Service", "Erstellt und versendet Benachrichtigungen an Nutzer:innen")
+Container_Boundary(backend, "Backend (FastAPI)") {
+  Component(items_router, "Items-Router", "FastAPI Router", "Nimmt eingehende Item-Anfragen entgegen; enthält CRUD- und Ausleih-Logik")
+  Component(borrowings_router, "Borrowings-Router", "FastAPI Router", "Nimmt Anfragen zu Ausleihen entgegen, enthält ebenfalls Ausleihlogik (lesend)")
+  Component(dependencies, "Dependencies", "FastAPI", "Stellt Datenbank-Sessions bereit; schreibt Startdaten beim ersten Start")
 }
 
 Container_Boundary(persistence, "Persistenz") {
-  Component(booking_repo, "Buchungs-Repository", "z. B. JPA Repository", "Datenzugriff für Buchungsentitäten")
-  Component(user_repo, "Nutzer-Repository", "z. B. JPA Repository", "Datenzugriff für Nutzerentitäten")
-  ContainerDb(db, "Datenbank", "z. B. PostgreSQL", "Persistente Datenhaltung für alle Entitäten")
+  Component(item_model, "ORM", "SQLModel", "Definiert die Item-Entität; ORM-Mapping zur Datenbank")
+  ContainerDb(db, "Datenbank", "PostgreSQL 17", "Persistente Datenhaltung für alle Item-Entitäten")
 }
 
-System_Ext(ext, "Externer E-Mail-Dienst", "Zustellung von E-Mail-Benachrichtigungen, z. B. via SMTP")
-
-Rel(booking_ui, booking_ctrl, "sendet Buchungsanfragen", "REST / HTTPS")
-Rel(auth_ui, user_svc, "authentifiziert Nutzer:in", "REST / HTTPS")
-Rel(booking_ctrl, booking_svc, "delegiert an", "Java API")
-Rel(booking_svc, booking_repo, "liest / schreibt Buchungen", "JPA")
-Rel(booking_svc, notification_svc, "löst Benachrichtigung aus", "Java API")
-Rel(user_svc, user_repo, "liest / schreibt Nutzerdaten", "JPA")
-Rel(booking_repo, db, "persistiert Daten", "SQL")
-Rel(user_repo, db, "persistiert Daten", "SQL")
-Rel(notification_svc, ext, "sendet E-Mails über", "SMTP")
+Rel(api_service, backend, "sendet Anfragen", "REST / HTTP")
+Rel(items_router, dependencies, "hängt ab", "FastAPI")
+Rel(borrowings_router, dependencies, "hängt ab", "FastAPI")
+Rel(item_model, db, "liest / schreibt", "SQLModel")
+Rel_R(backend,item_model, "benutzt", "")
 
 @enduml
 ....
@@ -143,29 +135,31 @@ Rel(notification_svc, ext, "sendet E-Mails über", "SMTP")
 |===
 | Komponente | Verantwortung | Schnittstellen
 
-| [z. B. Buchungs-Controller]
-| HTTP-Anfragen für Buchungsvorgänge entgegennehmen;
-  Eingaben validieren; Antworten zurückgeben
-| REST-API (eingehend); Buchungs-Service (ausgehend)
+| Items-Router
+| HTTP-Anfragen für Gegenstände entgegennehmen;
+  CRUD- und Ausleih-Logik ausführen; Antworten zurückgeben
+| REST-API (eingehend); Item-Modell, Dependencies (ausgehend)
 
-| [z. B. Buchungs-Service]
-| Buchungslogik koordinieren; Verfügbarkeit prüfen;
-  Transaktionen verwalten; Benachrichtigungen auslösen
-| Buchungs-Repository; Benachrichtigungs-Service
+| Item-Modell
+| Item-Entität definieren; ORM-Mapping zur Datenbank
+| Items-Router (eingehend); Datenbank (ausgehend)
 
-| [z. B. Buchungs-Repository]
-| Buchungsdaten lesen und schreiben;
-  Datenbankabfragen kapseln
-| Datenbank (JPA / SQL)
+| Dependencies
+| Datenbank-Sessions als FastAPI-Dependency bereitstellen;
+  Startdaten beim ersten Start schreiben
+| Items-Router (eingehend); Datenbank (ausgehend)
 
-| [z. B. Benachrichtigungs-Service]
-| E-Mail-Benachrichtigungen versenden;
-  Vorlagen verwalten
-| Externer SMTP-Dienst
+| Navigation/Routing
+| Verwaltet die clientseitigen Routen der Anwendung; ermöglicht den nahtlosen Wechsel zwischen verschiedenen Ansichten der SPA.
+| Vue-Core-Anwendung (eingehend); Browser-History-API, UI-Komponenten (ausgehend)
 
-| [Weitere Komponente]
-| [Verantwortung]
-| [Schnittstellen]
+| API Service Layer
+| Beinhaltet gesamte HTTP-Kommunikation; Sendet asynchrone REST-Anfragen an das Fast API-Backend
+| Frontend-UI-Komponenten (eingehend); REST-API des Backends via HTTP (ausgehend)
+
+| Gemeinsame UI-Komponenten
+| Stellt die visuelle Schnittstelle für den Verleiher bereit; rendert reaktive, responsive UI-Elemente(v-card, v-dialog, v-btn) basierend auf den aktuellen Zustandsdaten
+| Verleiher/Endnutzer via Klick- und Eingabe-Events (eingehend); API Service Layer, Vue-Router (ausgehend)
 |===
 
 ---
@@ -176,61 +170,51 @@ Sequenzdiagramme zeigen, wie Komponenten bei typischen Abläufen zusammenarbeite
 Dokumentiert werden hier nur die wichtigsten und komplexesten Flüsse —
 nicht jede einfache CRUD-Operation.
 
-=== [Flussname, z. B. Raum buchen]
+=== Item ausleihen
 
-_Beschreibe kurz, was dieser Ablauf zeigt und warum er dokumentiert wird._
+Zeigt wie ein Item erfolgreich ausgeliehen wird.
 
 //Beispielhaftes Sequenzdiagramm für den Buchungsprozess
 //Die tatsächlichen Flüsse müssen auf das konkrete Projekt zugeschnitten sein
 
-[plantuml, sequence-booking, svg]
+[plantuml, sequence-borrow, svg]
 ....
 @startuml
 skinparam monochrome true
 skinparam defaultFontSize 12
 
 actor "Nutzer:in" as user
-participant "Buchungs-\nController" as ctrl
-participant "Buchungs-\nService" as svc
-participant "Buchungs-\nRepository" as repo
-participant "Benachrichtigungs-\nService" as notify
+participant "Items-Router" as router
+participant "Datenbank" as db
 
-user -> ctrl : POST /buchungen\n{raumId, zeitraum}
-ctrl -> ctrl : Eingabe validieren
-ctrl -> svc : buchungErstellen(raumId, zeitraum, nutzerId)
-svc -> repo : istVerfuegbar(raumId, zeitraum)
-repo --> svc : true
-svc -> repo : buchungSpeichern(buchung)
-repo --> svc : gespeicherteBuchung
-svc -> notify : bestaetigungSenden(buchung)
-notify --> svc : OK
-svc --> ctrl : buchung
-ctrl --> user : 201 Created\n{buchungsId, details}
+user -> router : PUT /api/items/borrow/{id}
+router -> db : Item aus Datenbank laden
+db --> router : Item (isBorrowed = false)
+router -> db : isBorrowed auf true setzen und speichern
+db --> router : gespeichertes Item
+router --> user : 200 OK – ausgeliehenes Item
 
 @enduml
 ....
 
 ---
 
-=== [Weiterer Fluss, z. B. Fehlerfall: Raum nicht verfügbar]
+=== Fehlerfall: Item bereits ausgeliehen
 
-[plantuml, sequence-conflict, svg]
+[plantuml, sequence-borrow-conflict, svg]
 ....
 @startuml
 skinparam monochrome true
 skinparam defaultFontSize 12
 
 actor "Nutzer:in" as user
-participant "Buchungs-\nController" as ctrl
-participant "Buchungs-\nService" as svc
-participant "Buchungs-\nRepository" as repo
+participant "Items-Router" as router
+participant "Datenbank" as db
 
-user -> ctrl : POST /buchungen\n{raumId, zeitraum}
-ctrl -> svc : buchungErstellen(raumId, zeitraum, nutzerId)
-svc -> repo : istVerfuegbar(raumId, zeitraum)
-repo --> svc : false
-svc --> ctrl : RaumNichtVerfuegbarException
-ctrl --> user : 409 Conflict\n{message, alternativen}
+user -> router : PUT /api/items/borrow/{id}
+router -> db : Item aus Datenbank laden
+db --> router : Item (isBorrowed = true)
+router --> user : 400 Bad Request – Item bereits ausgeliehen
 
 @enduml
 ....
@@ -259,35 +243,55 @@ Dieses Dokument zeigt ausschließlich die technische Persistenzstruktur.
 skinparam monochrome true
 skinparam defaultFontSize 12
 
-entity "nutzer" as user {
-  * id : UUID <<PK>>
+entity "Gegenstand" as item {
+  id : UUID <<PK>>
   --
-  * email : VARCHAR(255) <<UNIQUE>>
-  * name : VARCHAR(100)
-  * erstellt_am : TIMESTAMP
+  name : VARCHAR
+  description : VARCHAR
+  state : VARCHAR
+  isBorrowed : BOOLEAN
+  category : VARCHAR
 }
 
-entity "raum" as room {
-  * id : UUID <<PK>>
+entity "Ausleihe" as borrowing {
+  * borrowing_id: UUID <<PK>>
   --
-  * bezeichnung : VARCHAR(100)
-  * kapazitaet : INTEGER
-  * standort : VARCHAR(100)
+  * item_id : UUID <<FK>>
+  * borrowing_date : TIMESTAMP
+  * return_date : TIMESTAMP
+  * due_date : TIMESTAMP
 }
 
-entity "buchung" as booking {
-  * id : UUID <<PK>>
-  --
-  * nutzer_id : UUID <<FK>>
-  * raum_id : UUID <<FK>>
-  * beginn : TIMESTAMP
-  * ende : TIMESTAMP
-  * status : VARCHAR(20)
-  * erstellt_am : TIMESTAMP
-}
-
-user ||--o{ booking : "gibt auf"
-room ||--o{ booking : "ist Gegenstand von"
+' entity "nutzer" as user {
+'   * id : UUID <<PK>>
+'   --
+'   * email : VARCHAR(255) <<UNIQUE>>
+'   * name : VARCHAR(100)
+'   * erstellt_am : TIMESTAMP
+' }
+' 
+' entity "raum" as room {
+'   * id : UUID <<PK>>
+'   --
+'   * bezeichnung : VARCHAR(100)
+'   * kapazitaet : INTEGER
+'   * standort : VARCHAR(100)
+' }
+' 
+' entity "buchung" as booking {
+'   * id : UUID <<PK>>
+'   --
+'   * nutzer_id : UUID <<FK>>
+'   * raum_id : UUID <<FK>>
+'   * beginn : TIMESTAMP
+'   * ende : TIMESTAMP
+'   * status : VARCHAR(20)
+'   * erstellt_am : TIMESTAMP
+' }
+' 
+' user ||--o{ booking : "gibt auf"
+' room ||--o{ booking : "ist Gegenstand von"
+item ||--o{ borrowing : "bezieht sich auf"
 
 @enduml
 ....
@@ -298,27 +302,28 @@ room ||--o{ booking : "ist Gegenstand von"
 |===
 | Tabelle | Spalte | Beschreibung & Besonderheiten
 
-.4+| nutzer
+.5+| Gegenstand
 | id | UUID als Primärschlüssel; wird vom System generiert
-| email | Eindeutig; wird für Login und Benachrichtigungen verwendet
-| name | Anzeigename; kein Pflichtfeld nach DSGVO-Anforderung
-| erstellt_am | Automatisch gesetzt; nicht änderbar
+| name | Anzeigename
+| description | Eine genauere Beschreibung des Gegenstands
+| isBorrowed | Boolean-Wer, gibt Aukunft darüber, ob der Gegenstand ausgeliehen ist.
+| category | Oberkategorie für den Gegenstand
 
-.4+| buchung
-| id | UUID als Primärschlüssel
-| status | Enum-Werte: `AKTIV`, `STORNIERT`, `ABGELAUFEN`
-| beginn / ende | Beide Zeitpunkte inklusive; keine Überschneidung per DB-Constraint
-| nutzer_id / raum_id | Fremdschlüssel; kein Cascade Delete — Buchungen bleiben erhalten
+.4+| Ausleihe
+| borrowing_id | UUID als Primärschlüssel
+| item_id | Fremdschlüssel, ID des ausgeliehenen Gegenstands
+| borrowing_date | Beginn der Ausleihe
+| return_date | Datum der Rückgabe des Gegenstandes, wenn null ist die Ausleihe noch offen
+| due_date | Rückgabefrist der Ausleihe, wenn Frist gerissen wird das markiert 
 
-| [Weitere Tabelle]
-| [Spalte]
-| [Beschreibung]
 |===
 
 === Datenbankmigrationen
 
 _Schemaänderungen werden nicht manuell durchgeführt, sondern über Migrationsskripte
 versioniert. So ist der Datenbankzustand jederzeit reproduzierbar._
+
+Mit Datenbankmigrationen haben wir uns dieses Semester nicht befasst, auch da wir bisher keine wichtigen Daten speichern. Bei Schemaänderungen wurde das Datenbankvolume komplett gelöscht und danach neu erstellt.
 
 [cols="1,3", options="header"]
 |===
@@ -349,20 +354,23 @@ Problem auf unterschiedliche Weise lösen._
 |===
 | Muster | Wo eingesetzt | Begründung
 
-| Repository Pattern
-| Persistenzschicht: alle Datenbankzugriffe
-| Datenbanklogik von Geschäftslogik trennen;
-  einfacher austauschbar und testbar
+// | Repository Pattern
+// | Persistenzschicht: alle DatenbankRepository Pattern
+// | Persistenzschicht: alle Datenbankzugriffe
+// | Datenbanklogik von Geschäftslogik trennen;
+//   einfacher austauschbar und testbarzugriffe
+// | Datenbanklogik von Geschäftslogik trennen;
+//   einfacher austauschbar und testbar
 
 | DTO (Data Transfer Object)
 | Schnittstelle zwischen Controller und Service
 | Interne Domänenobjekte nicht direkt exponieren;
   API-Struktur unabhängig vom Datenbankmodell
 
-| Service Layer
-| Anwendungsschicht: alle Use Cases
-| Geschäftslogik zentralisieren;
-  Controller schlank halten
+// | Service Layer
+// | Anwendungsschicht: alle Use Cases
+// | Geschäftslogik zentralisieren;
+//  Controller schlank halten
 
 | [Weiteres Muster]
 | [Wo eingesetzt]
@@ -376,20 +384,15 @@ Problem auf unterschiedliche Weise lösen._
 | Aspekt | Konvention
 
 | Fachliche Fehler
-| Als eigene Exception-Klassen modellieren
-  (z. B. `RaumNichtVerfuegbarException`, `BuchungNichtGefundenException`)
+| Über `HTTPException` mit passendem Status-Code und Fehlermeldung
 
 | HTTP-Fehlercodes
-| 400 für Validierungsfehler; 404 für nicht gefundene Ressourcen;
-  409 für Konflikte; 500 nur für unerwartete Systemfehler
+| 400 wenn Item bereits ausgeliehen; 
+  404 wenn Item nicht gefunden
 
 | Fehlermeldungen
 | Immer strukturiert zurückgeben:
-  `{ "fehler": "...", "details": "..." }` — kein Stack Trace an den Client
-
-| Logging
-| Fachliche Fehler als WARN; unerwartete Fehler als ERROR;
-  keine personenbezogenen Daten in Log-Ausgaben (DSGVO)
+  `{"detail": "..." }` — kein Stack Trace an den Client; kurze Beschreibung des Fehlers im `detail`-Attribut
 |===
 
 === API-Konventionen
@@ -399,17 +402,16 @@ Problem auf unterschiedliche Weise lösen._
 | Aspekt | Konvention
 
 | URL-Struktur
-| Ressourcenorientiert im Plural: `/buchungen`, `/raeume`, `/nutzer`
+| `/api` immer als Präfix, danach beschreibendes Wort für den jeweiligen Router. Pfadvariablen werden praktisch nur für IDs verwendet.
 
 | HTTP-Methoden
-| GET = lesen; POST = erstellen; PUT = ersetzen; PATCH = teilweise ändern;
-  DELETE = löschen
+| GET = lesen; POST = erstellen; PUT = aktualisieren; DELETE = löschen, andere Funktionen werden derzeit nicht benutzt
 
 | Antwortformat
-| JSON in allen Fällen; Datumsformat ISO 8601: `2024-06-01T09:00:00Z`
+| JSON in allen Fällen
 
 | Versionierung
-| [z. B. URL-Präfix `/api/v1/` - Version nur erhöhen bei Breaking Changes]
+| Kein Versionspräfix im Pfad
 |===
 
 _Diagramme in diesem Dokument sollten den aktuellen Stand des Codes widerspiegeln.

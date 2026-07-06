@@ -101,13 +101,14 @@ Diese Sicht gibt an, welche Umgebungen für den Code vorgesehen sind, z.B. JVM, 
 ' C4 Model
 !include <c4/C4_Container.puml>
 
-Person(user, "Nutzeri:in", "Hochschulmitarbeiter:in oder Ausleiher")
+Person(user, "Nutzer:in", "leiht Gegenstände aus")
+Person(worker, "Mitarbeiter:in", "Ausleiher")
 
 System_Boundary(c1, "Frontend") {
     Container(UI, "Browser", "Firefox, Chrome...", "Benutzeroberfläche, über die Nutzer:innen mit dem restlichen System interagieren")
 }
 
-System_Boundary(c2, "Backend - VM") {
+System_Boundary(c2, "Backend") {
     Container(api, "API-Server", "FastAPI", "REST-API für Datenbankinteraktion")
 
     System_Boundary(c3, "Docker Container") {
@@ -117,7 +118,8 @@ System_Boundary(c2, "Backend - VM") {
 }
 
 Rel(user, UI, "bedient", "")
-Rel(UI,api, "kommuniziert mit","HTTP")
+Rel(worker, UI, "bedient", "")
+Rel_L(UI,api, "kommuniziert mit","HTTP")
 Rel(api,db,"liest/schreibt","ODBC")
 
 @enduml
@@ -492,5 +494,9 @@ Punkte in Vergessenheit geraten._
 | Kein gekoppelter Start von API und Datenbank
 | für initiale Architektur unnötiger Aufwand
 | Issue #71
+
+| Qualitätsmängel im Code (API - Borrow-Router)
+| Zeitdruck gegen Ende vom Sprint 3.
+| 130
 
 |===
