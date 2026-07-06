@@ -495,4 +495,8 @@ Punkte in Vergessenheit geraten._
 | für initiale Architektur unnötiger Aufwand
 | Issue #71
 
+| Qualitätsmängel im Code (API - Borrow-Router)
+| Zeitdruck gegen Ende vom Sprint 3.
+| 130
+
 |===
