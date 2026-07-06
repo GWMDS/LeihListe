@@ -170,7 +170,7 @@ Beschreiben Sie, was Ihr Team nach Sprint 3 beibehalten, ändern oder gezielt ve
 | Git-Vereinbarungen. Es wurde während des Sprints ersichtlich, dass die aufgestellten Regeln nicht perfekt waren. Insbesondere die Branchingstrategie zeigte jedoch Wirkung und erleichterte die Zusammenarbeit **immens**.
 
 | Ändern / verbessern
-| Es sollten dringend verbindliche, konkrete Codestandards festgelegt werden. Zudem muss ein konkreterer Ablauf zur Überprüfung der Einhaltung der Akzeptanzkriterien erarbeitet und umgesetzt werden. Die Sprint-Planung ist ebenfalls verbesserungswürdig. Es sollte sich über konkrete Zuständigkeiten und Aufgaben bei der Planung Gedanken gemacht sowie feste Deadlines für den Sprint festgelegt werden.
+| Es sollten dringend verbindliche, konkrete Codestandards festgelegt, sowie ein besseres Konzept zum Softwaredesign bzw. der "Separation of concerns" eingeführt werden. Zudem muss ein konkreterer Ablauf zur Überprüfung der Einhaltung der Akzeptanzkriterien erarbeitet und umgesetzt werden. Die Sprint-Planung ist ebenfalls verbesserungswürdig. Es sollte sich über konkrete Zuständigkeiten und Aufgaben bei der Planung Gedanken gemacht sowie feste Deadlines für den Sprint festgelegt werden.
 
 | Nächster MVP-Schritt
 | Am wichtigsten ist es demanächst die Nutzertrennung zu implementieren. Die Trennung von Ausleihern und Verleihern ist für das Produkt elementar, ohne dies geht das gesamte Produktkonzept nicht auf. Somit ist der nächste Schritt eine Registrierung und einen Login zu implementieren. Je nach Nutzertyp müssen auch verschiedene Sichten und Berechtigungen festgelegt werden.
