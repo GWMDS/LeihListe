@@ -135,7 +135,7 @@ Beschreiben Sie kurz, welche Nachweise zeigen, dass Ihr Produktinkrement nützli
 | Kriterium | Ihre Antwort
 
 | Umgesetzter End-to-End-Nutzerfluss
-| 
+| Der Nutzer ist in der Lage durch eine Inventarliste zu navigieren, Gegenstände auszuleihen und wieder zurück zu geben. Dabei wird die Verfügbarkeit eines Gegenstandes in Echtzeit aktualisiert. Zudem ist er in der Lage Details von Gegenständen zu sehen, Gegenstände zu erstellen/löschen und vorhandene Gegenstände zu bearbeiten. Damit sind die grundlegenden Funktionalitäten gegeben, die der Nutzer braucht, um das Produkt zu nutzen.
 
 | Akzeptanzkriterien und Definition of Done
 | Die Einhaltung von Akzeptanzkriterien und der DoD wurden nicht überprüft, auch aus Zeitgründen. Probleme konnten hier nur über das Code Review auffallen.
@@ -173,7 +173,7 @@ Beschreiben Sie, was Ihr Team nach Sprint 3 beibehalten, ändern oder gezielt ve
 | Es sollten dringend verbindliche, konkrete Codestandards festgelegt werden. Zudem muss ein konkreterer Ablauf zur Überprüfung der Einhaltung der Akzeptanzkriterien erarbeitet und umgesetzt werden. Die Sprint-Planung ist ebenfalls verbesserungswürdig. Es sollte sich über konkrete Zuständigkeiten und Aufgaben bei der Planung Gedanken gemacht sowie feste Deadlines für den Sprint festgelegt werden.
 
 | Nächster MVP-Schritt
-| 
+| Am wichtigsten ist es demanächst die Nutzertrennung zu implementieren. Die Trennung von Ausleihern und Verleihern ist für das Produkt Elementar, ohne dies geht das gesamte Produktkonzept nicht auf. Somit ist der nächste Schritt eine Registrierung und einen Login zu implementieren. Je nach Nutzertyp müssen auch verschiedene Sichten und Berechtigungen festgelegt werden.
 
 | Offene Fragen / Risiken für die weitere Projektarbeit
 | Wie setzt man eine Nutzerauthentifizierung,, bzw. eine allgemeine Nutzertrennung am besten technisch um?
