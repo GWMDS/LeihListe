@@ -242,35 +242,55 @@ Dieses Dokument zeigt ausschließlich die technische Persistenzstruktur.
 skinparam monochrome true
 skinparam defaultFontSize 12
 
-entity "nutzer" as user {
-  * id : UUID <<PK>>
+entity "Gegenstand" as item {
+  id : UUID <<PK>>
   --
-  * email : VARCHAR(255) <<UNIQUE>>
-  * name : VARCHAR(100)
-  * erstellt_am : TIMESTAMP
+  name : VARCHAR
+  description : VARCHAR
+  state : VARCHAR
+  isBorrowed : BOOLEAN
+  category : VARCHAR
 }
 
-entity "raum" as room {
-  * id : UUID <<PK>>
+entity "Ausleihe" as borrowing {
+  * borrowing_id: UUID <<PK>>
   --
-  * bezeichnung : VARCHAR(100)
-  * kapazitaet : INTEGER
-  * standort : VARCHAR(100)
+  * item_id : UUID <<FK>>
+  * borrowing_date : TIMESTAMP
+  * return_date : TIMESTAMP
+  * due_date : TIMESTAMP
 }
 
-entity "buchung" as booking {
-  * id : UUID <<PK>>
-  --
-  * nutzer_id : UUID <<FK>>
-  * raum_id : UUID <<FK>>
-  * beginn : TIMESTAMP
-  * ende : TIMESTAMP
-  * status : VARCHAR(20)
-  * erstellt_am : TIMESTAMP
-}
-
-user ||--o{ booking : "gibt auf"
-room ||--o{ booking : "ist Gegenstand von"
+' entity "nutzer" as user {
+'   * id : UUID <<PK>>
+'   --
+'   * email : VARCHAR(255) <<UNIQUE>>
+'   * name : VARCHAR(100)
+'   * erstellt_am : TIMESTAMP
+' }
+' 
+' entity "raum" as room {
+'   * id : UUID <<PK>>
+'   --
+'   * bezeichnung : VARCHAR(100)
+'   * kapazitaet : INTEGER
+'   * standort : VARCHAR(100)
+' }
+' 
+' entity "buchung" as booking {
+'   * id : UUID <<PK>>
+'   --
+'   * nutzer_id : UUID <<FK>>
+'   * raum_id : UUID <<FK>>
+'   * beginn : TIMESTAMP
+'   * ende : TIMESTAMP
+'   * status : VARCHAR(20)
+'   * erstellt_am : TIMESTAMP
+' }
+' 
+' user ||--o{ booking : "gibt auf"
+' room ||--o{ booking : "ist Gegenstand von"
+item ||--o{ borrowing : "bezieht sich auf"
 
 @enduml
 ....
@@ -281,21 +301,20 @@ room ||--o{ booking : "ist Gegenstand von"
 |===
 | Tabelle | Spalte | Beschreibung & Besonderheiten
 
-.4+| nutzer
+.5+| Gegenstand
 | id | UUID als Primärschlüssel; wird vom System generiert
-| email | Eindeutig; wird für Login und Benachrichtigungen verwendet
-| name | Anzeigename; kein Pflichtfeld nach DSGVO-Anforderung
-| erstellt_am | Automatisch gesetzt; nicht änderbar
+| name | Anzeigename
+| description | Eine genauere Beschreibung des Gegenstands
+| isBorrowed | Boolean-Wer, gibt Aukunft darüber, ob der Gegenstand ausgeliehen ist.
+| category | Oberkategorie für den Gegenstand
 
-.4+| buchung
-| id | UUID als Primärschlüssel
-| status | Enum-Werte: `AKTIV`, `STORNIERT`, `ABGELAUFEN`
-| beginn / ende | Beide Zeitpunkte inklusive; keine Überschneidung per DB-Constraint
-| nutzer_id / raum_id | Fremdschlüssel; kein Cascade Delete — Buchungen bleiben erhalten
+.4+| Ausleihe
+| borrowing_id | UUID als Primärschlüssel
+| item_id | Fremdschlüssel, ID des ausgeliehenen Gegenstands
+| borrowing_date | Beginn der Ausleihe
+| return_date | Datum der Rückgabe des Gegenstandes, wenn null ist die Ausleihe noch offen
+| due_date | Rückgabefrist der Ausleihe, wenn Frist gerissen wird das markiert 
 
-| [Weitere Tabelle]
-| [Spalte]
-| [Beschreibung]
 |===
 
 === Datenbankmigrationen
