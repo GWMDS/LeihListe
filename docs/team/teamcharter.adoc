@@ -1,5 +1,5 @@
 = Teamcharta: {project-name}
-Gabriel Wulkow <s87063@htw-dresden.de>; Pascal John <s87929@htw-dresden.de>; Eric Hübel <s86462@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Kevin Le Nguyen<s88877@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Marius Thomas Hoffmann<s86306@htw-dresden.de>
+Joud Khatib <s88435@htw-dresden.de>; Franz Borrmann<s89416@htw-dresden.de>; Moritz Kretschmer <s88992@htw-dresden.de>; Jonas Schletze<s88957@htw-dresden.de>; Fatemeh Pak Cheshm <s88161@htw-dresden.de>
 {localdatetime}
 include::../_includes/default-attributes.inc.adoc[]
 :version: 1.0
@@ -23,13 +23,13 @@ Für Hochschulen, die einen Ausliehservice für ihr Inventar anbieten möchten, 
 | Jonas Schletze
 
 | Scrum Master
-| Gabriel Wulkow Moreira da Silva
+| Franz Borrmann
 
 | Tech Lead footnote:[optionale Rolle, aber empfohlen, um technische Entscheidungen zu koordinieren]
-| Marius Thomas Hoffmann
+| 
 
 | Entwickler:innen
-| Pascal John; Eric Hübel; Franz Borrmann; Kevin Le Nguyen; Marius Thomas Hoffmann
+| Franz Borrmann; Moritz Kretschmer; Joud Khatib; Fatemeh Pak Cheshm
 
 
 | Stakeholder (Hauptansprechpartner)
@@ -44,12 +44,12 @@ Für Hochschulen, die einen Ausliehservice für ihr Inventar anbieten möchten, 
 | Ereignis | Wann | Dauer | Moderation
 
 | Standup (Weekly)
-| Mittwoch 18:00 Uhr
+| Donnerstag 9:30 Uhr
 | 15 - 30 min
 | Scrum Master
 
 | Sprint Planning
-| Mittwoch 18:30 Uhr
+| Donnerstag 8:45 Uhr
 | ca. 2 h
 | Product Owner, Scrum Master
 
